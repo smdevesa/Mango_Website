@@ -1,0 +1,8 @@
+body {
+    background-color: #FFFBE6;
+    font-family: 'Poppins', sans-serif;
+}
+
+.v-application { /* Evitar que nos pise nuestro fondo */
+    background: transparent;
+}
