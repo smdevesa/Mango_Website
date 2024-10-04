@@ -1,6 +1,6 @@
 <template>
-    <div style="position: relative; width: 120px; height: 120px;"> <!-- Aumenta el tamaño aquí -->
-      <canvas ref="myChart" width="120" height="120"></canvas> <!-- Aumenta el tamaño aquí -->
+    <div style="position: relative; width: 200px; height: 200px; margin-left: 50px;"> <!-- Aumenta el tamaño aquí -->
+      <canvas ref="myChart" width="200" height="200"></canvas> <!-- Aumenta el tamaño aquí -->
       <div class="balance-text">{{ balance }}</div>
     </div>
   </template>
@@ -33,8 +33,7 @@
         this.sections.forEach((section) => {
           datasets.push({
             data: [section.percentage],
-            backgroundColor: section.color, // Colores sólidos
-            borderWidth: 0, // Sin bordes
+            backgroundColor: section.color,
           });
         });
   
@@ -44,19 +43,19 @@
             labels: this.sections.map(section => section.label),
             datasets: [{
               data: this.sections.map(section => section.percentage),
-              backgroundColor: datasets.map(dataset => dataset.backgroundColor), // Usar colores sólidos
+              backgroundColor: datasets.map(dataset => dataset.backgroundColor),
               borderWidth: 0,
             }],
           },
           options: {
             responsive: true,
-            cutout: '60%', // Ajusta el tamaño del centro del gráfico (más pequeño para un círculo más grande)
+            cutout: '70%',
             plugins: {
               legend: {
                 display: false, // Oculta la leyenda
               },
               tooltip: {
-                enabled: false,
+                enabled: true,
               },
             },
           },
@@ -72,7 +71,7 @@
     top: 50%; /* Ajusta para centrar verticalmente */
     left: 50%; /* Ajusta para centrar horizontalmente */
     transform: translate(-50%, -50%); /* Centra el texto */
-    font-size: 14px; /* Cambia el tamaño de fuente según sea necesario */
+    font-size: 14pt; /* Cambia el tamaño de fuente según sea necesario */
     text-align: center;
     font-weight: bold;
   }

@@ -40,7 +40,7 @@ export default {
     props: {
         username: {
             type: String,
-            required: true,
+            default: 'Juan F. Palermo'
         },
         profileImage: {
             type: String,

@@ -1,16 +1,43 @@
 <template>
   <v-container>
-    <WelcomeBanner username="Robert Bin Udin" />
+    <WelcomeBanner />
 
-    <ReusableCard>
-            <CircularBalance
-        :balance="'$1,234.56'"
-        :sections="[
-          { label: 'Ahorros', percentage: 40, color: 'rgba(255, 99, 132, 1)' },  // Color sólido
-          { label: 'Gastos', percentage: 30, color: 'rgba(54, 162, 235, 1)' },  // Color sólido
-          { label: 'Inversiones', percentage: 30, color: 'rgba(75, 192, 192, 1)' } // Color sólido
-        ]"
-      />
+    <ReusableCard title="Balance">
+      <v-row rows>
+        <!-- Columna para el gráfico circular -->
+        <v-col cols="5">
+          <CircularBalance
+            :balance="'$1,234.56'"
+            :sections="[
+              { label: 'Ahorros', percentage: 70, color: 'purple' },
+              { label: 'Gastos', percentage: 10, color: 'red' },
+              { label: 'Inversiones', percentage: 20, color: 'cyan' }
+            ]"
+          />
+        </v-col>
+
+        <!-- Columna para los botones 2x2 -->
+        <v-col cols="7">
+          <v-row>
+            <!-- Primera fila de botones -->
+            <v-col cols="6">
+              <ReusableIconButton icon="mdi-cash" text="Ahorros" />
+            </v-col>
+            <v-col cols="6">
+              <ReusableIconButton icon="mdi-wallet" text="Gastos" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <!-- Segunda fila de botones -->
+            <v-col cols="6">
+              <ReusableIconButton icon="mdi-chart-line" text="Inversiones" />
+            </v-col>
+            <v-col cols="6">
+              <ReusableIconButton icon="mdi-account" text="Cuentas" />
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
     </ReusableCard>
 
     <v-row>
@@ -18,7 +45,6 @@
         <ReusableCard title="Planificador de Gastos">
           <v-card>
             <v-card-subtitle>Aquí puedes planificar tus gastos</v-card-subtitle>
-            <!-- Contenido de la tarjeta Planificador de Gastos -->
           </v-card>
         </ReusableCard>
       </v-col>
@@ -26,7 +52,6 @@
         <ReusableCard title="Historial">
           <v-card>
             <v-card-subtitle>Aquí se muestra el historial de gastos</v-card-subtitle>
-            <!-- Contenido de la tarjeta Historial -->
           </v-card>
         </ReusableCard>
       </v-col>
@@ -37,7 +62,8 @@
 <script>
 import WelcomeBanner from '../components/common/WelcomeBanner.vue';
 import ReusableCard from '../components/common/ReusableCard.vue';
-import CircularBalance from '../components/wallet/CircularBalance.vue'; // Asegúrate de importar el componente
+import CircularBalance from '../components/wallet/CircularBalance.vue';
+import ReusableIconButton from '../components/common/ReusableIconButton.vue';
 
 export default {
   name: 'GeneralView',
@@ -45,10 +71,11 @@ export default {
     WelcomeBanner,
     ReusableCard,
     CircularBalance,
+    ReusableIconButton
   },
 };
 </script>
 
 <style scoped>
-/* Estilos específicos para este componente */
+/* Ajustes adicionales en caso de ser necesario */
 </style>
