@@ -41,6 +41,11 @@
   <style scoped>
   .custom-icon {
     color: #F19743; /* Cambia el color del icono */
+    font-size: 30px;
+    margin-right: 20px;
+
+    position: absolute;
+    left: 15px;    
   }
 
   .custom-button {
@@ -48,6 +53,17 @@
     height: 60px;
     border: solid 0.5px;
     width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
+
+.button-text {
+  text-align: center;
+  flex: 1; /* Asegura que el texto esté centrado */
+}
   </style>
   
