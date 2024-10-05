@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <!-- Contenedor para el logo en la esquina superior derecha -->
+    
     <v-row align="center" justify="space-between">
       <!-- Welcome Banner -->
       <v-col cols="auto">
@@ -18,7 +19,7 @@
         <v-col cols="5">
           <CircularBalance
             :balance="'$1,234.56'"
-            :sections="[ 
+            :sections="[
               { label: 'Ahorros', percentage: 70, color: 'purple' },
               { label: 'Gastos', percentage: 10, color: 'red' },
               { label: 'Inversiones', percentage: 20, color: 'cyan' }
@@ -29,7 +30,7 @@
         <v-col cols="7" class="button-column">
           <v-row justify="center">
             <v-col cols="6">
-              <ReusableIconButton icon="mdi-bank-transfer" text="Transferir" @click="goToTransfer" />
+              <ReusableIconButton icon="mdi-bank-transfer" text=" Transferir" @click ="TransferWindow" />
             </v-col>
             <v-col cols="6">
               <ReusableIconButton icon="mdi-cash-plus" text="Ingresar" />
@@ -52,11 +53,10 @@
         <ReusableCard title="Planificador de Gastos">
           <v-card class="planner-card">
             <v-card-text class="planner-input-container">
-              <!-- Se renderizan las píldoras (gastos) actuales -->
-              <PillManager 
-                :pills="pills" 
-                @add-pill="addPill" 
-              />
+              <PlannerInput name="Alquiler" value="$800" iconColor="blue" />
+              <PlannerInput name="Comida" value="$250" iconColor="green" />
+              <PlannerInput name="Transporte" value="$150" iconColor="orange" />
+              
             </v-card-text>
           </v-card>
         </ReusableCard>
@@ -94,12 +94,12 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
 import WelcomeBanner from '../components/common/WelcomeBanner.vue';
 import ReusableCard from '../components/common/ReusableCard.vue';
 import CircularBalance from '../components/wallet/CircularBalance.vue';
 import ReusableIconButton from '../components/common/ReusableIconButton.vue';
-import TransactionItem from '../components/wallet/TransactionItem.vue';
+import PlannerInput from '../components/wallet/PlannerInput.vue';
+import TransactionItem from '../components/wallet/TransactionItem.vue'; // Importar el componente
 import PillManager from '../components/wallet/PillManager.vue';
 
 export default {
@@ -109,43 +109,29 @@ export default {
     ReusableCard,
     CircularBalance,
     ReusableIconButton,
-    TransactionItem,
+    PlannerInput,
+    TransactionItem, // Registrar el componente
     PillManager,
   },
-  setup() {
-    const router = useRouter();
-
-    const goToTransfer = () => {
-      router.push('/transfer');
-    };
-
-    return {
-      goToTransfer,
-    };
-  },
-  
-  data() {
-    return {
-      pills: [
-        { name: 'Alquiler', value: '$800', iconColor: 'blue' },
-        { name: 'Comida', value: '$250', iconColor: 'green' },
-        { name: 'Transporte', value: '$150', iconColor: 'orange' },
-      ],
-    };
-  },
   methods: {
-    addPill(newPill) {
-      this.pills.push(newPill); // Agrega la nueva píldora a la lista de gastos
-    },
+    openTransferWindow() {
+      // Abrimos la ruta /transfer en una nueva ventana o pestaña
+      const routePath = this.$router.resolve({ path: '/transfer' }).href;
+      window.open(routePath, '_blank');
+    }
   }
 };
+
+
 </script>
 
 <style scoped>
+
 .app-logo {
   width: 75px;
   height: 75px;
   margin-right: 10px;
+  
 }
 .button-column {
   display: flex;
@@ -159,12 +145,13 @@ export default {
   margin: 0;
 }
 
+/* Agregamos un margen entre el v-card-subtitle y el primer PlannerInput */
 .planner-input-container > *:first-child {
-  margin-top: 10px;
+  margin-top: 10px; /* Ajusta el valor según lo que necesites */
 }
 
 .planner-input-container > *:not(:last-child) {
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* Espacio entre PlannerInput */
 }
 
 .planner-card {
@@ -172,6 +159,7 @@ export default {
   box-shadow: none;
 }
 
+/* Estilos para el historial para quitar fondo y sombra */
 .historial-card {
   background-color: transparent;
   box-shadow: none;

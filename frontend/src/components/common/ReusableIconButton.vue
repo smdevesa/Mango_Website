@@ -45,16 +45,15 @@
     margin-right: 20px;
 
     position: absolute;
-    left: 15px;    
+    left: 25px;    
   }
 
   .custom-button {
     text-transform: none; /* Evita que el texto se vea en mayúsculas */
     height: 60px;
     border: solid 0.5px;
-    width: 100%;
+    width: 95%;
     font-size: 20px;
-
     display: flex;
     justify-content: center;
     align-items: center;

@@ -63,6 +63,7 @@
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    border: 1px solid #000;
   }
   
   .transaction-details {
@@ -71,13 +72,13 @@
   }
   
   .transaction-name {
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: normal;
+    font-size: 18px;
   }
   
   .transaction-date {
     font-size: 12px;
-    color: #888;
+    color: #000;
   }
   
   .transaction-amount {
