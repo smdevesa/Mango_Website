@@ -49,10 +49,31 @@
           </v-card>
         </ReusableCard>
       </v-col>
+
       <v-col cols="6">
         <ReusableCard title="Historial">
-          <v-card>
+          <v-card class="historial-card">
             <v-card-subtitle>Aquí se muestra el historial de gastos</v-card-subtitle>
+            <v-card-text>
+              <TransactionItem
+                logoUrl="https://www.shutterstock.com/image-vector/c-icon-vector-logo-sign-600nw-2242697067.jpg"
+                name="Carrefour"
+                date="2024-10-03 14:35"
+                :amount="-50.75"
+              />
+              <TransactionItem
+                logoUrl="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png"
+                name="McDonalds"
+                date="2024-10-01 09:00"
+                :amount="-1500.00"
+              />
+              <TransactionItem
+                logoUrl="https://blog.saleslayer.com/hubfs/mercado-libre-logo.jpg"
+                name="Mercado Libre"
+                date="2024-09-30 12:45"
+                :amount="200.00"
+              />
+            </v-card-text>
           </v-card>
         </ReusableCard>
       </v-col>
@@ -66,6 +87,7 @@ import ReusableCard from '../components/common/ReusableCard.vue';
 import CircularBalance from '../components/wallet/CircularBalance.vue';
 import ReusableIconButton from '../components/common/ReusableIconButton.vue';
 import PlannerInput from '../components/wallet/PlannerInput.vue';
+import TransactionItem from '../components/wallet/TransactionItem.vue'; // Importar el componente
 
 export default {
   name: 'GeneralView',
@@ -75,6 +97,7 @@ export default {
     CircularBalance,
     ReusableIconButton,
     PlannerInput,
+    TransactionItem, // Registrar el componente
   },
 };
 </script>
@@ -92,13 +115,24 @@ export default {
   margin: 0;
 }
 
+/* Agregamos un margen entre el v-card-subtitle y el primer PlannerInput */
+.planner-input-container > *:first-child {
+  margin-top: 10px; /* Ajusta el valor según lo que necesites */
+}
+
+.planner-input-container > *:not(:last-child) {
+  margin-bottom: 15px; /* Espacio entre PlannerInput */
+}
+
 .planner-card {
   background-color: #D5ED9F;
   box-shadow: none;
 }
 
-/* Aquí agregamos el margen entre cada PlannerInput */
-.planner-input-container > *:not(:last-child) {
-  margin-bottom: 15px; /* Ajusta el valor para mayor o menor espacio */
+/* Estilos para el historial para quitar fondo y sombra */
+.historial-card {
+  background-color: transparent;
+  box-shadow: none;
 }
 </style>
+
