@@ -1,13 +1,9 @@
 <template>
   <v-container>
-    <!-- Contenedor para el logo en la esquina superior derecha -->
     <v-row align="center" justify="space-between">
-      <!-- Welcome Banner -->
       <v-col cols="auto">
         <WelcomeBanner />
       </v-col>
-
-      <!-- Logo -->
       <v-col cols="auto">
         <img :src="require('@/assets/logo.png')" alt="Logo" class="app-logo" />
       </v-col>
@@ -40,7 +36,10 @@
               <ReusableIconButton icon="mdi-cash-minus" text="Retirar" />
             </v-col>
             <v-col cols="6">
-              <ReusableIconButton icon="mdi-credit-card-plus" text="Añadir tarjeta" />
+              <ReusableIconButton 
+                icon="mdi-credit-card-plus" 
+                text="Añadir tarjeta" 
+                @click="goToAddCard" /> <!-- Agregamos el click aquí -->
             </v-col>
           </v-row>
         </v-col>
@@ -52,7 +51,6 @@
         <ReusableCard title="Planificador de Gastos">
           <v-card class="planner-card">
             <v-card-text class="planner-input-container">
-              <!-- Se renderizan las píldoras (gastos) actuales -->
               <PillManager 
                 :pills="pills" 
                 @add-pill="addPill" 
@@ -65,7 +63,6 @@
       <v-col cols="6">
         <ReusableCard title="Historial">
           <v-card class="historial-card">
-            <v-card-subtitle>Aquí se muestra el historial de gastos</v-card-subtitle>
             <v-card-text>
               <TransactionItem
                 logoUrl="https://www.shutterstock.com/image-vector/c-icon-vector-logo-sign-600nw-2242697067.jpg"
@@ -85,6 +82,9 @@
                 date="2024-09-30 12:45"
                 :amount="200.00"
               />
+              <div class="historial-button" @click="goToHistory">
+                Ver historial completo
+              </div>
             </v-card-text>
           </v-card>
         </ReusableCard>
@@ -119,8 +119,13 @@ export default {
       router.push('/transfer');
     };
 
+    const goToAddCard = () => {
+      router.push('/add-card'); // Asegúrate de que esta ruta esté configurada
+    };
+
     return {
       goToTransfer,
+      goToAddCard, // Asegúrate de devolver la nueva función
     };
   },
   
@@ -136,6 +141,9 @@ export default {
   methods: {
     addPill(newPill) {
       this.pills.push(newPill); // Agrega la nueva píldora a la lista de gastos
+    },
+    goToHistory() {
+      this.$router.push('/history'); // Redirige a la página de historial
     },
   }
 };
@@ -176,5 +184,14 @@ export default {
   background-color: transparent;
   box-shadow: none;
 }
-</style>
 
+.historial-button{
+  text-align: center;
+  color: #000;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 20px;
+}
+</style>

@@ -21,16 +21,12 @@
         type: String,
         required: true,
       },
-      iconColor: {
-        type: String,
-        default: '#000',
-      },
       bgColor: {
         type: String,
         default: '#FFFBE6',
       },
     },
-  };
+  }
   </script>
   
   <style scoped>
@@ -39,26 +35,31 @@
     align-items: center;
     padding: 10px 15px;
     border-radius: 20px;
-    margin: 5px;
+    margin: 10px;
     color: #000;
-    font-weight: bold;
+    font-weight: 600;
     justify-content: space-between;
     cursor: pointer;
+    height: 54.53px;
+    border: solid #000 1px;
   }
   
   .icon {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
+    font-size: large;
     border-radius: 50%;
     margin-right: 10px;
+    
   }
   
   .text-container {
     flex-grow: 1;
-  }
+    }
   
   .name {
-    font-size: 16px;
+    font-size: 18px;
+    text-decoration: underline;
   }
   </style>
   

@@ -10,9 +10,19 @@ const router = createRouter({
       component: GeneralView
     },
     {
+      path: '/history',
+      name: 'HistoryView',
+      component: () => import('../pages/HistoryView.vue')
+    },
+    {
       path: '/transfer',
       name: 'transfer',
       component: () => import('../pages/TransferWindow.vue')
+    },
+    {
+      path: '/add-card',
+      name: 'add-card',
+      component: () => import('../pages/AddCardView.vue')
     }
   ]
 })

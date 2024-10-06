@@ -59,8 +59,8 @@
   }
   
   .transaction-logo {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 10px;
     border: 1px solid #000;
@@ -73,17 +73,18 @@
   
   .transaction-name {
     font-weight: normal;
-    font-size: 18px;
+    font-size: 20px;
   }
   
   .transaction-date {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
   }
   
   .transaction-amount {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
+    margin-right: 10px;
   }
   
   .expense {
