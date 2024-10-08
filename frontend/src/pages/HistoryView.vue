@@ -17,7 +17,7 @@
         <v-col cols="12">
           <v-text-field
             v-model="searchQuery"
-            label="Buscar transacciones"
+            label= "Buscar transacciones"
             append-icon="mdi-magnify"
             @input="filterTransactions"
             clearable
