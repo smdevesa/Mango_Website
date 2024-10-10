@@ -1,7 +1,7 @@
 <template>
   <div class="pill-button" :style="{ backgroundColor: bgColor }">
     <div class="icon" :style="{ backgroundColor: iconColor }">
-      <v-icon>{{ icon }}</v-icon>
+      <v-icon></v-icon>
     </div>
     <div class="text-container">
       <span class="name">{{ name }}</span>
@@ -23,7 +23,7 @@ export default {
       required: true,
     },
     value: {
-      type: String,
+      type: Number,
       required: true,
     },
     iconColor: {

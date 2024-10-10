@@ -1,6 +1,6 @@
 <template>
     <v-card class="welcome-banner" outlined>
-        <v-row align="center" justify="flex-start" class="banner-content">
+        <v-row align="center" justify="start" class="banner-content">
             <v-col cols="auto" class="profile-col">
                 <v-img :src="profileImage" class="profile-image"></v-img>
                 <v-card-title class="username">

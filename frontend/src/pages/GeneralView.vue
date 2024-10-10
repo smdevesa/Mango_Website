@@ -50,9 +50,8 @@
       <v-col cols="6">
         <ReusableCard title="Planificador de Gastos">
           <v-card class="planner-card">
-            <v-card-text class="planner-input-container">
+            <v-card-text class="planner-input-container scrollable-pills">
               <PillManager 
-                :pills="pills" 
                 @add-pill="addPill" 
               />
             </v-card-text>
@@ -93,7 +92,7 @@
   </v-container>
 </template>
 
-<script>
+<script setup>
 import { useRouter } from 'vue-router';
 import WelcomeBanner from '../components/common/WelcomeBanner.vue';
 import ReusableCard from '../components/common/ReusableCard.vue';
@@ -102,50 +101,23 @@ import ReusableIconButton from '../components/common/ReusableIconButton.vue';
 import TransactionItem from '../components/wallet/TransactionItem.vue';
 import PillManager from '../components/wallet/PillManager.vue';
 
-export default {
-  name: 'GeneralView',
-  components: {
-    WelcomeBanner,
-    ReusableCard,
-    CircularBalance,
-    ReusableIconButton,
-    TransactionItem,
-    PillManager,
-  },
-  setup() {
-    const router = useRouter();
+const router = useRouter();
 
-    const goToTransfer = () => {
-      router.push('/transfer');
-    };
+const goToTransfer = () => {
+  router.push('/transfer');
+};
 
-    const goToAddCard = () => {
-      router.push('/add-card'); // Asegúrate de que esta ruta esté configurada
-    };
+const goToAddCard = () => {
+  router.push('/add-card');
+};
 
-    return {
-      goToTransfer,
-      goToAddCard, // Asegúrate de devolver la nueva función
-    };
-  },
-  
-  data() {
-    return {
-      pills: [
-        { name: 'Alquiler', value: '$800', iconColor: 'blue' },
-        { name: 'Comida', value: '$250', iconColor: 'green' },
-        { name: 'Transporte', value: '$150', iconColor: 'orange' },
-      ],
-    };
-  },
-  methods: {
-    addPill(newPill) {
-      this.pills.push(newPill); // Agrega la nueva píldora a la lista de gastos
-    },
-    goToHistory() {
-      this.$router.push('/history'); // Redirige a la página de historial
-    },
-  }
+const goToHistory = () => {
+  router.push('/history');
+};
+
+const addPill = (newPill) => {
+  // Aquí debes manejar cómo agregar la nueva píldora
+  console.log('Píldora agregada:', newPill);
 };
 </script>
 
@@ -155,6 +127,7 @@ export default {
   height: 75px;
   margin-right: 10px;
 }
+
 .button-column {
   display: flex;
   flex-direction: column;
@@ -185,7 +158,7 @@ export default {
   box-shadow: none;
 }
 
-.historial-button{
+.historial-button {
   text-align: center;
   color: #000;
   font-weight: 600;
@@ -193,5 +166,11 @@ export default {
   text-decoration: underline;
   cursor: pointer;
   margin-top: 20px;
+}
+
+/* Estilo para el scroll de las pills */
+.scrollable-pills {
+  max-height: 287.37px;
+  overflow-y: auto;
 }
 </style>

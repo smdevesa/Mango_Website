@@ -60,70 +60,54 @@
   </v-container>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import ReusableCard from '../components/common/ReusableCard.vue';
 import UserItem from '../components/common/UserItem.vue'; // Asegúrate de que la ruta sea correcta
-import { useRouter } from 'vue-router';
 
-export default {
-  components: {
-    ReusableCard,
-    UserItem, // Agregamos el componente UserItem
-  },
-  setup() {
-    const router = useRouter();
+const router = useRouter();
 
-    const goHome = () => {
-      router.push('/'); // Cambia esta ruta según sea necesario
-    };
+const searchQuery = ref('');
+const contacts = ref([
+  { firstName: 'Juan', lastName: 'Pérez' },
+  { firstName: 'María', lastName: 'García' },
+  { firstName: 'Carlos', lastName: 'Fernández' },
+  { firstName: 'Laura', lastName: 'Martínez' },
+  { firstName: 'Ana', lastName: 'López' },
+]);
+const filteredContacts = ref([...contacts.value]); // Almacena los contactos filtrados
 
-    const goToContacts = () => {
-      // Navegar a la vista de contactos Mango
-      console.log("Ir a Contactos Mango");
-    };
-
-    const goToBankDetails = () => {
-      // Navegar a la vista de ingresar CBU, CVU o Alias
-      console.log("Ir a CBU, CVU o Alias");
-    };
-
-    return {
-      goHome,
-      goToContacts,
-      goToBankDetails,
-    };
-  },
-  data() {
-    return {
-      searchQuery: '',
-      contacts: [
-        { firstName: 'Juan', lastName: 'Pérez' },
-        { firstName: 'María', lastName: 'García' },
-        { firstName: 'Carlos', lastName: 'Fernández' },
-        { firstName: 'Laura', lastName: 'Martínez' },
-        { firstName: 'Ana', lastName: 'López' },
-      ],
-      filteredContacts: [], // Almacena los contactos filtrados
-    };
-  },
-  methods: {
-    filterContacts() {
-      if (this.searchQuery) {
-        const query = this.searchQuery.toLowerCase();
-        this.filteredContacts = this.contacts.filter(contact =>
-          contact.firstName.toLowerCase().includes(query) ||
-          contact.lastName.toLowerCase().includes(query)
-        );
-      } else {
-        this.filteredContacts = this.contacts; // Si no hay búsqueda, muestra todos los contactos
-      }
-    },
-  },
-  mounted() {
-    // Inicializa los contactos filtrados al cargar el componente
-    this.filteredContacts = this.contacts;
-  },
+const goHome = () => {
+  router.push('/'); // Cambia esta ruta según sea necesario
 };
+
+const goToContacts = () => {
+  // Navegar a la vista de contactos Mango
+  console.log("Ir a Contactos Mango");
+};
+
+const goToBankDetails = () => {
+  // Navegar a la vista de ingresar CBU, CVU o Alias
+  console.log("Ir a CBU, CVU o Alias");
+};
+
+const filterContacts = () => {
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    filteredContacts.value = contacts.value.filter(contact =>
+      contact.firstName.toLowerCase().includes(query) ||
+      contact.lastName.toLowerCase().includes(query)
+    );
+  } else {
+    filteredContacts.value = [...contacts.value]; // Si no hay búsqueda, muestra todos los contactos
+  }
+};
+
+// Inicializa los contactos filtrados al cargar el componente
+onMounted(() => {
+  filteredContacts.value = [...contacts.value];
+});
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
     <div class="pill-button" @click="$emit('click')" :style="{ backgroundColor: bgColor }">
-      <div class="icon" :style="{ backgroundColor: iconColor }">
+      <div class="icon">
         <v-icon>{{ icon }}</v-icon>
       </div>
       <div class="text-container">
