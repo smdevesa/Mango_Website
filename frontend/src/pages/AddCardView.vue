@@ -78,7 +78,7 @@
                     :cvv="card.cvv"
                   />
                   <v-btn class="remove-button" @click="removeCard(card.id)">
-                    X
+                    ELIMINAR
                   </v-btn>
                 </div>
               </div>
@@ -194,12 +194,13 @@ const removeCard = (id) => {
 
 .remove-button {
   position: absolute; /* Posiciona el botón de manera absoluta */
-  top: 10px; /* Ajusta el espacio desde la parte superior */
-  right: 110px; /* Ajusta el espacio desde la izquierda */
-  width: 30px; /* Establece un ancho para que sea circular */
+  top: 0px; /* Ajusta el espacio desde la parte superior */
+  right: 100px; /* Ajusta el espacio desde la izquierda */
+  width: 80px; /* Establece un ancho para que sea circular */
   height: 30px; /* Establece una altura igual al ancho para ser circular */
-  
-  background: red;
+  border: solid 2px black;
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.831);
   text-align: center;
   cursor: pointer;
   color: white;
