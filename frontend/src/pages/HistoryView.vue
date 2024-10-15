@@ -1,13 +1,24 @@
 <template>
   <v-container>
-    <v-row align="center" justify="space-between" class="top-row">
+    <v-row 
+      align="center" 
+      justify="space-between"
+      class="top-row"
+    >
       <v-col cols="auto">
-        <v-btn class="custom-button" @click="goHome">
+        <v-btn
+          class="custom-button"
+          @click="goHome"
+        >
           Volver al inicio
         </v-btn>
       </v-col>
       <v-col cols="auto">
-        <img :src="require('@/assets/logo.png')" alt="Logo" class="app-logo" />
+        <img
+          :src="require('@/assets/logo.png')"
+          alt="Logo"
+          class="app-logo"
+        >
       </v-col>
     </v-row>
     
@@ -19,15 +30,18 @@
             v-model="searchQuery"
             label="Buscar transacciones"
             append-icon="mdi-magnify"
-            @input="filterTransactions"
             clearable
+            @input="filterTransactions"
           />
         </v-col>
       </v-row>
 
-      <div v-for="(transaction, index) in filteredTransactions" :key="index">
+      <div
+        v-for="(transaction, index) in filteredTransactions"
+        :key="index"
+      >
         <TransactionItem
-          :logoUrl="transaction.logoUrl"
+          :logo-url="transaction.logoUrl"
           :name="transaction.name"
           :date="transaction.date"
           :amount="transaction.amount"
@@ -90,7 +104,7 @@ const filteredTransactions = ref([]);
 // Método para filtrar transacciones
 const filterTransactions = () => {
   if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
+    const query = searchQuery.value.toLowerCase(); // warning?
     filteredTransactions.value = transactions.value.filter(transaction =>
       transaction.name.toLowerCase().includes(query) || 
       transaction.date.includes(query)
@@ -107,9 +121,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.transaction-card {
-  margin-bottom: 15px;
-}
 
 .app-logo {
   width: 75px; /* Ajusta el tamaño según sea necesario */

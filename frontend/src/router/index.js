@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import GeneralView from '../pages/GeneralView.vue'
+import HistoryView from '../pages/HistoryView.vue'
+import TransferView from '../pages/TransferWindow.vue'
+import AddCardView from '../pages/AddCardView.vue'
+import LoginView from '../pages/LoginView.vue'
+import RegisterView  from "../pages/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -10,19 +15,29 @@ const router = createRouter({
       component: GeneralView
     },
     {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
+    },
+    {
       path: '/history',
       name: 'HistoryView',
-      component: () => import('../pages/HistoryView.vue')
+      component: HistoryView
     },
     {
       path: '/transfer',
       name: 'transfer',
-      component: () => import('../pages/TransferWindow.vue')
+      component: TransferView
     },
     {
       path: '/add-card',
       name: 'add-card',
-      component: () => import('../pages/AddCardView.vue')
+      component: AddCardView
     }
   ]
 })

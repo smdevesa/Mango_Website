@@ -1,13 +1,24 @@
 <template>
   <v-container>
-    <v-row align="center" justify="space-between" class="top-row">
+    <v-row
+      align="center"
+      justify="space-between"
+      class="top-row"
+    >
       <v-col cols="auto">
-        <v-btn class="custom-button" @click="goToHome">
+        <v-btn
+          class="custom-button"
+          @click="goToHome"
+        >
           Volver al inicio
         </v-btn>
       </v-col>
       <v-col cols="auto">
-        <img :src="require('@/assets/logo.png')" alt="Logo" class="app-logo" />
+        <img
+          :src="require('@/assets/logo.png')"
+          alt="Logo"
+          class="app-logo"
+        >
       </v-col>
     </v-row>
 
@@ -20,9 +31,13 @@
               height="150"
               contain
               class="card-image"
-            ></v-img>
+            />
 
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
               <v-row>
                 <v-col cols="6">
                   <v-text-field
@@ -59,7 +74,12 @@
                   />
                 </v-col>
               </v-row>
-              <v-btn @click="addCard" class="button-container">Agregar tarjeta</v-btn>
+              <v-btn
+                class="button-container"
+                @click="addCard"
+              >
+                Agregar tarjeta
+              </v-btn>
             </v-form>
           </v-card-text>
         </ReusableCard>
@@ -69,21 +89,30 @@
         <ReusableCard title="Mis Tarjetas">
           <v-card-text>
             <div class="scrollable">
-              <div v-for="card in cards" :key="card.id" class="card-item">
+              <div
+                v-for="card in cards"
+                :key="card.id"
+                class="card-item"
+              >
                 <div class="card-content">
                   <CardDisplay
-                    :cardName="card.name"
-                    :cardNumber="card.number"
-                    :expirationDate="card.expiration"
+                    :card-name="card.name"
+                    :card-number="card.number"
+                    :expiration-date="card.expiration"
                     :cvv="card.cvv"
                   />
-                  <v-btn class="remove-button" @click="removeCard(card.id)">
+                  <v-btn
+                    class="remove-button"
+                    @click="removeCard(card.id)"
+                  >
                     ELIMINAR
                   </v-btn>
                 </div>
               </div>
             </div>
-            <div v-if="cards.length === 0">No tienes tarjetas guardadas.</div>
+            <div v-if="cards.length === 0">
+              No tienes tarjetas guardadas.
+            </div>
           </v-card-text>
         </ReusableCard>
       </v-col>
@@ -122,7 +151,7 @@ const goToHome = () => {
 
 const formattedCardNumber = computed({
   get() {
-    return cardNumber.value.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    return cardNumber.value.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, '$1 '); // warning?
   },
   set(value) {
     cardNumber.value = value.replace(/\s/g, '');
@@ -168,8 +197,7 @@ const removeCard = (id) => {
 }
 .card-image {
   display: block;
-  margin: 0 auto;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
 
 .button-container {
@@ -194,8 +222,8 @@ const removeCard = (id) => {
 
 .remove-button {
   position: absolute; /* Posiciona el botón de manera absoluta */
-  top: 0px; /* Ajusta el espacio desde la parte superior */
-  right: 100px; /* Ajusta el espacio desde la izquierda */
+  top: 0; /* Ajusta el espacio desde la parte superior */
+  right: 250px; /* Ajusta el espacio desde la izquierda */
   width: 80px; /* Establece un ancho para que sea circular */
   height: 30px; /* Establece una altura igual al ancho para ser circular */
   border: solid 2px black;

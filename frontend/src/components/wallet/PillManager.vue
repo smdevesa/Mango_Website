@@ -1,11 +1,14 @@
 <template>
   <div>
     <!-- Renderizamos las píldoras actuales -->
-    <div v-for="(pill, index) in pills" :key="index">
+    <div
+      v-for="(pill, index) in pills"
+      :key="index"
+    >
       <PlannerInput
         :name="pill.name"
         :value="pill.value"
-        :iconColor="pill.iconColor" 
+        :icon-color="pill.iconColor" 
       />
     </div>
 
@@ -13,9 +16,9 @@
     <PillButton
       name="Agregar"
       icon="mdi-pencil"
+      icon-color="orange"
+      bg-color="#FFFBE6"
       @click="openInputDialog"
-      iconColor="orange"
-      bgColor="#FFFBE6"
     />
 
     <!-- Formulario de entrada solo se muestra cuando showInput es true -->
@@ -36,8 +39,18 @@
 
       <!-- Contenedor flexible para los botones -->
       <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-        <v-btn color="secondary" @click="cancelNewPill">Cancelar</v-btn>
-        <v-btn color="primary" @click="confirmNewPill">Confirmar</v-btn>
+        <v-btn
+          color="secondary"
+          @click="cancelNewPill"
+        >
+          Cancelar
+        </v-btn>
+        <v-btn
+          color="primary"
+          @click="confirmNewPill"
+        >
+          Confirmar
+        </v-btn>
       </div>
     </div>
   </div>
@@ -79,6 +92,7 @@ const confirmNewPill = () => {
 };
 
 const cancelNewPill = () => {
+  // Cancela la entrada y oculta el formulario
   // Cancela la entrada y oculta el formulario
   resetForm();
 };

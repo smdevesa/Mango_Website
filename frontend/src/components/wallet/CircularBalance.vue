@@ -1,7 +1,13 @@
 <template>
-  <div style="position: relative; width: 200px; height: 200px; margin-left: 50px;">
-    <canvas ref="myChart" width="200" height="200"></canvas>
-    <div class="balance-text">{{ balance }}</div>
+  <div class="chart-container">
+    <canvas
+      ref="myChart"
+      width="200"
+      height="200"
+    />
+    <div class="balance-text">
+      {{ balance }}
+    </div>
   </div>
 </template>
 
@@ -70,12 +76,19 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.chart-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-left: 50px;
+}
+
 .balance-text {
   position: absolute;
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-  font-size: 14pt; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14pt;
   text-align: center;
   font-weight: bold;
 }

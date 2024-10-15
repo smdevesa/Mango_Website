@@ -1,14 +1,25 @@
 <template>
   <v-container>
     <!-- Fila superior con botón de volver y logo -->
-    <v-row align="center" justify="space-between" class="top-row">
+    <v-row
+      align="center"
+      justify="space-between"
+      class="top-row"
+    >
       <v-col cols="auto">
-        <v-btn class="custom-button" @click="goHome">
+        <v-btn 
+          class="custom-button"           
+          @click="goHome"
+        >
           Volver al inicio
         </v-btn>
       </v-col>
       <v-col cols="auto">
-        <img :src="require('@/assets/logo.png')" alt="Logo" class="app-logo" />
+        <img 
+          :src="require('@/assets/logo.png')" 
+          alt="Logo" 
+          class="app-logo" 
+        >
       </v-col>
     </v-row>
 
@@ -17,19 +28,39 @@
       <v-row>
         <v-col cols="6">
           <!-- Botón para contactos Mango -->
-          <v-btn class="transfer-button" @click="goToContacts">
+          <v-btn 
+            class="transfer-button" 
+            @click="goToContacts"
+          >
             <div class="transfer-content">
-              <v-icon class="transfer-icon" size="56px">mdi-account-multiple</v-icon>
-              <div class="transfer-text">Contactos Mango</div>
+              <v-icon 
+                class="transfer-icon" 
+                size="56px"
+              >
+                mdi-account-multiple
+              </v-icon>
+              <div class="transfer-text">
+                Contactos Mango
+              </div>
             </div>
           </v-btn>
         </v-col>
         <v-col cols="6">
           <!-- Botón para CBU, CVU o Alias -->
-          <v-btn class="transfer-button" @click="goToBankDetails">
+          <v-btn 
+            class="transfer-button" 
+            @click="goToBankDetails"
+          >
             <div class="transfer-content">
-              <v-icon class="transfer-icon" size="56px">mdi-bank</v-icon>
-              <div class="transfer-text">CBU, CVU o Alias</div>
+              <v-icon 
+                class="transfer-icon"
+                size="56px"
+              >
+                mdi-bank
+              </v-icon>
+              <div class="transfer-text">
+                CBU, CVU o Alias
+              </div>
             </div>
           </v-btn>
         </v-col>
@@ -43,17 +74,17 @@
           v-model="searchQuery"
           prepend-inner-icon="mdi-magnify" 
           label="Buscar contactos frecuentes"
-          @input="filterContacts"
           clearable
-        ></v-text-field>
+          @input="filterContacts"
+        />
       </v-form>
       <!-- Lista de contactos frecuentes -->
       <v-list class="transparent-background">
         <UserItem
           v-for="(contact, index) in filteredContacts"
           :key="index"
-          :firstName="contact.firstName"
-          :lastName="contact.lastName"
+          :first-name="contact.firstName"
+          :last-name="contact.lastName"
         />
       </v-list>
     </ReusableCard>
@@ -94,7 +125,7 @@ const goToBankDetails = () => {
 
 const filterContacts = () => {
   if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
+    const query = searchQuery.value.toLowerCase(); // warning?
     filteredContacts.value = contacts.value.filter(contact =>
       contact.firstName.toLowerCase().includes(query) ||
       contact.lastName.toLowerCase().includes(query)

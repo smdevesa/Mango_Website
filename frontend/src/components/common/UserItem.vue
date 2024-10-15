@@ -1,37 +1,41 @@
 <template>
   <div class="user-item">
     <div class="user-info">
-      <img :src="photoUrl || defaultPhoto" alt="User Photo" class="user-photo" />
+      <img
+        :src="photoUrl || defaultPhoto"
+        alt="User Photo"
+        class="user-photo"
+      >
       <div class="user-details">
-        <span class="user-name">{{ firstName }} {{ lastName }}</span>
+        <span class="user-name">
+          {{ firstName }} {{ lastName }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UserItem',
-  props: {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    photoUrl: {
-      type: String,
-      default: null,
-    },
+<script setup>
+import { computed } from 'vue';
+
+defineProps({
+  firstName: {
+    type: String,
+    required: true,
   },
-  computed: {
-    defaultPhoto() {
-      return 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'; // Cambia la ruta a tu ícono por defecto
-    },
+  lastName: {
+    type: String,
+    required: true,
   },
-};
+  photoUrl: {
+    type: String,
+    default: null,
+  },
+});
+
+const defaultPhoto = computed(() => {
+  return 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png';
+});
 </script>
 
 <style scoped>

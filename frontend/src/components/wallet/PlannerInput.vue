@@ -1,41 +1,47 @@
 <template>
-  <div class="pill-button" :style="{ backgroundColor: bgColor }">
-    <div class="icon" :style="{ backgroundColor: iconColor }">
-      <v-icon></v-icon>
+  <div
+    class="pill-button"
+    :style="{ backgroundColor: bgColor }"
+  >
+    <div 
+      class="icon" 
+      :style="{ backgroundColor: iconColor }"
+    >
+      <v-icon />
     </div>
     <div class="text-container">
       <span class="name">{{ name }}</span>
     </div>
-    <div class="amount-pill" style="background-color: orange;">
+    <div 
+      class="amount-pill" 
+      style="background-color: orange;"
+    >
       <div class="text-pill">
-        <span>{{ "$"+value }}</span> <!-- Muestra el valor asignado -->
+        <span>{{ "$" + value }}</span>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'PlannerInput',
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    value: {
-      type: Number,
-      required: true,
-    },
-    iconColor: {
-      type: String,
-      default: '#000',
-    },
-    bgColor: {
-      type: String,
-      default: '#FFFBE6',
-    },
+<script setup>
+defineProps({
+  name: {
+    type: String,
+    required: true,
   },
-};
+  value: {
+    type: Number,
+    required: true,
+  },
+  iconColor: {
+    type: String,
+    default: '#000',
+  },
+  bgColor: {
+    type: String,
+    default: '#FFFBE6',
+  },
+});
 </script>
 
 <style scoped>
@@ -60,7 +66,7 @@ export default {
 .text-container {
   flex-grow: 1;
   border: #000;
-  font-weight: 600; 
+  font-weight: 600;
 }
 
 .name {
@@ -68,16 +74,11 @@ export default {
 }
 
 .amount-pill {
-  border-radius: 12px; /* Forma de píldora */
+  border-radius: 12px;
   padding: 5px 10px;
   color: #000;
   border: solid 1px #000;
   font-weight: 600;
   font-size: 16px;
-  border: solid #000;
 }
-
-
 </style>
-
-

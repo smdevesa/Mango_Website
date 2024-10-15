@@ -1,16 +1,23 @@
 <template>
   <v-container>
-    <v-row align="center" justify="space-between">
+    <v-row
+      align="center" 
+      justify="space-between"
+    >
       <v-col cols="auto">
         <WelcomeBanner />
       </v-col>
       <v-col cols="auto">
-        <img :src="require('@/assets/logo.png')" alt="Logo" class="app-logo" />
+        <img 
+          :src="require('@/assets/logo.png')" 
+          alt="Logo" 
+          class="app-logo" 
+        >
       </v-col>
     </v-row>
 
     <ReusableCard title="Balance">
-      <v-row style="height: 100%; align-items: center;">
+      <v-row class="balance-layout">
         <v-col cols="5">
           <CircularBalance
             :balance="'$1,234.56'"
@@ -22,24 +29,38 @@
           />
         </v-col>
 
-        <v-col cols="7" class="button-column">
+        <v-col
+          cols="7"
+          class="button-column"
+        >
           <v-row justify="center">
             <v-col cols="6">
-              <ReusableIconButton icon="mdi-bank-transfer" text="Transferir" @click="goToTransfer" />
+              <ReusableIconButton 
+                icon="mdi-bank-transfer" 
+                text="Transferir" 
+                @click="goToTransfer" 
+              />
             </v-col>
             <v-col cols="6">
-              <ReusableIconButton icon="mdi-cash-plus" text="Ingresar" />
+              <ReusableIconButton 
+                icon="mdi-cash-plus" 
+                text="Ingresar" 
+              />
             </v-col>
           </v-row>
           <v-row justify="center">
             <v-col cols="6">
-              <ReusableIconButton icon="mdi-cash-minus" text="Retirar" />
+              <ReusableIconButton 
+                icon="mdi-cash-minus" 
+                text="Retirar" 
+              />
             </v-col>
             <v-col cols="6">
               <ReusableIconButton 
                 icon="mdi-credit-card-plus" 
                 text="Añadir tarjeta" 
-                @click="goToAddCard" /> <!-- Agregamos el click aquí -->
+                @click="goToAddCard"
+              /> <!-- Agregamos el click aquí -->
             </v-col>
           </v-row>
         </v-col>
@@ -64,24 +85,27 @@
           <v-card class="historial-card">
             <v-card-text>
               <TransactionItem
-                logoUrl="https://www.shutterstock.com/image-vector/c-icon-vector-logo-sign-600nw-2242697067.jpg"
+                logo-url="https://www.shutterstock.com/image-vector/c-icon-vector-logo-sign-600nw-2242697067.jpg"
                 name="Carrefour"
                 date="2024-10-03 14:35"
                 :amount="-50.75"
               />
               <TransactionItem
-                logoUrl="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png"
+                logo-url="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png"
                 name="McDonalds"
                 date="2024-10-01 09:00"
                 :amount="-1500.00"
               />
               <TransactionItem
-                logoUrl="https://blog.saleslayer.com/hubfs/mercado-libre-logo.jpg"
+                logo-url="https://blog.saleslayer.com/hubfs/mercado-libre-logo.jpg"
                 name="Mercado Libre"
                 date="2024-09-30 12:45"
                 :amount="200.00"
               />
-              <div class="historial-button" @click="goToHistory">
+              <div
+                class="historial-button"
+                @click="goToHistory"
+              >
                 Ver historial completo
               </div>
             </v-card-text>
@@ -168,9 +192,14 @@ const addPill = (newPill) => {
   margin-top: 20px;
 }
 
+.balance-layout{
+  height: 100%;
+  align-items: center;
+}
+
 /* Estilo para el scroll de las pills */
 .scrollable-pills {
-  max-height: 287.37px;
+  max-height: 287px;
   overflow-y: auto;
 }
 </style>
