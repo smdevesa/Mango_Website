@@ -1,158 +1,86 @@
 <template>
-  <div class="register-page">
-    <div class="logo">
-      <img
-        :src="require('@/assets/logo.png')"
-        alt="Mango$ Logo"
-      >
-    </div>
-    <form class="register-form">
-      <!-- Campo de usuario con ícono dentro -->
-      <div class="input-group">
-        <i class="mdi mdi-account" />
-        <input
-          v-model="user.username"
-          type="text"
-          placeholder="Usuario"
-        />
-      </div>
+  <v-container class="fill-height">
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6" lg="4">
+        
+        <div class="logo">
+          <img 
+            :src="require('@/assets/logo.png')"
+            alt="Mango$ Logo"
+          >
+        </div>
+        <v-form @submit.prevent="submitForm" class="text-center">
+          <v-text-field
+            v-model="username"
+            label="Nombre de usuario"
+            outlined
+          />
+          <v-text-field
+            v-model="email"
+            label="Correo electrónico"
+            outlined
+            type="email"
+          />
+          <v-text-field
+            v-model="telephone"
+            label="Teléfono"
+            outlined
+            type="tel"
+          />
+          <v-text-field
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            label="Contraseña"
+            outlined
+          />
+          <v-text-field
+            v-model="confirmPassword"
+            :type="showPassword ? 'text' : 'password'"
+            label="Confirmar contraseña"
+            outlined
+          />
+          <div icon @click="togglePassword" class="eye">
+            <v-icon>{{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+          </div>
 
-      <!-- Campo de email con validación -->
-      <div class="input-group">
-        <i class="mdi mdi-email"></i>
-        <input type="email" v-model="user.email" placeholder="Email" @blur="validateEmail" />
-      </div>
-      <p v-if="emailError" class="error-message">{{ emailError }}</p>
-
-      <!-- Campo de teléfono con validación -->
-      <div class="input-group">
-        <i class="mdi mdi-phone"></i>
-        <input type="tel" v-model="user.phone" placeholder="Teléfono" @blur="validatePhone" />
-      </div>
-      <p v-if="phoneError" class="error-message">{{ phoneError }}</p>
-
-      <!-- Campo de contraseña con ícono dentro -->
-      <div class="input-group">
-        <i class="mdi mdi-lock"></i>
-        <input
-            :type="passwordVisible ? 'text' : 'password'"
-            v-model="user.password"
-            placeholder="Contraseña"
-            @blur="validatePassword"
-        />
-      </div>
-
-      <!-- Campo de repetir contraseña con ícono dentro -->
-      <div class="input-group">
-        <i class="mdi mdi-lock-check"></i>
-        <input
-            :type="passwordVisible ? 'text' : 'password'"
-            v-model="user.confirmPassword"
-            placeholder="Repetir contraseña"
-            @blur="validatePassword"
-        />
-      </div>
-      <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
-
-      <!-- Icono del ojo debajo de repetir contraseña -->
-      <div class="eye-icon-container">
-        <i class="mdi" :class="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'" @click="togglePasswordVisibility"></i>
-      </div>
-
-      <button type="submit" @click.prevent="register">Registrarse</button>
-
-      <p class="login-text">
-        <a href="/login">Iniciar sesión</a>
-      </p>
-    </form>
-  </div>
+          <v-btn 
+            type="submit"
+            class="buttonRegister"
+          >
+            Registrarse
+          </v-btn>
+          <div class="login">
+            <a href="/login">Iniciar sesión</a>
+          </div>
+        </v-form>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import '@mdi/font/css/materialdesignicons.min.css'
+import { ref } from 'vue';
 
-// Estado reactivo para almacenar los datos del usuario
-const user = reactive({
-  username: '',
-  email: '',
-  phone: '',
-  password: '',
-  confirmPassword: ''
-})
+const username = ref('');
+const email = ref('');
+const telephone = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const showPassword = ref(false);
 
-// Estado para controlar la visibilidad de la contraseña
-const passwordVisible = ref(false)
+const submitForm = () => {
+  console.log('Form submitted');
+};
 
-// Variables para almacenar errores de validación
-const emailError = ref('')
-const phoneError = ref('')
-const passwordError = ref('')
-
-// Función para alternar la visibilidad de la contraseña
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value
-}
-
-// Validar el correo electrónico
-const validateEmail = () => {
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
-  if (!emailPattern.test(user.email)) {
-    emailError.value = 'El correo electrónico no es válido'
-  } else {
-    emailError.value = ''
-  }
-}
-
-// Validar el número de teléfono (Ejemplo: 10 dígitos, solo números)
-const validatePhone = () => {
-  const phonePattern = /^[0-9]{10}$/
-  if (!phonePattern.test(user.phone)) {
-    phoneError.value = 'El número de teléfono debe contener 10 dígitos'
-  } else {
-    phoneError.value = ''
-  }
-}
-
-// Validar que las contraseñas coincidan
-const validatePassword = () => {
-  if (user.password !== user.confirmPassword) {
-    passwordError.value = 'Las contraseñas no coinciden'
-  } else if (user.password.length < 8) {
-    passwordError.value = 'La contraseña debe tener al menos 8 caracteres'
-  } else {
-    passwordError.value = ''
-  }
-}
-
-// Lógica para el registro (lógica personalizada aquí)
-const register = () => {
-  validateEmail()
-  validatePhone()
-  validatePassword()
-
-  if (!emailError.value && !phoneError.value && !passwordError.value) {
-    console.log(user)
-  } else {
-    console.error('Por favor, corrige los errores antes de enviar.')
-  }
-}
+const togglePassword = () => {
+  showPassword.value = !showPassword.value;
+};
 </script>
 
 <style scoped>
-.register-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #fff7e6;
-}
-
 .logo {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -161,76 +89,40 @@ const register = () => {
   height: 200px;
 }
 
-.register-form {
+.v-form {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  align-items: center;
 }
 
-.input-group {
-  position: relative; /* Para posicionar el ícono dentro del input */
-  margin: 10px 0;
-}
-
-.input-group i {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  color: #888; /* Color gris */
-}
-
-.input-group input {
-  padding: 15px 15px 15px 45px; /* Espacio para el ícono */
+.v-text-field {
   width: 100%;
-  border: 2px solid black;
-  border-radius: 10px;
-  font-size: 16px;
+  max-width: 700px;
+  margin-bottom: 2px;
 }
 
-.eye-icon-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -10px;
-  margin-bottom: 20px;
+.eye{
+    position: absolute;
+    right: 37%;
+    top: 80%;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    background-color: transparent;
+    border : transparent;
 }
 
-.mdi {
-  font-size: 24px;
-  cursor: pointer;
-  color: #333;
-}
-
-.register-form button {
-  background-color: #ff8c00;
+.buttonRegister {
+  width: 100%;
+  max-width: 700px;
+  background-color: #FF9500;
   color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 22px;
-  margin-top: 0px;
+  margin-top: 9px;
+  margin-bottom: 10px;
+  height : 40px;
 }
-
-.register-form button:hover {
-  background-color: #ff7300;
-}
-
-.login-text {
-  text-align: right;
-  margin-top: 10px;
-  text-decoration: underline;
-}
-
-.login-text a {
-  color: black;
-  text-decoration: none;
-}
-
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin: -10px 0 10px 0;
+.login{
+  position: absolute;
+  top: 93%;
+  right: 37%;
 }
 </style>
