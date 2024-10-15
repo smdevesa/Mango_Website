@@ -1,144 +1,160 @@
 <template>
-  <v-container
-      fluid
-      class="d-flex justify-center align-center"
-      style="background-color: #FFFBE6; height: 100vh;"
-  >
-    <v-card
-        class="pa-5"
-        width="400"
-        style="background-color: transparent; box-shadow: none;"
-    >
-      <!-- Logo centrado -->
-      <v-row class="d-flex justify-center mb-3">
-        <v-img
-            src="@/assets/logo.png"
-            alt="logo"
-            width="80"
-        />
-      </v-row>
+  <div class="login-page">
+    <div class="logo">
+      <img
+        :src="require('@/assets/logo.png')"
+        alt="Mango$ Logo"
+      />
+    </div>
 
-      <!-- Formulario de registro -->
-      <v-form>
-        <v-text-field
-            v-model="username"
-            label="Usuario"
-            variant="outlined"
-            dense
-            class="input-field"
-            required
-        />
+    <v-form class="login-form" v-model="valid" lazy-validation>
+      <!-- Campo de usuario con ícono dentro -->
+      <v-text-field class="input-group"
+        v-model="user.username"
+        label="Usuario"
+        :rules="[rules.required]"
+        prepend-inner-icon="mdi-account"
+        dense
+        outlined
+        required
+        hide-details="auto"
+      />
 
-        <v-text-field
-            v-model="email"
-            label="Email"
-            variant="outlined"
-            dense
-            class="input-field"
-            required
-        />
+      <!-- Campo de contraseña con ícono dentro -->
+      <v-text-field class="input-group"
+        v-model="user.password"
+        :type="passwordVisible ? 'text' : 'password'"
+        label="Contraseña"
+        :rules="[rules.required, rules.password]"
+        prepend-inner-icon="mdi-lock"
+        append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+        @click:append-inner="togglePasswordVisibility"
+        dense
+        outlined
+        required
+        hide-details="auto"
+      />
 
-        <v-text-field
-            v-model="phone"
-            label="Teléfono"
-            variant="outlined"
-            dense
-            class="input-field"
-            required
-        />
+      <!-- Botón de iniciar sesión -->
+      <v-btn class="login-button"
+        :disabled="!valid"
+        block        
+        @click.prevent="login"
+      >
+        Iniciar sesión
+      </v-btn>
 
-        <v-text-field
-            v-model="password"
-            :type="showPassword ? 'text' : 'password'"
-            label="Contraseña"
-            variant="outlined"
-            dense
-            class="input-field"
-            required
-        />
-
-        <v-text-field
-            v-model="confirmPassword"
-            :type="showPassword ? 'text' : 'password'"
-            label="Repetir contraseña"
-            variant="outlined"
-            dense
-            class="input-field"
-            required
-        />
-
-        <!-- Ojo para mostrar/ocultar contraseña debajo y alineado a la derecha -->
-        <v-row class="d-flex justify-end mb-2">
-          <v-btn
-              icon
-              class="eye-button"
-              @click="togglePasswordVisibility"
-          >
-            <v-icon>
-              {{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}
-            </v-icon>
-          </v-btn>
-        </v-row>
-
-        <!-- Botón de registrarse más grande -->
-        <v-btn
-            class="mt-4"
-            color="orange"
-            style="color: white; width: 100%; height: 56px;"
-            @click="register"
-        >
-          Registrarse
-        </v-btn>
-
-        <!-- Texto de iniciar sesión -->
-        <v-row class="d-flex justify-center mt-3">
-          <v-btn text>
-            Iniciar sesión
-          </v-btn>
-        </v-row>
-      </v-form>
-    </v-card>
-  </v-container>
+      <!-- Texto de registrarse -->
+      <p class="register-text">
+        <a href="/register">Registrarse</a>
+      </p>
+    </v-form>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
+import '@mdi/font/css/materialdesignicons.min.css'
 
-const username = ref('')
-const email = ref('')
-const phone = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const showPassword = ref(false)
+// Estado del usuario
+const user = reactive({
+  username: '',
+  password: ''
+})
 
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
+// Controlar visibilidad de la contraseña
+const passwordVisible = ref(false)
+const valid = ref(false)
+
+const rules = {
+  required: v => !!v || 'Este campo es requerido',
+  password: v => v.length >= 8 || 'La contraseña debe tener al menos 8 caracteres'
 }
 
-const register = () => {
-  // Aquí iría la lógica de registro
-  console.log('Registrarse', {
-    username: username.value,
-    email: email.value,
-    phone: phone.value,
-    password: password.value,
-    confirmPassword: confirmPassword.value,
-  })
+// Alternar visibilidad de la contraseña
+const togglePasswordVisibility = () => {
+  passwordVisible.value = !passwordVisible.value
+}
+
+// Lógica de login
+const login = () => {
+  if (valid.value) {
+    console.log('Iniciando sesión con:', user)
+  }
 }
 </script>
 
 <style scoped>
-.v-text-field {
-  margin-bottom: 6px; /* Reducir aún más espacio entre campos */
-  border-radius: 20px;
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff7e6;
 }
 
-.eye-button {
-  padding: 0;
-  min-width: 0;
+.logo img {
+  width: 150px;
+  height: 150px;
 }
 
-.v-btn .v-icon {
-  margin-right: 0;
+.login-form {
+  width: 400px;
+}
+.input-group {
+  position: relative; /* Para posicionar el ícono dentro del input */
+  margin: 10px 0;
+}
+
+.input-group i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #888; /* Color gris */
+}
+
+.input-group input {
+  padding: 15px 15px 15px 45px; /* Espacio para el ícono */
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.eye-icon-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  background-color: #ff8c00;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 22px;
+  margin-top: 0px;
+}
+
+.login-button:hover {
+  background-color: #ff7300;
+}
+
+
+.register-text {
+  text-align: center;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+
+.register-text a {
+  color: black;
+  text-decoration: none;
 }
 </style>

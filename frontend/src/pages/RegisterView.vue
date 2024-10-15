@@ -14,7 +14,7 @@
           v-model="user.username"
           type="text"
           placeholder="Usuario"
-/>
+        />
       </div>
 
       <!-- Campo de email con validación -->
