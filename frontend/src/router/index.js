@@ -8,11 +8,16 @@ import RegisterView  from "../pages/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
+  
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: GeneralView
+      redirect: '/register'  // Redirige al register cuando el usuario entra a "/"
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
     },
     {
       path: '/login',
@@ -20,9 +25,9 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/register',
-      name: 'register',
-      component: RegisterView
+      path: '/home',
+      name: 'home',
+      component: GeneralView
     },
     {
       path: '/history',

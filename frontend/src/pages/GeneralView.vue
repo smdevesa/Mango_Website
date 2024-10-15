@@ -9,7 +9,7 @@
       </v-col>
       <v-col cols="auto">
         <img 
-          :src="require('@/assets/logo.png')" 
+          :src="require('@/assets/mangoLogo.png')" 
           alt="Logo" 
           class="app-logo" 
         >
