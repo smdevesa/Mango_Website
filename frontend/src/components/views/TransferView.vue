@@ -16,7 +16,7 @@
       </v-col>
       <v-col cols="auto">
         <img 
-          :src="require('@/assets/logo.png')" 
+          :src="mangoLogo" 
           alt="Logo" 
           class="app-logo" 
         >
@@ -94,8 +94,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import ReusableCard from '../components/common/ReusableCard.vue';
-import UserItem from '../components/common/UserItem.vue'; // Asegúrate de que la ruta sea correcta
+import ReusableCard from '../common/ReusableCard.vue';
+import UserItem from '../common/UserItem.vue';
+import mangoLogo from '@/assets/mangoLogo.png';
 
 const router = useRouter();
 
@@ -110,7 +111,7 @@ const contacts = ref([
 const filteredContacts = ref([...contacts.value]); // Almacena los contactos filtrados
 
 const goHome = () => {
-  router.push('/'); // Cambia esta ruta según sea necesario
+  router.push('/home'); // Cambia esta ruta según sea necesario
 };
 
 const goToContacts = () => {

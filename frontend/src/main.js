@@ -1,17 +1,14 @@
-import { createApp } from 'vue'
+import { registerPlugins } from '@/plugins'
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
-import { loadFonts } from './plugins/webfontloader'
 import './styles/styles.css'
-import '@mdi/font/css/materialdesignicons.css';
-import router from './router' // Importamos el enrutador
+import vuetify from './plugins/vuetify'
+import router from './router'
+import { createApp } from 'vue'
 
-
-loadFonts()
-
-createApp(App)
-
-.use(router) // Usamos el enrutador
+const app = createApp(App)
 .use(vuetify)
-.mount('#app')
+.use(router)
 
+registerPlugins(app)
+
+app.mount('#app')

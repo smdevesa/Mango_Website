@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import GeneralView from '../pages/GeneralView.vue'
-import HistoryView from '../pages/HistoryView.vue'
-import TransferView from '../pages/TransferWindow.vue'
-import AddCardView from '../pages/AddCardView.vue'
-import LoginView from '../pages/LoginView.vue'
-import RegisterView  from "../pages/RegisterView.vue";
+import GeneralView from '../components/views/GeneralView.vue'
+import HistoryView from '../components/views/HistoryView.vue'
+import TransferView from '../components/views/TransferView.vue'
+import AddCardView from '../components/views/AddCardView.vue'
+import LoginView from '../components/views/LoginView.vue'
+import RegisterView  from "../components/views/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
