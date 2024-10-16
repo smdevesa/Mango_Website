@@ -23,15 +23,15 @@
 
     <!-- Formulario de entrada solo se muestra cuando showInput es true -->
     <div v-if="showInput">
-      <v-text-field 
-        v-model="newPillName" 
+      <v-text-field
+        v-model="newPillName"
         label="Nombre" 
         placeholder="Ingrese el nombre de una categoría." 
         :rules="[rules.required]" 
       />
-      <v-text-field 
-        v-model.number="newPillValue" 
-        label="Monto" 
+      <v-text-field
+        v-model.number="newPillValue"
+        label="Monto"
         placeholder="Ingrese el monto destinado para dicha categoría."
         type="number" 
         :rules="[rules.nonNegative]"
@@ -118,5 +118,4 @@ const getRandomColor = () => {
 </script>
 
 <style scoped>
-/* Puedes agregar estilos personalizados aquí */
 </style>

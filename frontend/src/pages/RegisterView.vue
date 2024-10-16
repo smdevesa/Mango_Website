@@ -2,7 +2,7 @@
   <v-container class="fill-height">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        
+
         <div class="logo">
           <img
             :src="require('@/assets/mangoLogo.png')"
@@ -46,9 +46,9 @@
             prepend-inner-icon="mdi-lock"
             :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
             @click:append-inner="togglePassword"
-            
+
           />
-          <v-text-field 
+          <v-text-field
             v-model="confirmPassword"
             :type="showConfirmPassword ? 'text' : 'password'"
             label="Confirmar contraseña"
@@ -69,7 +69,6 @@
               <a href="/login">Iniciar sesión</a>
             </div>
           </div>
-
         </v-form>
       </v-col>
     </v-row>
@@ -91,12 +90,12 @@ const showConfirmPassword = ref(false);
 //REGEX PARA VALIDACION DE CAMPOS 
 const rules = {
   required: (value) => !!value || 'Campo requerido',
-  
+
   email: (value) => {
     const valid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return valid.test(value) || 'Correo inválido';
   },
-  
+
   telephone: (value) => {
     const valid = /^\d{10}$/;
     return valid.test(value) || 'Teléfono inválido';
@@ -104,16 +103,16 @@ const rules = {
   passwordMatch: () => {
     return password.value === confirmPassword.value || 'Las contraseñas no coinciden';
   }
-  
-  
+
+
 };
 
 
 //FUNCION DE ENVIO DE REGISTRO Y VALIDACION DE COMPLETITUD DE CAMPOS
 const submitForm = () => {
-  
+
   if(username.value && email.value && telephone.value && password.value && confirmPassword.value){
-    router.push('/home'); 
+    router.push('/home');
 }else{
   alert('Por favor, llene todos los campos');
 }
@@ -159,7 +158,7 @@ const toggleConfirmPassword = () => {
   border-radius: 20px;
   padding: 0;
   overflow: hidden;
-  
+
 }
 
 /* Eliminar el subrayado */
@@ -198,11 +197,12 @@ const toggleConfirmPassword = () => {
   height: 50px;
   border-radius: 20px;
   margin-bottom: 5px;
+  font-size: 18px;
 }
 
 .login a {
   color: #000;
   text-decoration: underline;
-  font-size: 0.9rem;
+  font-size: 15px;
 }
 </style>

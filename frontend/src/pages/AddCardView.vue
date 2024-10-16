@@ -205,6 +205,7 @@ const removeCard = (id) => {
   margin: 20px auto;
   color: #FFFBE6;
   background: #F19743;
+  font-size: 17px;
 }
 
 .scrollable {
