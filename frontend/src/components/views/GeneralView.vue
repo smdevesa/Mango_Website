@@ -188,8 +188,8 @@
   
   <style scoped>
   .app-logo {
-    width: 75px;
-    height: 75px;
+    width: 150px;
+    height: 150px;
     margin-right: 10px;
   }
   
