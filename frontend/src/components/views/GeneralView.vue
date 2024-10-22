@@ -16,8 +16,8 @@
         <v-row class="balance-layout">
           <v-col cols="5">
             <CircularBalance
-                :balance="balanceStore.balance"
-                :sections="balanceStore.sections"
+                :balance="balance"
+                :sections="sections"
             />
           </v-col>
   
@@ -124,6 +124,7 @@
   <script setup>
   import { ref } from 'vue';
   import { useBalanceStore } from '@/store/balanceStore';
+  import { storeToRefs } from 'pinia';
   import { useRouter } from 'vue-router';
   import WelcomeBanner from '../common/WelcomeBanner.vue';
   import ReusableCard from '../common/ReusableCard.vue';
@@ -134,6 +135,7 @@
   import mangoLogo from '@/assets/mangoLogo.png';
   
   const balanceStore = useBalanceStore();
+  const { balance, sections } = storeToRefs(balanceStore);
   const router = useRouter();
   
   // Definimos el estado para mostrar el diálogo
@@ -187,6 +189,7 @@
     // Aquí debes manejar cómo agregar la nueva píldora
     console.log('Píldora agregada:', newPill);
   };
+  
   </script>
   
   <style scoped>
@@ -254,4 +257,3 @@
     margin-bottom: 20px;
   }
   </style>
-  

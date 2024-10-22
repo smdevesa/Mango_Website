@@ -12,12 +12,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { Chart, registerables } from 'chart.js';
+import { ref, onMounted, watch, toRefs } from 'vue';
+import Chart from 'chart.js/auto';
 
-Chart.register(...registerables);
-
-// Definir props con defineProps
 const props = defineProps({
   balance: {
     type: String,
@@ -29,31 +26,26 @@ const props = defineProps({
   },
 });
 
-// Ref para acceder al canvas
+const { balance, sections } = toRefs(props);
+
 const myChart = ref(null);
-const chartInstance = ref(null);
+let chartInstance = null;
 
-// Función para dibujar el gráfico
 const drawChart = () => {
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+  
   const ctx = myChart.value.getContext('2d'); // Obtiene el contexto del canvas
-  const datasets = [];
-
-  props.sections.forEach((section) => {
-    datasets.push({
-      data: [section.percentage],
-      backgroundColor: section.color,
-    });
-  });
-
-  new Chart(ctx, {
+  chartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: props.sections.map(section => section.label),
+      labels: sections.value.map(section => section.label),
       datasets: [{
-        data: props.sections.map(section => section.percentage),
-        backgroundColor: datasets.map(dataset => dataset.backgroundColor),
-        borderWidth: 0,
-      }],
+        data: sections.value.map(section => section.percentage),
+        backgroundColor: sections.value.map(section => section.color),
+        borderWidth: 0
+      }]
     },
     options: {
       responsive: true,
@@ -66,7 +58,17 @@ const drawChart = () => {
           enabled: true,
         },
       },
-    },
+      maintainAspectRatio: false,
+      animation: {
+        animateRotate: true,
+        animateScale: true
+      },
+      elements: {
+        arc: {
+          borderWidth: 0
+        }
+      }
+    }
   });
 };
 
@@ -74,6 +76,11 @@ const drawChart = () => {
 onMounted(() => {
   drawChart();
 });
+
+// Vigilar cambios en las props y volver a dibujar el gráfico
+watch([balance, sections], () => {
+  drawChart();
+}, { deep: true });
 </script>
 
 <style scoped>
