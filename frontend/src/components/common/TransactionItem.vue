@@ -58,7 +58,7 @@ const formattedAmount = computed(() => {
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #8b8383;
 }
 
 .transaction-info {

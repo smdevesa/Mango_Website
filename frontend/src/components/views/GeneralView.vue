@@ -16,12 +16,8 @@
         <v-row class="balance-layout">
           <v-col cols="5">
             <CircularBalance
-                :balance="'$1,234.56'"
-                :sections="[
-                { label: 'Ahorros', percentage: 70, color: 'purple' },
-                { label: 'Gastos', percentage: 10, color: 'red' },
-                { label: 'Inversiones', percentage: 20, color: 'cyan' }
-              ]"
+                :balance="balanceStore.balance"
+                :sections="balanceStore.sections"
             />
           </v-col>
   
@@ -45,8 +41,9 @@
             <v-row justify="center">
               <v-col cols="6">
                 <ReusableIconButton
-                    icon="mdi-cash-minus"
-                    text="Retirar"
+                  icon="mdi-chart-line"
+                  text="Invertir"
+                  @click="goToInvest"
                 />
               </v-col>
               <v-col cols="6">
@@ -126,6 +123,7 @@
   
   <script setup>
   import { ref } from 'vue';
+  import { useBalanceStore } from '@/store/balanceStore';
   import { useRouter } from 'vue-router';
   import WelcomeBanner from '../common/WelcomeBanner.vue';
   import ReusableCard from '../common/ReusableCard.vue';
@@ -135,6 +133,7 @@
   import PillManager from '../common/PillManager.vue';
   import mangoLogo from '@/assets/mangoLogo.png';
   
+  const balanceStore = useBalanceStore();
   const router = useRouter();
   
   // Definimos el estado para mostrar el diálogo
@@ -147,6 +146,10 @@
   // Funciones de navegación
   const goToTransfer = () => {
     router.push('/transfer');
+  };
+
+  const goToInvest = () => {
+    router.push('/invest');
   };
   
   const goToAddCard = () => {

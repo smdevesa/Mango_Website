@@ -5,7 +5,7 @@ import TransferView from '../components/views/TransferView.vue'
 import AddCardView from '../components/views/AddCardView.vue'
 import LoginView from '../components/views/LoginView.vue'
 import RegisterView  from "../components/views/RegisterView.vue";
-
+import InvestView from '../components/views/InvestView.vue';
 const router = createRouter({
   history: createWebHistory(),
   
@@ -38,6 +38,11 @@ const router = createRouter({
       path: '/transfer',
       name: 'transfer',
       component: TransferView
+    },
+    {
+      path: '/invest',
+      name: 'invest',
+      component: InvestView
     },
     {
       path: '/add-card',
