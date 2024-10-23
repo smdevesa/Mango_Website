@@ -1,32 +1,18 @@
 <template>
   <div class="chart-container">
-    <canvas
-      ref="myChart"
-      width="300"
-      height="300"
-    />
+    <canvas ref="myChart" width="300" height="300" />
     <div class="balance-text">
-      {{ balance }}
+      {{ balanceStore.formattedBalance }}
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, toRefs } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useBalanceStore } from '@/store/balanceStore';
 import Chart from 'chart.js/auto';
 
-const props = defineProps({
-  balance: {
-    type: String,
-    required: true,
-  },
-  sections: {
-    type: Array,
-    required: true,
-  },
-});
-
-const { balance, sections } = toRefs(props);
+const balanceStore = useBalanceStore();
 
 const myChart = ref(null);
 let chartInstance = null;
@@ -36,23 +22,23 @@ const drawChart = () => {
     chartInstance.destroy();
   }
   
-  const ctx = myChart.value.getContext('2d'); // Obtiene el contexto del canvas
+  const ctx = myChart.value.getContext('2d');
   chartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: sections.value.map(section => section.label),
+      labels: balanceStore.sections.map(section => section.label),
       datasets: [{
-        data: sections.value.map(section => section.percentage),
-        backgroundColor: sections.value.map(section => section.color),
+        data: balanceStore.sections.map(section => section.percentage),
+        backgroundColor: balanceStore.sections.map(section => section.color),
         borderWidth: 0
       }]
     },
     options: {
       responsive: true,
-      cutout: '75%', // Aumentado para mantener la proporción
+      cutout: '75%',
       plugins: {
         legend: {
-          display: false, // Oculta la leyenda
+          display: false,
         },
         tooltip: {
           enabled: true,
@@ -72,22 +58,18 @@ const drawChart = () => {
   });
 };
 
-// Ejecutar la función drawChart cuando el componente se monta
 onMounted(() => {
   drawChart();
 });
 
-// Vigilar cambios en las props y volver a dibujar el gráfico
-watch([balance, sections], () => {
-  drawChart();
-}, { deep: true });
+watch(() => balanceStore.sections, drawChart, { deep: true });
 </script>
 
 <style scoped>
 .chart-container {
   position: relative;
-  width: 250px; /*Aumentado de 200px a 300px*/
-  height: 250px; /*Aumentado de 200px a 300px*/
+  width: 250px;
+  height: 250px;
   margin-left: 80px;
 }
 
@@ -96,7 +78,7 @@ watch([balance, sections], () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 18pt; /*Aumentado de 14pt a 18pt*/
+  font-size: 18pt;
   text-align: center;
   font-weight: bold;
 }

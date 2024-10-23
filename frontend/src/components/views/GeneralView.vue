@@ -151,7 +151,7 @@
   };
 
   const goToInvest = () => {
-    router.push('/invest');
+    push('/invest');  
   };
   
   const goToAddCard = () => {
