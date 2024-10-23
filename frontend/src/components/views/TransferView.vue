@@ -16,7 +16,7 @@
       </v-col>
       <v-col cols="auto">
         <img 
-          :src="mangoLogo" 
+          src="../../assets/mangoLogo3.png"
           alt="Logo" 
           class="app-logo" 
         >
@@ -70,7 +70,7 @@
     <!-- ReusableCard para buscar contactos frecuentes -->
     <ReusableCard title="Buscar Contactos Frecuentes">
       <v-form>
-        <v-text-field 
+        <ReusableInput 
           v-model="searchQuery"
           prepend-inner-icon="mdi-magnify" 
           label="Buscar contactos frecuentes"
@@ -97,6 +97,7 @@ import { useRouter } from 'vue-router';
 import ReusableCard from '../common/ReusableCard.vue';
 import UserItem from '../common/UserItem.vue';
 import mangoLogo from '@/assets/mangoLogo.png';
+import ReusableInput from '../common/ReusableInput.vue';
 
 const router = useRouter();
 
@@ -116,12 +117,12 @@ const goHome = () => {
 
 const goToContacts = () => {
   // Navegar a la vista de contactos Mango
-  console.log("Ir a Contactos Mango");
+  router.push('/transfer/mango-contact');
 };
 
 const goToBankDetails = () => {
   // Navegar a la vista de ingresar CBU, CVU o Alias
-  console.log("Ir a CBU, CVU o Alias");
+  router.push('/transfer/new-account')
 };
 
 const filterContacts = () => {

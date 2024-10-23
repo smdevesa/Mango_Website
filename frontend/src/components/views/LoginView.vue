@@ -64,7 +64,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false">Cancelar</v-btn>
+                <v-btn color="red" text @click="dialog = false">Cancelar</v-btn>
                 <v-btn color="blue darken-1" text @click="handleResetPassword">Continuar</v-btn>
               </v-card-actions>
             </v-card>
@@ -118,105 +118,105 @@
   </script>
   
   <style scoped>
-  .logo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1px;
-    margin-top: -230px;
-  }
-  
-  .logo img {
-    width: 400px;
-    height: 400px;
-  }
-  
-  .v-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: -10px;
-    margin-top: -30px;
-  }
-  
-  .v-text-field {
-    width: 100%;
-    max-width: 700px;
-  }
-  
-  /* Estilos de borde */
-  .custom-input >>> .v-input__control {
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  /* Eliminar el subrayado */
-  .custom-input >>> .v-input__control::after {
-    content: none;
-  }
-  
-  /* Eliminar borde inferior interno */
-  .custom-input >>> .v-input__control .v-input__outline {
-    border-bottom: none;
-  }
-  
-  /* Eliminar sombra interna que sobresale */
-  .custom-input >>> .v-input__control .v-input__outline {
-    box-shadow: none;
-  }
-  
-  .custom-input >>> .v-input__control .v-input__slot {
-    padding-bottom: 0 !important;
-  }
-  
-  .clase-boton {
-    display: flex;
-    flex-direction: column; /* Colocar los elementos en columnas */
-    align-items: flex-end; /* Alinear el enlace a la derecha */
-    width: 100%;
-    margin-top: 9px;
-    position: relative;
-  }
-  
-  .clase-campo{
-    display: flex;
-    flex-direction: column; /* Colocar los elementos en columnas */
-    align-items: flex-start; /* Alinear el enlace a la derecha */
-    width: 100%;
-    margin-top: 4px;
-    position: relative;
-  }
-  
-  .olvide-mi-contra{
-    margin-top: -18px;
-    margin-left: 15px;
-    font-size: 15px;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
-  .reestab-email-field{
-    margin-top: 15px;
-  }
-  
-  .buttonLogin {
-    background-color: #FF9500;
-    color: white;
-    width: 100%; /* El botón ocupa todo el ancho */
-    max-width: 700px;
-    height: 50px;
-    border-radius: 20px;
-    margin-bottom: 5px;
-    font-size: 18px;
-    margin-top: 10px;
-  }
-  
-  .register a {
-    color: #000;
-    text-decoration: underline;
-    font-size: 15px;
-  }
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1px;
+      margin-top: -230px;
+    }
+    
+    .logo img {
+      width: 400px;
+      height: 400px;
+    }
+    
+    .v-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: -10px;
+      margin-top: -30px;
+    }
+    
+    .v-text-field {
+      width: 100%;
+      max-width: 700px;
+    }
+    
+    .custom-input :deep(.v-input__control) {
+      border: 1px solid black;
+      border-radius: 20px;
+      padding: 0;
+      overflow: hidden;
+    }
+      
+    /* Eliminar el subrayado */
+    .custom-input :deep(.v-input__control::after) {
+        content: none;
+    }
+      
+    /* Eliminar borde inferior interno */
+    .custom-input :deep(.v-input__control .v-input__outline) {
+        border-bottom: none;
+    }
+      
+    /* Eliminar sombra interna que sobresale */
+    .custom-input :deep(.v-input__control .v-input__outline) {
+        box-shadow: none;
+    }
+      
+    .custom-input :deep(.v-input__control .v-input__slot) {
+        padding-bottom: 0 !important;
+    }
+
+      
+      .clase-boton {
+        display: flex;
+        flex-direction: column; /* Colocar los elementos en columnas */
+        align-items: flex-end; /* Alinear el enlace a la derecha */
+        width: 100%;
+        margin-top: 9px;
+        position: relative;
+      }
+    
+    .clase-campo{
+      display: flex;
+      flex-direction: column; /* Colocar los elementos en columnas */
+      align-items: flex-start; /* Alinear el enlace a la derecha */
+      width: 100%;
+      margin-top: 4px;
+      position: relative;
+    }
+    
+    .olvide-mi-contra{
+      margin-top: -18px;
+      margin-left: 15px;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    .reestab-email-field{
+      margin-top: 15px;
+    }
+    
+    .buttonLogin {
+      background-color: #FF9500;
+      color: white;
+      width: 100%; /* El botón ocupa todo el ancho */
+      max-width: 700px;
+      height: 50px;
+      border-radius: 20px;
+      margin-bottom: 5px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    
+    .register a {
+      color: #000;
+      text-decoration: underline;
+      font-size: 15px;
+    }
   
   </style>
   

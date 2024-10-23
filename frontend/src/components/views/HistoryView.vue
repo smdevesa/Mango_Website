@@ -15,7 +15,7 @@
         </v-col>
         <v-col cols="auto">
           <img
-            :src="mangoLogo"
+            src="../../assets/mangoLogo3.png"
             alt="Logo"
             class="app-logo"
           >
@@ -26,10 +26,10 @@
       <ReusableCard title="Historial">
         <v-row class="search-row">
           <v-col cols="12">
-            <v-text-field
+            <ReusableInput
               v-model="searchQuery"
               label="Buscar transacciones"
-              append-icon="mdi-magnify"
+              prepend-inner-icon="mdi-magnify"
               clearable
               @input="filterTransactions"
             />
@@ -124,8 +124,8 @@
   <style scoped>
   
   .app-logo {
-    width: 75px; /* Ajusta el tamaño según sea necesario */
-    height: 75px; /* Ajusta el tamaño según sea necesario */
+    width: 150px; /* Ajusta el tamaño según sea necesario */
+    height: 150px; /* Ajusta el tamaño según sea necesario */
   }
   
   .top-row {

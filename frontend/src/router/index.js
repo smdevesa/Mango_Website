@@ -1,28 +1,23 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import GeneralView from '../components/views/GeneralView.vue'
-import HistoryView from '../components/views/HistoryView.vue'
-import TransferView from '../components/views/TransferView.vue'
-import AddCardView from '../components/views/AddCardView.vue'
-import LoginView from '../components/views/LoginView.vue'
-import RegisterView  from "../components/views/RegisterView.vue";
-import InvestView from '../components/views/InvestView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import GeneralView from '../components/views/GeneralView.vue';
+
 const router = createRouter({
   history: createWebHistory(),
   
   routes: [
     {
       path: '/',
-      redirect: '/register'  // Redirige al register cuando el usuario entra a "/"
+      redirect: '/register'
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: () => import('../components/views/RegisterView.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: () => import('../components/views/LoginView.vue')
     },
     {
       path: '/home',
@@ -31,25 +26,40 @@ const router = createRouter({
     },
     {
       path: '/history',
-      name: 'HistoryView',
-      component: HistoryView
+      name: 'history',
+      component: () => import('../components/views/HistoryView.vue')
     },
     {
       path: '/transfer',
       name: 'transfer',
-      component: TransferView
+      component: () => import('../components/views/TransferView.vue')
     },
     {
       path: '/invest',
       name: 'invest',
-      component: InvestView
+      component: () => import('../components/views/InvestView.vue')
     },
     {
       path: '/add-card',
       name: 'add-card',
-      component: AddCardView
+      component: () => import('../components/views/AddCardView.vue')
+    },
+    {
+      path: '/transfer/new-account',
+      name: 'transfer/new-account',
+      component: () => import('../components/views/TransferNewAccountView.vue')
+    },
+    {
+      path: '/transfer/mango-contact',
+      name: 'transfer/mango-contact',
+      component: () => import('../components/views/TransferMangoAccountView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../components/views/NotFoundView.vue')
     }
   ]
-})
+});
 
-export default router
+export default router;

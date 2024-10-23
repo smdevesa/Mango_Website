@@ -36,6 +36,7 @@
     border-radius: 5px; /* Esquinas redondeadas */
     font-weight: normal; /* Para quitar el bold */
     font-size: 20pt; /* Tamaño de fuente de 20 puntos */
+    text-align: left;
   }
   
   .card-content {

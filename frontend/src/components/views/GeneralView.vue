@@ -5,12 +5,13 @@
           <WelcomeBanner />
         </v-col>
         <v-col cols="auto">
-          <img :src="mangoLogo"
+          <img 
+          src="../../assets/mangoLogo3.png"
           alt="Logo"
           class="app-logo"
             >
         </v-col>
-      </v-row>
+      </v-row> 
   
       <ReusableCard title="Balance">
         <v-row class="balance-layout">

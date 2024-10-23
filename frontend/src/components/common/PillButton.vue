@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div
     class="pill-button"
     :style="{ backgroundColor: bgColor }"
@@ -7,12 +7,14 @@
       class="icon" 
       :style="{ backgroundColor: iconColor }"
     >
-      <v-icon />
+    <v-icon class="pill-icon">{{ icon }}</v-icon>
     </div>
     <div class="text-container">
       <span class="name">{{ name }}</span>
     </div>
+    
     <div 
+      v-if="value !== undefined" 
       class="amount-pill" 
       style="background-color: orange;"
     >
@@ -20,6 +22,7 @@
         <span>{{ "$" + value }}</span>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -32,6 +35,11 @@ defineProps({
   value: {
     type: Number,
     required: true,
+    //default: undefined,
+  },
+  icon: {
+    type: String,
+    required: false, // No es obligatorio y sin valor por defecto
   },
   iconColor: {
     type: String,
@@ -71,6 +79,7 @@ defineProps({
 
 .name {
   font-size: 18px;
+  margin-left: 10px;
 }
 
 .amount-pill {
@@ -80,5 +89,12 @@ defineProps({
   border: solid 1px #000;
   font-weight: 600;
   font-size: 16px;
+}
+.pill-icon {
+  color: #000;
+  font-size: 28px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 5px;
 }
 </style>
