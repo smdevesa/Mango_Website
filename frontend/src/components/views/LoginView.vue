@@ -61,6 +61,7 @@
                     :rules="[rules.required, rules.email]"
                     prepend-inner-icon="mdi-email"
                 />
+                <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> <!-- Mostrar el mensaje de error -->
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -85,6 +86,7 @@
   const email = ref('');
   const showPassword = ref(false);
   const dialog = ref(false);
+  const errorMessage = ref(''); // Nueva variable para el mensaje de error
   
   // Validaciones
   const rules = {
@@ -111,8 +113,9 @@
     if (email.value) {
       alert(`Correo enviado a ${email.value} para reestablecer la contraseña.`);
       dialog.value = false;
+      errorMessage.value = ''; // Limpiar el mensaje de error
     } else {
-      alert('Por favor, ingrese un correo válido.');
+      errorMessage.value = 'Por favor, ingrese un correo válido.'; // Actualizar el mensaje de error
     }
   };
   </script>
@@ -217,6 +220,11 @@
       text-decoration: underline;
       font-size: 15px;
     }
+    
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
   
   </style>
-  

@@ -75,8 +75,8 @@
                     :expiration-date="card.expiration"
                     :cvv="card.cvv"
                   />
-                  <v-btn class="remove-button" @click="removeCard(card.id)">
-                    ELIMINAR
+                  <v-btn icon small class="remove-button" @click="openConfirmDialog(card.id)">
+                    <v-icon color="red">mdi-delete</v-icon>
                   </v-btn>
                 </div>
               </div>
@@ -88,6 +88,19 @@
         </ReusableCard>
       </v-col>
     </v-row>
+
+    <!-- Diálogo de confirmación -->
+    <v-dialog v-model="showConfirmDialog" max-width="300">
+      <v-card>
+        <v-card-title class="headline">Confirmar eliminación</v-card-title>
+        <v-card-text>¿Estás seguro de que quieres eliminar esta tarjeta?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="closeConfirmDialog">Cancelar</v-btn>
+          <v-btn color="red darken-1" text @click="confirmRemove">Eliminar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -97,7 +110,7 @@ import { useRouter } from 'vue-router';
 import ReusableCard from '../common/ReusableCard.vue';
 import CardDisplay from '../common/CardDisplay.vue';
 import ReusableInput from '../common/ReusableInput.vue'; // Importa el componente ReusableInput
-import mangoLogo from '@/assets/mangoLogo.png';
+
 
 // Variables reactivas
 const router = useRouter();
@@ -107,6 +120,8 @@ const expirationDate = ref('');
 const valid = ref(false);
 const cvv = ref('');
 const cards = ref([]);
+const showConfirmDialog = ref(false);
+const cardToRemove = ref(null);
 
 // Reglas de validación
 const rules = {
@@ -138,7 +153,8 @@ const addCard = () => {
       name: cardName.value,
       number: cardNumber.value,
       expiration: expirationDate.value,
-      cvv: cvv.value.length === 3 ? '***' : '****',
+      cvv: cvv.value,
+      showCvv: false,
     });
     cardName.value = '';
     cardNumber.value = '';
@@ -147,9 +163,27 @@ const addCard = () => {
   }
 };
 
+const openConfirmDialog = (id) => {
+  cardToRemove.value = id;
+  showConfirmDialog.value = true;
+};
+
+const closeConfirmDialog = () => {
+  showConfirmDialog.value = false;
+  cardToRemove.value = null;
+};
+
+const confirmRemove = () => {
+  if (cardToRemove.value !== null) {
+    removeCard(cardToRemove.value);
+    closeConfirmDialog();
+  }
+};
+
 const removeCard = (id) => {
   cards.value = cards.value.filter(card => card.id !== id);
 };
+
 </script>
 
 <style scoped>
@@ -194,20 +228,25 @@ const removeCard = (id) => {
   position: relative; 
 }
 
-.remove-button {
-  position: absolute; 
-  top: 0; 
-  right: 250px; 
-  width: 80px; 
-  height: 30px; 
-  border: solid 2px black;
-  border-radius: 10px;
-  background: rgba(255, 0, 0, 0.831);
-  text-align: center;
+.remove-button{
+  position: absolute;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: white;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
 }
+
+.remove-button {
+  right: 10px;
+}
+
+.remove-button:hover {
+  background: rgba(255, 0, 0, 0.1); /* Fondo rojo suave al pasar el mouse */
+}
+
 </style>
