@@ -2,6 +2,8 @@
     <v-container>
       <v-row align="center" justify="space-between">
         <v-col cols="auto">
+        </v-col>
+        <v-col cols="auto">
           <img 
           src="../../assets/mangoLogo3.png"
           alt="Logo"
@@ -9,12 +11,7 @@
             >
         </v-col>
         
-        <v-col cols="auto">
-          <WelcomeBanner />
-        </v-col>
-       
       </v-row> 
-  
       <ReusableCard title="Balance">
         <v-row class="balance-layout">
           <v-col cols="5">
@@ -154,7 +151,7 @@
   };
 
   const goToInvest = () => {
-    push('/invest');  
+    router.push('/invest');  
   };
   
   const goToAddCard = () => {

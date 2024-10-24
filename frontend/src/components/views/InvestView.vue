@@ -1,5 +1,5 @@
 <template>
-    <h1>Invertir</h1>
+    <h1>ESTAS SON MIS INVERSIONE SOY BALBOA</h1>
 </template>
 
 <script setup>
