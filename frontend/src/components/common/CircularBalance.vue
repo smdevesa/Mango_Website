@@ -2,7 +2,7 @@
   <div class="chart-container">
     <canvas ref="myChart" width="300" height="300" />
     <div class="balance-text">
-      {{ balanceStore.formattedBalance }}
+      {{ balanceStore.formattedBalance(userStore.currentUser.username) }}
     </div>
   </div>
 </template>
@@ -10,26 +10,33 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useBalanceStore } from '@/store/balanceStore';
+import { useUserStore } from '@/store/userStore';
 import Chart from 'chart.js/auto';
 
 const balanceStore = useBalanceStore();
+const userStore = useUserStore();
 
 const myChart = ref(null);
 let chartInstance = null;
+
+// Asegúrate de inicializar el balance del usuario al montar el componente
+balanceStore.initUserBalance(userStore.currentUser.username);
 
 const drawChart = () => {
   if (chartInstance) {
     chartInstance.destroy();
   }
-  
+
   const ctx = myChart.value.getContext('2d');
+  const currentUserSections = balanceStore.users[userStore.currentUser.username].sections;
+
   chartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: balanceStore.sections.map(section => section.label),
+      labels: currentUserSections.map(section => section.label),
       datasets: [{
-        data: balanceStore.sections.map(section => section.percentage),
-        backgroundColor: balanceStore.sections.map(section => section.color),
+        data: currentUserSections.map(section => section.percentage),
+        backgroundColor: currentUserSections.map(section => section.color),
         borderWidth: 0
       }]
     },
@@ -62,7 +69,11 @@ onMounted(() => {
   drawChart();
 });
 
-watch(() => balanceStore.sections, drawChart, { deep: true });
+watch(
+  () => balanceStore.users[userStore.currentUser.username]?.sections,
+  drawChart,
+  { deep: true }
+);
 </script>
 
 <style scoped>

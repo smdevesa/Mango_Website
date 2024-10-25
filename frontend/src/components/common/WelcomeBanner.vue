@@ -6,7 +6,7 @@
       alt="Profile Picture"
       contain
     />
-    <label class="username">John Salchichon</label>
+    <label class="username">{{ userStore.currentUser.username }}</label>
     <span class="notification-icon" @click="handleNotificationClick">
       <i class="mdi mdi-bell"></i> <!-- Ícono de notificaciones -->
     </span>
@@ -14,6 +14,10 @@
 </template>
 
 <script setup>
+import { useUserStore } from '@/store/userStore';
+
+const userStore = useUserStore();
+
 const handleNotificationClick = () => {
   // Maneja el evento de clic en el ícono de notificaciones
   alert("¡Notificaciones clickeadas!");
@@ -39,8 +43,8 @@ const handleNotificationClick = () => {
   margin-right: 10px;
   border: solid 2px #fff; /* Especifica el color del borde aquí */
   border-radius: 50%; /* Esto hará que la imagen sea redonda */
-  width: 50px;
-  height: 50px;
+  max-width: 50px; /* Tamaño fijo de la imagen */
+  max-height: 50px; /* Tamaño fijo de la imagen */
   object-fit: cover; /* Asegura que la imagen se recorte adecuadamente en el contenedor */
 }
 
@@ -48,6 +52,11 @@ const handleNotificationClick = () => {
   margin: 0; /* Elimina márgenes */
   font-size: 16px; /* Tamaño del texto */
   font-weight: bold; /* Estilo del texto */
+  flex-grow: 1; /* Permite que el nombre ocupe el espacio disponible */
+  min-width: 0; /* Previene que el texto se desborde el contenedor */
+  white-space: nowrap; /* Evita que el texto se envuelva en múltiples líneas */
+  overflow: hidden; /* Oculta cualquier desbordamiento de texto */
+  text-overflow: ellipsis; /* Agrega "..." al final si el texto es demasiado largo */
 }
 
 .notification-icon {
@@ -56,7 +65,7 @@ const handleNotificationClick = () => {
   font-size: 24px; /* Tamaño del ícono */
 }
 
-.notification-icon :hover {
+.notification-icon:hover {
   color: #F19743;
 }
 </style>

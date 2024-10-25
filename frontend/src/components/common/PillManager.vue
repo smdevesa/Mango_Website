@@ -1,18 +1,17 @@
 <template> 
   <div>
     <!-- Lista de píldoras existentes -->
-    <div v-for="(pill, index) in balanceStore.sections.slice(1)" :key="index">
+    <div v-for="(pill, index) in balanceStore.users[userStore.currentUser.username].sections.slice(1)" :key="index">
       <PlannerInput
         :name="pill.label"
         :value="pill.value.toFixed(2)"
         :icon-color="pill.color"
         :percentage="pill.percentage.toFixed(1)"
-        @remove="removePill(index + 1)"
+        @remove="removePill(index + 1)" 
       />
     </div>
 
     <!-- Botón para agregar nueva píldora -->
-     
     <PillButton
       name="Agregar"
       icon="mdi-pencil"
@@ -59,10 +58,12 @@
 <script setup>
 import { ref } from 'vue';
 import { useBalanceStore } from '@/store/balanceStore';
+import { useUserStore } from '@/store/userStore'; // Importa el store de usuario
 import PlannerInput from './PlannerInput.vue';
 import PillButton from './PillButton.vue';
 
 const balanceStore = useBalanceStore();
+const userStore = useUserStore(); // Obtén el store de usuario
 
 // Control de dialogo
 const showDialog = ref(false);
@@ -73,7 +74,7 @@ const newPillValue = ref(null);
 const rules = {
   required: (v) => !!v || 'Este campo es requerido',
   nonNegative: (v) => (v !== null && !isNaN(v) && v > 0) || 'El monto debe ser mayor a $0',
-  notExceedingBalance: (v) => (v !== null && v <= balanceStore.availableBalance) || `El monto no puede exceder el disponible ($${balanceStore.availableBalance.toFixed(2)})`
+  notExceedingBalance: (v) => (v !== null && v <= balanceStore.availableBalance(userStore.currentUser.username)) || `El monto no puede exceder el disponible ($${balanceStore.availableBalance(userStore.currentUser.username).toFixed(2)})`
 };
 
 // Función para abrir el dialogo de entrada
@@ -87,7 +88,7 @@ const confirmNewPill = () => {
   const isValueValid = rules.nonNegative(newPillValue.value) === true && rules.notExceedingBalance(newPillValue.value) === true;
 
   if (isNameValid && isValueValid) {
-    balanceStore.addSection({
+    balanceStore.addSection(userStore.currentUser.username, { // Asegúrate de pasar el username
       label: newPillName.value,
       value: parseFloat(newPillValue.value),
       color: getRandomColor(),
@@ -120,17 +121,15 @@ const getRandomColor = () => {
 
 // Elimina una píldora
 const removePill = (index) => {
-  balanceStore.removeSection(index);
+  balanceStore.removeSection(userStore.currentUser.username, index); // Asegúrate de que esta función esté bien implementada en tu store
 };
 </script>
 
 <style scoped>
-
 .add-pill-button {
   height: 56.8px;
   cursor: pointer;
 }
-
 
 .custom-input :deep(.v-input__control) {
     border: 1px solid black;
@@ -157,6 +156,4 @@ const removePill = (index) => {
 .custom-input :deep(.v-input__control .v-input__slot) {
     padding-bottom: 0 !important;
 }
-
-
 </style>

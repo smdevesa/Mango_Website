@@ -21,6 +21,13 @@
           <span class="menu-text">{{ item.title }}</span>
         </v-list-item>
       </v-list-item-group>
+
+      <!-- Botón de cerrar sesión -->
+      <v-list-item @click="logout" class="custom-list-item">
+        <v-icon class="menu-icon">mdi-logout</v-icon>
+        <span class="menu-text">Cerrar sesión</span>
+      </v-list-item>
+      
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -28,6 +35,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore'; // Asegúrate de importar tu store
 
 // Menú con items dinámicos
 const menuItems = [
@@ -40,10 +48,17 @@ const menuItems = [
 
 const activeItem = ref(0); // Controla el ítem activo
 const router = useRouter();
+const userStore = useUserStore(); // Inicializa el store
 
 const goToRoute = (route) => {
   router.push(route);
   activeItem.value = menuItems.findIndex(item => item.route === route);
+};
+
+// Función para cerrar sesión
+const logout = () => {
+  userStore.logout(); // Llama a la función de logout del store
+  router.push('/login'); // Redirige a la página de login después de cerrar sesión
 };
 </script>
 
@@ -68,9 +83,8 @@ const goToRoute = (route) => {
   margin-right: 12px;
 }
 
-
 .active-item {
-background-color: rgba(255, 255, 255, 0.2); /* Color de fondo para el ítem activo */
-color: #FFF; /* Cambia el color del texto si es necesario */
+  background-color: rgba(255, 255, 255, 0.2); /* Color de fondo para el ítem activo */
+  color: #FFF; /* Cambia el color del texto si es necesario */
 }
 </style>

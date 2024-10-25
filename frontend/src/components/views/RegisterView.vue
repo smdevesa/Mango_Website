@@ -54,7 +54,10 @@
             :append-inner-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
             @click:append-inner="toggleConfirmPassword"
           />
-  
+          
+          <!-- Mostrar errores si existen -->
+          <div v-if="store.error" class="error-message">{{ store.error }}</div>
+
           <div class="actions">
             <v-btn type="submit" class="buttonRegister">
               Registrarse
@@ -64,8 +67,6 @@
             </div>
           </div>
         </v-form>
-        <!-- Mostrar errores si existen -->
-        <v-alert v-if="error" type="error">{{ error }}</v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -74,11 +75,13 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from '@/store/userStore'; // Importa tu store de Pinia
+import { useBalanceStore } from '@/store/balanceStore';
 import mangoLogo from '@/assets/mangoLogo.png';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const store = useUserStore();
+const balanceStore = useBalanceStore();
 
 const username = ref('');
 const email = ref('');
@@ -111,6 +114,7 @@ const submitForm = () => {
     store.register(username.value, password.value, email.value);
 
     if (!store.error) {
+      balanceStore.initUserBalance(username.value); // Crea un balance para el nuevo usuario
       router.push('/home'); // Redirige al usuario a la página de inicio
     }
   } else {
@@ -202,5 +206,11 @@ const toggleConfirmPassword = () => {
   color: #000;
   text-decoration: underline;
   font-size: 15px;
+}
+
+.error-message {
+  color: red; /* Texto en rojo para el mensaje de error */
+  margin-bottom: 10px; /* Espacio entre el mensaje de error y el botón */
+  font-size: 14px; /* Tamaño de fuente del mensaje de error */
 }
 </style>
