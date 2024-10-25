@@ -46,8 +46,8 @@ const router = createRouter({
             component: () => import('../components/views/InvestView.vue')
           },
           {
-            path: '/add-card',
-            name: 'add-card',
+            path: '/cards',
+            name: 'cards',
             component: () => import('../components/views/AddCardView.vue')
           },
           {

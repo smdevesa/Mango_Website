@@ -1,70 +1,62 @@
 <template>
-  <div class="welcome-banner">
-    <div class="profile-section">
-      <img class="profile-picture" src="https://via.placeholder.com/60" alt="Profile Picture" />
-      <div class="user-info">
-        <h2 class="username">Welcome, John!</h2>
-        <p class="user-role">Administrator</p>
-      </div>
-    </div>
-    <button class="notification-button">
-      <span class="material-icons">notifications</span>
-    </button>
+  <div class="banner-container">
+    <v-img
+      class="profile-picture"
+      src="https://via.placeholder.com/50"
+      alt="Profile Picture"
+      contain
+    />
+    <label class="username">John Salchichon</label>
+    <span class="notification-icon" @click="handleNotificationClick">
+      <i class="mdi mdi-bell"></i> <!-- Ícono de notificaciones -->
+    </span>
   </div>
 </template>
 
 <script setup>
-// Importa un ícono si estás usando un paquete de íconos específico
+const handleNotificationClick = () => {
+  // Maneja el evento de clic en el ícono de notificaciones
+  alert("¡Notificaciones clickeadas!");
+};
 </script>
 
 <style scoped>
-.welcome-banner {
+.banner-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 250px; /* Mantiene el ancho máximo en 250px */
+  box-sizing: border-box;
   background-color: #444;
+  border-radius: 8px;
   color: #fff;
-}
-
-.profile-section {
-  display: flex;
-  align-items: center;
+  margin-bottom: 10px;
 }
 
 .profile-picture {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
+  margin-right: 10px;
+  border: solid 2px #fff; /* Especifica el color del borde aquí */
+  border-radius: 50%; /* Esto hará que la imagen sea redonda */
+  width: 50px;
+  height: 50px;
+  object-fit: cover; /* Asegura que la imagen se recorte adecuadamente en el contenedor */
 }
 
 .username {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
+  margin: 0; /* Elimina márgenes */
+  font-size: 16px; /* Tamaño del texto */
+  font-weight: bold; /* Estilo del texto */
 }
 
-.user-role {
-  margin: 0;
-  font-size: 14px;
-  color: #ccc;
+.notification-icon {
+  cursor: pointer; /* Cambia el cursor a pointer para indicar que es clickeable */
+  color: #fff; /* Color del ícono */
+  font-size: 24px; /* Tamaño del ícono */
 }
 
-.notification-button {
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-.notification-button .material-icons {
-  font-size: 24px;
+.notification-icon :hover {
+  color: #F19743;
 }
 </style>
