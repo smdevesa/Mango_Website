@@ -67,6 +67,12 @@ const router = createRouter({
           component: () => import('../components/views/TransferMangoAccountView.vue'),
           meta: { requiresAuth: true } // Ruta protegida
         },
+        {
+          path: '/add-card',
+          name: 'add-card',
+          component: () => import('../components/views/AddCardView.vue'),
+          meta: { requiresAuth: true } // Ruta protegida
+        }
       ]
     },
     {

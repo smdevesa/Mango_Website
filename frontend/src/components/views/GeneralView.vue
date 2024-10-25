@@ -121,10 +121,14 @@
   import TransactionItem from '../common/TransactionItem.vue';
   import PillManager from '../common/PillManager.vue';
   import mangoLogo from '@/assets/mangoLogo.png';
+  import { useUserStore } from '@/store/userStore'; // Importa el store de usuario
+
   
   const balanceStore = useBalanceStore();
   const { balance, sections } = storeToRefs(balanceStore);
   const router = useRouter();
+  const userStore = useUserStore(); // Obtén el store de usuario
+
   
   // Definimos el estado para mostrar el diálogo
   const showCvuDialog = ref(false);
@@ -163,15 +167,27 @@
   // Llamada simulada a la API (esta sería tu lógica real)
   const fetchCvuAndAlias = () => {
     return new Promise(resolve => {
-      // Simulación de respuesta de la API (en tu caso harás una llamada real)
-      setTimeout(() => {
-        resolve({
-          cvu: '260611260611260611',
-          alias: 'cobayo.platudo.arg'
-        });
-      }, 1000);
-    });
-  };
+    // Obtener el usuario actual (esto depende de cómo manejes la autenticación)
+    const currentUser = userStore.currentUser;
+
+    if (currentUser) {
+      // Obtener el CVU y alias del usuario actual desde el store
+      const cvu = userStore.currentUser.cvu;
+      const alias = userStore.currentUser.alias;
+
+      resolve({
+        cvu: cvu,
+        alias: alias
+      });
+    } else {
+      // Manejar el caso en que no haya un usuario actual
+      resolve({
+        cvu: 'N/A',
+        alias: 'N/A'
+      });
+    }
+  });
+};
   
   const addPill = (newPill) => {
     // Aquí debes manejar cómo agregar la nueva píldora

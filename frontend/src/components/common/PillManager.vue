@@ -30,13 +30,13 @@
       <v-card>
         <v-card-title class="headline">Agregar nueva categoría</v-card-title>
         <v-card-text class="custom-input">
-          <v-text-field
+          <ReusableInput
             v-model="newPillName"
             label="Nombre" 
             placeholder="Ingrese el nombre de una categoría." 
             :rules="[rules.required]" 
           />
-          <v-text-field
+          <ReusableInput
             v-model.number="newPillValue"
             label="Monto"
             placeholder="Ingrese el monto destinado para dicha categoría."
@@ -61,6 +61,7 @@ import { useBalanceStore } from '@/store/balanceStore';
 import { useUserStore } from '@/store/userStore'; // Importa el store de usuario
 import PlannerInput from './PlannerInput.vue';
 import PillButton from './PillButton.vue';
+import ReusableInput from './ReusableInput.vue';
 
 const balanceStore = useBalanceStore();
 const userStore = useUserStore(); // Obtén el store de usuario
@@ -129,31 +130,5 @@ const removePill = (index) => {
 .add-pill-button {
   height: 56.8px;
   cursor: pointer;
-}
-
-.custom-input :deep(.v-input__control) {
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 0;
-    overflow: hidden;
-}
-  
-/* Eliminar el subrayado */
-.custom-input :deep(.v-input__control::after) {
-    content: none;
-}
-  
-/* Eliminar borde inferior interno */
-.custom-input :deep(.v-input__control .v-input__outline) {
-    border-bottom: none;
-}
-  
-/* Eliminar sombra interna que sobresale */
-.custom-input :deep(.v-input__control .v-input__outline) {
-    box-shadow: none;
-}
-  
-.custom-input :deep(.v-input__control .v-input__slot) {
-    padding-bottom: 0 !important;
 }
 </style>

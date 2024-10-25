@@ -8,6 +8,8 @@ export const useUserStore = defineStore('user', () => {
   const error = ref('');
   const loading = ref(false);
 
+  const wordsForAlias = ['apple', 'humano', 'computador', 'cobayo', 'paloma', 'raton', 'estrella'];
+
   const saveUsersToLocalStorage = () => {
     localStorage.setItem('users', JSON.stringify(users.value));
   };
@@ -28,8 +30,11 @@ export const useUserStore = defineStore('user', () => {
       return;
     }
 
+    const alias = generateRandomAlias();
+    const cvu = generateRandomCvu();
+
     // Simulación de registro
-    users.value.push({ username, password, email }); // Agregar nuevo usuario
+    users.value.push({ username, password, email, alias, cvu }); // Agregar nuevo usuario
     saveUsersToLocalStorage(); // Guardar usuarios en localStorage
     loading.value = false; // Finaliza la carga
   };
@@ -72,6 +77,33 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value = storedCurrentUser;
     }
   });
+
+  const generateRandomAlias = () => {
+    let alias;
+    let isUnique = false;
+  
+    while (!isUnique) {
+      const word1 = Math.floor(Math.random() * wordsForAlias.length);
+      const word2 = Math.floor(Math.random() * wordsForAlias.length);
+      alias = wordsForAlias[word1] + '.' + wordsForAlias[word2] + '.mango';
+  
+      isUnique = !users.value.some(user => user.alias === alias);
+    }
+  
+    return alias;
+  };
+
+  const generateRandomCvu = () => {
+    let cvu;
+    let isUnique = false;
+  
+    while (!isUnique) {
+      cvu = Math.random().toString().substring(2, 24);
+      isUnique = !users.value.some(user => user.cvu === cvu);
+    }
+  
+    return cvu;
+  };
 
   return { users, currentUser, error, loading, register, login, logout, isLoggedIn };
 });

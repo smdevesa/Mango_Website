@@ -11,6 +11,7 @@ export const useBalanceStore = defineStore('balance', {
         this.users[username] = {
           totalBalance: 1000, // Balance inicial
           sections: [{ label: 'Disponible', value: 1000, percentage: 100, color: 'green' }]
+
         };
         this.saveToLocalStorage(); // Guarda en localStorage
       }
@@ -68,6 +69,6 @@ export const useBalanceStore = defineStore('balance', {
       return username in state.users 
         ? state.users[username].sections[0].value 
         : 0;
-    }
+    },
   }
 });
