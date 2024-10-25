@@ -92,17 +92,30 @@
   
       <!-- Diálogo para mostrar CVU y Alias -->
       <v-dialog v-model="showCvuDialog" max-width="500px">
-        <v-card>
+        <v-card class="v-card-class">
           <v-card-title class="headline">Recibir Dinero</v-card-title>
           <v-card-text>
             <div class="cvu-info">
               <p><strong>CVU:</strong> {{ cvu }}</p>
               <p><strong>Alias:</strong> {{ alias }}</p>
+              <div v-if="showAliasInput">
+                <reusableInput
+                v-if="showAliasInput"
+                v-model="newAlias"
+                label="Ingrese su nuevo alias"
+                outlined
+                class= "cambio-alias"
+                ></reusableInput>
+                <a class="confirm-text">
+                  para confirmar su nuevo alias presione "cambiar alias"
+                </a>
+              </div>
             </div>
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions class="reduced-margin">
+            <v-btn color="blue" @click="changeAlias">Cambiar alias</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="showCvuDialog = false">Cerrar</v-btn>
+            <v-btn color="red" @click="cerrarBotton" >Cerrar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -114,28 +127,26 @@
   import { useBalanceStore } from '@/store/balanceStore';
   import { storeToRefs } from 'pinia';
   import { useRouter } from 'vue-router';
-  import WelcomeBanner from '../common/WelcomeBanner.vue';
   import ReusableCard from '../common/ReusableCard.vue';
   import CircularBalance from '../common/CircularBalance.vue';
   import ReusableIconButton from '../common/ReusableIconButton.vue';
   import TransactionItem from '../common/TransactionItem.vue';
   import PillManager from '../common/PillManager.vue';
-  import mangoLogo from '@/assets/mangoLogo.png';
   import { useUserStore } from '@/store/userStore'; // Importa el store de usuario
-
+  import ReusableInput from '../common/ReusableInput.vue';
+import { errorMessages } from 'vue/compiler-sfc';
   
   const balanceStore = useBalanceStore();
   const { balance, sections } = storeToRefs(balanceStore);
   const router = useRouter();
   const userStore = useUserStore(); // Obtén el store de usuario
-
-  
-  // Definimos el estado para mostrar el diálogo
+  const newAlias = ref('');
+  const showAliasInput = ref(false);
   const showCvuDialog = ref(false);
   
   // CVU y alias que traerá la API
-  const cvu = ref('');
-  const alias = ref('');
+  const cvu = ref(userStore.currentUser.cvu);
+  const alias = ref(userStore.currentUser.alias);
   
   // Funciones de navegación
   const goToTransfer = () => {
@@ -147,7 +158,7 @@
   };
   
   const goToAddCard = () => {
-    router.push('/add-card');
+    router.push('/cards');
   };
   
   const goToHistory = () => {
@@ -156,7 +167,6 @@
   
   // Función para manejar el click en "Ingresar"
   const handleShowCvu = () => {
-    // Simulación de llamada a la API para obtener el CVU y alias
     fetchCvuAndAlias().then(data => {
       cvu.value = data.cvu;
       alias.value = data.alias;
@@ -167,7 +177,6 @@
   // Llamada simulada a la API (esta sería tu lógica real)
   const fetchCvuAndAlias = () => {
     return new Promise(resolve => {
-    // Obtener el usuario actual (esto depende de cómo manejes la autenticación)
     const currentUser = userStore.currentUser;
 
     if (currentUser) {
@@ -188,6 +197,24 @@
     }
   });
 };
+
+const changeAlias = () => {
+  showAliasInput.value = !showAliasInput.value;
+  if (!showAliasInput.value) {
+    if ((newAlias.value.trim() !== '') && !userStore.aliasIsUsed(newAlias.value)) {
+        userStore.currentUser.alias = newAlias;
+        alias.value = newAlias;
+    }
+    else{
+      errorMessages.value = "alias en uso"; 
+    }
+  }
+};
+
+const cerrarBotton = () => {
+  showAliasInput.value = false;
+  showCvuDialog.value = false;
+}
   
   const addPill = (newPill) => {
     // Aquí debes manejar cómo agregar la nueva píldora
@@ -260,4 +287,24 @@
     font-size: 19px;
     margin-bottom: 20px;
   }
+
+  .cambio-alias {
+    margin-top: 20px;
+  }
+
+  .v-card-class {
+    padding: 0px;
+  }
+
+  .reduced-margin {
+    margin-top: -40px;
+  }
+
+  .confirm-text {
+  margin-top: -20px;
+  font-size: 14px;
+  color: gray;
+  text-align: center;
+  padding: 0px;
+}
   </style>

@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
   const users = ref(JSON.parse(localStorage.getItem('users')) || []); // Cargar usuarios desde localStorage
-  const currentUser = ref(JSON.parse(localStorage.getItem('currentUser')) || null); 
+  const currentUser = ref(JSON.parse(localStorage.getItem('currentUser')) || null);
   const error = ref('');
   const loading = ref(false);
 
@@ -89,7 +89,6 @@ export const useUserStore = defineStore('user', () => {
   
       isUnique = !users.value.some(user => user.alias === alias);
     }
-  
     return alias;
   };
 
@@ -101,9 +100,14 @@ export const useUserStore = defineStore('user', () => {
       cvu = Math.random().toString().substring(2, 24);
       isUnique = !users.value.some(user => user.cvu === cvu);
     }
-  
     return cvu;
   };
 
-  return { users, currentUser, error, loading, register, login, logout, isLoggedIn };
+  const aliasIsUsed = (aliasToCheck) => {
+    return users.value.some(user => user.alias === aliasToCheck); 
+
+  } 
+
+
+  return { users, currentUser, error, loading, register, login, logout, isLoggedIn, aliasIsUsed};
 });

@@ -6,7 +6,7 @@
           <img :src="mangoLogo" alt="Mango$ Logo">
         </div>
         <v-form @submit.prevent="submitForm" class="text-center">
-          <v-text-field
+          <ReusableInput
             v-model="username"
             label="Nombre de usuario"
             outlined
@@ -14,7 +14,7 @@
             class="custom-input"
             prepend-inner-icon="mdi-account"
           />
-          <v-text-field
+          <ReusableInput
             v-model="email"
             label="Correo electrónico"
             outlined
@@ -23,7 +23,7 @@
             class="custom-input"
             prepend-inner-icon="mdi-email"
           />
-          <v-text-field
+          <ReusableInput
             v-model="telephone"
             label="Teléfono"
             outlined
@@ -32,7 +32,7 @@
             class="custom-input"
             prepend-inner-icon="mdi-phone"
           />
-          <v-text-field
+          <ReusableInput
             v-model="password"
             :type="showPassword ? 'text' : 'password'"
             label="Contraseña"
@@ -43,7 +43,7 @@
             :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
             @click:append-inner="togglePassword"
           />
-          <v-text-field
+          <ReusableInput
             v-model="confirmPassword"
             :type="showConfirmPassword ? 'text' : 'password'"
             label="Confirmar contraseña"
@@ -78,6 +78,7 @@ import { useUserStore } from '@/store/userStore'; // Importa tu store de Pinia
 import { useBalanceStore } from '@/store/balanceStore';
 import mangoLogo from '@/assets/mangoLogo.png';
 import { useRouter } from 'vue-router';
+import ReusableInput from '../common/ReusableInput.vue';
 
 const router = useRouter();
 const store = useUserStore();
@@ -153,33 +154,6 @@ const toggleConfirmPassword = () => {
 .v-text-field {
   width: 100%;
   max-width: 700px;
-}
-
-/* Estilos de borde */
-.custom-input >>> .v-input__control {
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 0;
-  overflow: hidden;
-}
-
-/* Eliminar el subrayado */
-.custom-input >>> .v-input__control::after {
-  content: none;
-}
-
-/* Eliminar borde inferior interno */
-.custom-input >>> .v-input__control .v-input__outline {
-  border-bottom: none;
-}
-
-/* Eliminar sombra interna que sobresale */
-.custom-input >>> .v-input__control .v-input__outline {
-  box-shadow: none;
-}
-
-.custom-input >>> .v-input__control .v-input__slot {
-  padding-bottom: 0 !important;
 }
 
 .actions {
