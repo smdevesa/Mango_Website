@@ -106,6 +106,7 @@ const rules = {
 
 // Función de envío de registro
 const submitForm = () => {
+  store.logout(); // Cerrar sesión antes de registrar un nuevo usuario
   if (username.value && email.value && telephone.value && password.value && confirmPassword.value) {
     store.register(username.value, password.value, email.value);
 

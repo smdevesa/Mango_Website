@@ -94,8 +94,8 @@ const rules = {
 
 // Envío del formulario de login
 const submitLoginForm = () => {
+  userStore.logout();
   if (username.value && password.value) {
-    userStore.logout();
     userStore.login(username.value, password.value);
 
     // Esperar a que la acción de login termine
