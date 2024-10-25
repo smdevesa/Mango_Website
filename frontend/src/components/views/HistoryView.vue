@@ -1,26 +1,5 @@
 <template>
     <v-container>
-      <v-row 
-        align="center" 
-        justify="space-between"
-        class="top-row"
-      >
-        <v-col cols="auto">
-          <v-btn
-            class="custom-button"
-            @click="goHome"
-          >
-            Volver al inicio
-          </v-btn>
-        </v-col>
-        <v-col cols="auto">
-          <img
-            src="../../assets/mangoLogo3.png"
-            alt="Logo"
-            class="app-logo"
-          >
-        </v-col>
-      </v-row>
       
       <!-- Utilizando el componente ReusableCard -->
       <ReusableCard title="Historial">

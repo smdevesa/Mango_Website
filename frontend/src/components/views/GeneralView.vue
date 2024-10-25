@@ -1,17 +1,5 @@
 <template>
     <v-container>
-      <v-row align="center" justify="space-between">
-        <v-col cols="auto">
-        </v-col>
-        <v-col cols="auto">
-          <img 
-          src="../../assets/mangoLogo3.png"
-          alt="Logo"
-          class="app-logo"
-            >
-        </v-col>
-        
-      </v-row> 
       <ReusableCard title="Balance">
         <v-row class="balance-layout">
           <v-col cols="5">

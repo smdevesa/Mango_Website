@@ -8,9 +8,6 @@
             Volver
           </v-btn>
         </v-col>
-        <v-col cols="auto">
-          <img src="../../assets/mangoLogo3.png" alt="Logo" class="app-logo">
-        </v-col>
       </v-row>
   
       <!-- Contenido específico de la transferencia -->

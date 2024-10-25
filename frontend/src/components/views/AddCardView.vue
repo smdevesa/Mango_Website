@@ -1,16 +1,5 @@
 <template>
   <v-container>
-    <v-row align="center" justify="space-between" class="top-row">
-      <v-col cols="auto">
-        <v-btn class="custom-button" @click="goToHome">
-          Volver al inicio
-        </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <img src="../../assets/mangoLogo3.png" alt="Logo" class="app-logo">
-      </v-col>
-    </v-row>
-
     <v-row>
       <v-col cols="6">
         <ReusableCard title="Agregar nueva tarjeta">
@@ -76,7 +65,7 @@
                     :cvv="card.cvv"
                   />
                   <v-btn icon small class="remove-button" @click="openConfirmDialog(card.id)">
-                    <v-icon color="red">mdi-delete</v-icon>
+                    <v-icon color="red">mdi-close-circle</v-icon>
                   </v-btn>
                 </div>
               </div>

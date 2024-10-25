@@ -69,7 +69,8 @@ const toggleCvv = () => {
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #45b6fc 0%, #5dadec 100%);
-  color: white;
+  color: black;
+  border: solid 1px black;
 }
 
 .card-display::after {
