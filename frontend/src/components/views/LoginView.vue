@@ -1,230 +1,229 @@
 <template>
-    <v-container class="fill-height">
-      <v-row justify="center" align="center">
-        <v-col cols="12" sm="8" md="6" lg="4">
-  
-          <div class="logo">
-            <img :src="mangoLogo"
-             alt="Mango$ Logo"
-             >
-          </div>
-  
-          <v-form @submit.prevent="submitLoginForm" class="text-center">
-            <v-text-field
-                v-model="username"
-                label="Nombre de usuario"
-                outlined
-                :rules="[rules.required]"
-                class="custom-input"
-                prepend-inner-icon="mdi-account"
-            />
-  
-            <div class="clase-campo">
-              <v-text-field
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  label="Contraseña"
-                  outlined
-                  class="custom-input"
-                  prepend-inner-icon="mdi-lock"
-                  :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                  @click:append-inner="togglePassword"
-              />
-              <div class="olvide-mi-contra">
-                <a @click="dialog = true">Olvidé mi contraseña</a>
-              </div>
-            </div>
-  
-            <!-- Contenedor del botón y enlace -->
-            <div class="clase-boton">
-              <v-btn type="submit" class="buttonLogin">
-                Iniciar sesión
-              </v-btn>
-              <div class="register">
-                <a href="/register">Registrarse</a>
-              </div>
-            </div>
-  
-          </v-form>
-  
-  
-          <v-dialog v-model="dialog" max-width="500px">
-            <v-card>
-              <v-card-title class="headline">Reestablecer Contraseña</v-card-title>
-              <v-card-text>
-                <p>¿Está seguro que quiere reestablecer la contraseña? Indique el correo de la cuenta que desea reestablecer.</p>
-                <v-text-field
-                    v-model="email"
-                    label="Correo Electrónico"
-                    outlined
-                    class="custom-input reestab-email-field"
-                    :rules="[rules.required, rules.email]"
-                    prepend-inner-icon="mdi-email"
-                />
-                <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> <!-- Mostrar el mensaje de error -->
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="red" text @click="dialog = false">Cancelar</v-btn>
-                <v-btn color="blue darken-1" text @click="handleResetPassword">Continuar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-  
-        </v-col>
-      </v-row>
-    </v-container>
-  </template>
-  
-  <script setup>
-  import router from '@/router';
-  import { ref } from 'vue';
-  import mangoLogo from '@/assets/mangoLogo.png';
-  
-  const username = ref('');
-  const password = ref('');
-  const email = ref('');
-  const showPassword = ref(false);
-  const dialog = ref(false);
-  const errorMessage = ref(''); // Nueva variable para el mensaje de error
-  
-  // Validaciones
-  const rules = {
-    required: (value) => !!value || 'Campo requerido',
-    email: (value) => /.+@.+\..+/.test(value) || 'Correo inválido',
-  };
-  
-  // Envío del formulario de login
-  const submitLoginForm = () => {
-    if (username.value && password.value) {
-      router.push('/home');
-    } else {
-      alert('Por favor, complete todos los campos');
-    }
-  };
-  
-  // Función para alternar la visibilidad de la contraseña
-  const togglePassword = () => {
-    showPassword.value = !showPassword.value;
-  };
-  
-  // Función para manejar el envío de restablecimiento de contraseña
-  const handleResetPassword = () => {
-    if (email.value) {
-      alert(`Correo enviado a ${email.value} para reestablecer la contraseña.`);
-      dialog.value = false;
-      errorMessage.value = ''; // Limpiar el mensaje de error
-    } else {
-      errorMessage.value = 'Por favor, ingrese un correo válido.'; // Actualizar el mensaje de error
-    }
-  };
-  </script>
-  
-  <style scoped>
-    .logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1px;
-      margin-top: -230px;
-    }
-    
-    .logo img {
-      width: 400px;
-      height: 400px;
-    }
-    
-    .v-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: -10px;
-      margin-top: -30px;
-    }
-    
-    .v-text-field {
-      width: 100%;
-      max-width: 700px;
-    }
-    
-    .custom-input :deep(.v-input__control) {
-      border: 1px solid black;
-      border-radius: 20px;
-      padding: 0;
-      overflow: hidden;
-    }
-      
-    /* Eliminar el subrayado */
-    .custom-input :deep(.v-input__control::after) {
-        content: none;
-    }
-      
-    /* Eliminar borde inferior interno */
-    .custom-input :deep(.v-input__control .v-input__outline) {
-        border-bottom: none;
-    }
-      
-    /* Eliminar sombra interna que sobresale */
-    .custom-input :deep(.v-input__control .v-input__outline) {
-        box-shadow: none;
-    }
-      
-    .custom-input :deep(.v-input__control .v-input__slot) {
-        padding-bottom: 0 !important;
-    }
+  <v-container class="fill-height">
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6" lg="4">
+        <div class="logo">
+          <img :src="mangoLogo" alt="Mango$ Logo">
+        </div>
 
-      
-      .clase-boton {
-        display: flex;
-        flex-direction: column; /* Colocar los elementos en columnas */
-        align-items: flex-end; /* Alinear el enlace a la derecha */
-        width: 100%;
-        margin-top: 9px;
-        position: relative;
-      }
-    
-    .clase-campo{
-      display: flex;
-      flex-direction: column; /* Colocar los elementos en columnas */
-      align-items: flex-start; /* Alinear el enlace a la derecha */
-      width: 100%;
-      margin-top: 4px;
-      position: relative;
+        <v-form @submit.prevent="submitLoginForm" class="text-center">
+          <v-text-field
+            v-model="username"
+            label="Nombre de usuario"
+            outlined
+            :rules="[rules.required]"
+            class="custom-input"
+            prepend-inner-icon="mdi-account"
+          />
+
+          <div class="clase-campo">
+            <v-text-field
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              label="Contraseña"
+              outlined
+              class="custom-input"
+              prepend-inner-icon="mdi-lock"
+              :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+              @click:append-inner="togglePassword"
+            />
+            <div class="olvide-mi-contra">
+              <a @click="dialog = true">Olvidé mi contraseña</a>
+            </div>
+          </div>
+
+          <!-- Mostrar mensaje de error si hay uno -->
+          <p v-if="userStore.error" class="error-message">{{ userStore.error }}</p>
+
+          <div class="clase-boton">
+            <v-btn type="submit" class="buttonLogin" :loading="userStore.loading">
+              Iniciar sesión
+            </v-btn>
+            <div class="register">
+              <a href="/register">Registrarse</a>
+            </div>
+          </div>
+        </v-form>
+
+        <v-dialog v-model="dialog" max-width="500px">
+          <v-card>
+            <v-card-title class="headline">Reestablecer Contraseña</v-card-title>
+            <v-card-text>
+              <p>¿Está seguro que quiere reestablecer la contraseña? Indique el correo de la cuenta que desea reestablecer.</p>
+              <v-text-field
+                v-model="email"
+                label="Correo Electrónico"
+                outlined
+                class="custom-input reestab-email-field"
+                :rules="[rules.required, rules.email]"
+                prepend-inner-icon="mdi-email"
+              />
+              <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red" text @click="dialog = false">Cancelar</v-btn>
+              <v-btn color="blue darken-1" text @click="handleResetPassword">Continuar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script setup>
+import router from '@/router';
+import { ref } from 'vue';
+import { useUserStore } from '@/store/userStore';
+import mangoLogo from '@/assets/mangoLogo.png';
+
+const username = ref('');
+const password = ref('');
+const email = ref('');
+const showPassword = ref(false);
+const dialog = ref(false);
+const errorMessage = ref('');
+const userStore = useUserStore();
+
+// Validaciones
+const rules = {
+  required: (value) => !!value || 'Campo requerido',
+  email: (value) => /.+@.+\..+/.test(value) || 'Correo inválido',
+};
+
+// Envío del formulario de login
+const submitLoginForm = () => {
+  if (username.value && password.value) {
+    userStore.logout();
+    userStore.login(username.value, password.value);
+
+    // Esperar a que la acción de login termine
+    if (userStore.isLoggedIn()) {
+      router.push('/home');
     }
-    
-    .olvide-mi-contra{
-      margin-top: -18px;
-      margin-left: 15px;
-      font-size: 15px;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    
-    .reestab-email-field{
-      margin-top: 15px;
-    }
-    
-    .buttonLogin {
-      background-color: #FF9500;
-      color: white;
-      width: 100%; /* El botón ocupa todo el ancho */
-      max-width: 700px;
-      height: 50px;
-      border-radius: 20px;
-      margin-bottom: 5px;
-      font-size: 18px;
-      margin-top: 10px;
-    }
-    
-    .register a {
-      color: #000;
-      text-decoration: underline;
-      font-size: 15px;
-    }
-    
-    .error-message {
-      color: red;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-  
-  </style>
+  } else {
+    alert('Por favor, complete todos los campos');
+  }
+};
+
+// Función para alternar la visibilidad de la contraseña
+const togglePassword = () => {
+  showPassword.value = !showPassword.value;
+};
+
+// Función para manejar el envío de restablecimiento de contraseña
+const handleResetPassword = () => {
+  if (email.value) {
+    alert(`Correo enviado a ${email.value} para reestablecer la contraseña.`);
+    dialog.value = false;
+    errorMessage.value = '';
+  } else {
+    errorMessage.value = 'Por favor, ingrese un correo válido.';
+  }
+};
+</script>
+
+<style scoped>
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1px;
+  margin-top: -230px;
+}
+
+.logo img {
+  width: 400px;
+  height: 400px;
+}
+
+.v-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: -10px;
+  margin-top: -30px;
+}
+
+.v-text-field {
+  width: 100%;
+  max-width: 700px;
+}
+
+.custom-input :deep(.v-input__control) {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.custom-input :deep(.v-input__control::after) {
+  content: none;
+}
+
+.custom-input :deep(.v-input__control .v-input__outline) {
+  border-bottom: none;
+}
+
+.custom-input :deep(.v-input__control .v-input__outline) {
+  box-shadow: none;
+}
+
+.custom-input :deep(.v-input__control .v-input__slot) {
+  padding-bottom: 0 !important;
+}
+
+.clase-boton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 9px;
+  position: relative;
+}
+
+.clase-campo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 4px;
+  position: relative;
+}
+
+.olvide-mi-contra {
+  margin-top: -18px;
+  margin-left: 15px;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.reestab-email-field {
+  margin-top: 15px;
+}
+
+.buttonLogin {
+  background-color: #FF9500;
+  color: white;
+  width: 100%;
+  max-width: 700px;
+  height: 50px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.register a {
+  color: #000;
+  text-decoration: underline;
+  font-size: 15px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+</style>
