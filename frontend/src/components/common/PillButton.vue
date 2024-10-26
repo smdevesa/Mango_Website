@@ -19,7 +19,7 @@
       style="background-color: orange;"
     >
       <div class="text-pill">
-        <span>{{ "$" + value }}</span>
+        <span>{{ prefix }}{{ value }}</span>
       </div>
     </div>
 
@@ -35,11 +35,10 @@ defineProps({
   value: {
     type: Number,
     required: true,
-    //default: undefined,
   },
   icon: {
     type: String,
-    required: false, // No es obligatorio y sin valor por defecto
+    required: false,
   },
   iconColor: {
     type: String,
@@ -48,6 +47,10 @@ defineProps({
   bgColor: {
     type: String,
     default: '#FFFBE6',
+  },
+  prefix: {
+    type: String,
+    default: '$',
   },
 });
 </script>
@@ -65,10 +68,13 @@ defineProps({
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .text-container {
@@ -90,11 +96,9 @@ defineProps({
   font-weight: 600;
   font-size: 16px;
 }
+
 .pill-icon {
   color: #000;
-  font-size: 28px;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-bottom: 5px;
+  font-size: 24px;
 }
 </style>

@@ -49,11 +49,9 @@
       <v-row>
         <v-col cols="6">
           <ReusableCard title="Inversiones">
-            <v-card class="planner-card">
-              <v-card-text class="planner-input-container scrollable-pills">
-                <PillManager
-                    @add-pill="addPill"
-                />
+            <v-card class="invest-card">
+              <v-card-text class="invest-container">
+                <Invest&Rescue />
               </v-card-text>
             </v-card>
           </ReusableCard>
@@ -233,20 +231,13 @@ const cerrarBotton = () => {
     height: 100%;
   }
   
-  .planner-input-container {
+  .invest-container {
     padding: 0;
     margin: 0;
   }
   
-  .planner-input-container > *:first-child {
-    margin-top: 10px;
-  }
   
-  .planner-input-container > *:not(:last-child) {
-    margin-bottom: 15px;
-  }
-  
-  .planner-card {
+  .invest-card {
     background-color: #D5ED9F;
     box-shadow: none;
   }

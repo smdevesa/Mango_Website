@@ -48,7 +48,7 @@ export const useBalanceStore = defineStore('balance', {
       if (this.users[username]) {
         const totalBalance = this.users[username].totalBalance;
         this.users[username].sections.forEach(section => {
-          section.percentage = (section.value / totalBalance) * 100;
+          section.percentage = ((section.value / totalBalance) * 100);
         });
       }
     },
@@ -61,7 +61,7 @@ export const useBalanceStore = defineStore('balance', {
     // Obtiene el balance formateado de un usuario
     formattedBalance: (state) => (username) => {
       return username in state.users 
-        ? `$${state.users[username].totalBalance.toFixed(2)}` 
+        ? `${state.users[username].totalBalance.toFixed(2)}` 
         : '$0.00';
     },
     // Obtiene el balance disponible de un usuario
@@ -70,10 +70,5 @@ export const useBalanceStore = defineStore('balance', {
         ? state.users[username].sections[0].value 
         : 0;
     },
-    t0talBalance: (state) => (username) => {
-      return username in state.users 
-        ? state.users[username].totalBalance 
-        : 0;
-    }
   }
 });

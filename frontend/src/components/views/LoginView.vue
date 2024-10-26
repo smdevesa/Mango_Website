@@ -7,22 +7,20 @@
         </div>
 
         <v-form @submit.prevent="submitLoginForm" class="text-center">
-          <v-text-field
+          <ReusableInput
             v-model="username"
             label="Nombre de usuario"
             outlined
             :rules="[rules.required]"
-            class="custom-input"
             prepend-inner-icon="mdi-account"
           />
 
           <div class="clase-campo">
-            <v-text-field
+            <ReusableInput
               v-model="password"
               :type="showPassword ? 'text' : 'password'"
               label="Contraseña"
               outlined
-              class="custom-input"
               prepend-inner-icon="mdi-lock"
               :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
               @click:append-inner="togglePassword"
@@ -50,7 +48,7 @@
             <v-card-title class="headline">Reestablecer Contraseña</v-card-title>
             <v-card-text>
               <p>¿Está seguro que quiere reestablecer la contraseña? Indique el correo de la cuenta que desea reestablecer.</p>
-              <v-text-field
+              <ReusableInput
                 v-model="email"
                 label="Correo Electrónico"
                 outlined
@@ -150,28 +148,6 @@ const handleResetPassword = () => {
   max-width: 700px;
 }
 
-.custom-input :deep(.v-input__control) {
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 0;
-  overflow: hidden;
-}
-
-.custom-input :deep(.v-input__control::after) {
-  content: none;
-}
-
-.custom-input :deep(.v-input__control .v-input__outline) {
-  border-bottom: none;
-}
-
-.custom-input :deep(.v-input__control .v-input__outline) {
-  box-shadow: none;
-}
-
-.custom-input :deep(.v-input__control .v-input__slot) {
-  padding-bottom: 0 !important;
-}
 
 .clase-boton {
   display: flex;
@@ -197,6 +173,7 @@ const handleResetPassword = () => {
   font-size: 15px;
   cursor: pointer;
   text-decoration: underline;
+  color:"red";
 }
 
 .reestab-email-field {
