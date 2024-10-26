@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>VENTANA DE COBRO</h1>
+    <ReusableCard title="Cobrar">
     <v-form @submit.prevent="generarEnlace">
       <ReusableInput
         v-model="monto"
@@ -13,7 +13,7 @@
         label="Descripción del cobro"
         required
       ></v-textarea>
-      <v-btn class="button-container" @click="generarEnlace"> 
+      <v-btn class="button-container" @click="generarEnlace">
         Generar enlace de pago
       </v-btn>
     </v-form>
@@ -31,38 +31,47 @@
     >
       Debe ingresar un monto para generar un enlace
     </v-alert>
+  </ReusableCard>
   </v-container>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { usePayStore } from '@/store/payStore'; // Importa el store de pagos
+import { useUserStore } from '@/store/userStore';
 
+const domain = 'https://localhost:3000';
 const monto = ref('');
 const descripcion = ref('');
 const enlaceGenerado = ref('');
 const mostrarAlertaMonto = ref(false);
+const payStore = usePayStore(); // Inicializa el store de pagos
+const userStore = useUserStore();
 
 const generarEnlace = () => {
   if (!monto.value) {
     mostrarAlertaMonto.value = true;
     return;
   }
-  
+
   mostrarAlertaMonto.value = false;
-  // Aquí deberías implementar la lógica para generar el enlace de pago
-  // Esto es solo un ejemplo y deberías reemplazarlo con tu lógica real
-  const baseUrl = 'https://mango$-pay.com/pagar';
+
+  // Genera un ID único para el enlace (esto es solo un ejemplo; reemplázalo con tu lógica)
+  const linkId = `${Date.now()}`;
+  const baseUrl = domain + '/pay';
   const params = new URLSearchParams({
-    monto: monto.value,
-    descripcion: descripcion.value
+    id: linkId
   });
   enlaceGenerado.value = `${baseUrl}?${params.toString()}`;
+
+  // Guarda el enlace en el store
+  payStore.addLink(userStore.currentUser.username, linkId, monto.value, descripcion.value);
 };
 </script>
 
 <style scoped>
 .button-container {
-display: block;
+  display: block;
   color: #FFFBE6;
   background: #F19743;
   font-size: 17px;

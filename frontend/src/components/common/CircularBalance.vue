@@ -4,13 +4,6 @@
     <div class="balance-text">
       {{ balanceStore.formattedBalance(userStore.currentUser.username) }}
     </div>
-
-    <v-btn class="invest-button"
-    text="Invertir"
-      icon
-      @click="goToInvest">
-      <v-icon color=#F19743>mdi-chart-line</v-icon>
-    </v-btn>
   </div>
 </template>
 
@@ -19,17 +12,9 @@ import { ref, onMounted, watch } from 'vue';
 import { useBalanceStore } from '@/store/balanceStore';
 import { useUserStore } from '@/store/userStore';
 import Chart from 'chart.js/auto';
-import ReusableIconButton from '../common/ReusableIconButton.vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
 const balanceStore = useBalanceStore();
 const userStore = useUserStore();
-
-//Funciones de navegación
-const goToInvest = () => {
-    router.push('/invest');  
-  }; 
 
 const myChart = ref(null);
 let chartInstance = null;
@@ -107,15 +92,5 @@ watch(
   font-size: 18pt;
   text-align: center;
   font-weight: bold;
-}
-
-.invest-button {
-  height: 35px !important;
-  position: absolute !important;
-  
-  /* Ajusta estos valores para cambiar la posición del botón */
-  bottom: 25% !important;
-  left: 40% !important;
-
 }
 </style>

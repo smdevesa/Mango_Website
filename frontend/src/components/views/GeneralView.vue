@@ -48,7 +48,7 @@
   
       <v-row>
         <v-col cols="6">
-          <ReusableCard title="Planificador de Gastos">
+          <ReusableCard title="Inversiones">
             <v-card class="planner-card">
               <v-card-text class="planner-input-container scrollable-pills">
                 <PillManager
@@ -215,11 +215,7 @@ const cerrarBotton = () => {
   showAliasInput.value = false;
   showCvuDialog.value = false;
 }
-  
-  const addPill = (newPill) => {
-    // Aquí debes manejar cómo agregar la nueva píldora
-    console.log('Píldora agregada:', newPill);
-  };
+
   
   </script>
   

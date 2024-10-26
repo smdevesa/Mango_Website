@@ -70,5 +70,10 @@ export const useBalanceStore = defineStore('balance', {
         ? state.users[username].sections[0].value 
         : 0;
     },
+    t0talBalance: (state) => (username) => {
+      return username in state.users 
+        ? state.users[username].totalBalance 
+        : 0;
+    }
   }
 });

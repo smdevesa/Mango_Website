@@ -50,6 +50,12 @@ const router = createRouter({
           meta: { requiresAuth: true } // Ruta protegida
         },
         {
+          path: '/pay',
+          name: 'pay',
+          component: () => import('../components/views/PayView.vue'),
+          meta: { requiresAuth: true } // Ruta protegida
+        },
+        {
           path: '/invest',
           name: 'invest',
           component: () => import('../components/views/InvestView.vue'),

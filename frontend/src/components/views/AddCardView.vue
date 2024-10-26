@@ -95,22 +95,22 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import ReusableCard from '../common/ReusableCard.vue';
 import CardDisplay from '../common/CardDisplay.vue';
 import ReusableInput from '../common/ReusableInput.vue'; // Importa el componente ReusableInput
-
+import { useCardStore } from '../../store/cardStore';
 
 // Variables reactivas
-const router = useRouter();
+
+const cardStore = useCardStore(); // Importa el store de tarjetas
 const cardName = ref('');
 const cardNumber = ref('');
 const expirationDate = ref('');
 const valid = ref(false);
 const cvv = ref('');
-const cards = ref([]);
 const showConfirmDialog = ref(false);
 const cardToRemove = ref(null);
+const cards = computed(() => cardStore.getCards);
 
 // Reglas de validación
 const rules = {
@@ -119,11 +119,6 @@ const rules = {
   expirationDate: (v) => (v && /^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(v)) || 'Fecha de expiración inválida',
   cvv: (v) => (v && (/^[0-9]{3,4}$/.test(v))) || 'CVV inválido',
   cardName: (v) => (v && /^[a-zA-Z\s]*$/.test(v)) || 'Nombre de tarjeta inválido',
-};
-
-// Funciones
-const goToHome = () => {
-  router.push('/home');
 };
 
 const formattedCardNumber = computed({
@@ -137,13 +132,12 @@ const formattedCardNumber = computed({
 
 const addCard = () => {
   if (valid.value) {
-    cards.value.push({
+    cardStore.addCard({
       id: Date.now(),
       name: cardName.value,
       number: cardNumber.value,
       expiration: expirationDate.value,
       cvv: cvv.value,
-      showCvv: false,
     });
     cardName.value = '';
     cardNumber.value = '';
@@ -151,6 +145,7 @@ const addCard = () => {
     cvv.value = '';
   }
 };
+
 
 const openConfirmDialog = (id) => {
   cardToRemove.value = id;
@@ -164,13 +159,9 @@ const closeConfirmDialog = () => {
 
 const confirmRemove = () => {
   if (cardToRemove.value !== null) {
-    removeCard(cardToRemove.value);
+    cardStore.removeCard(cardToRemove.value);
     closeConfirmDialog();
   }
-};
-
-const removeCard = (id) => {
-  cards.value = cards.value.filter(card => card.id !== id);
 };
 
 </script>
