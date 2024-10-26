@@ -44,6 +44,12 @@ const router = createRouter({
           meta: { requiresAuth: true } // Ruta protegida
         },
         {
+          path: '/charge',
+          name: 'charge',
+          component: () => import('../components/views/ChargeView.vue'),
+          meta: { requiresAuth: true } // Ruta protegida
+        },
+        {
           path: '/invest',
           name: 'invest',
           component: () => import('../components/views/InvestView.vue'),

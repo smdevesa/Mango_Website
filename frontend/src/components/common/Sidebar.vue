@@ -55,6 +55,7 @@ const menuItems = [
   { title: 'Inicio', route: '/home', icon: 'mdi-home' },
   { title: 'Transferencias', route: '/transfer', icon: 'mdi-bank-transfer' },
   { title: 'Historial', route: '/history', icon: 'mdi-history' },
+  { title: 'Cobrar', route: '/charge', icon: 'mdi-cash-register' },
   { title: 'Inversiones', route: '/invest', icon: 'mdi-chart-line' },
   { title: 'Mis tarjetas', route: '/cards', icon: 'mdi-credit-card' }
 ];

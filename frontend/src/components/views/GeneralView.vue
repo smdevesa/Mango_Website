@@ -29,9 +29,9 @@
             <v-row justify="center">
               <v-col cols="6">
                 <ReusableIconButton
-                  icon="mdi-chart-line"
-                  text="Invertir"
-                  @click="goToInvest"
+                  icon="mdi-cash-register"
+                  text="Cobrar"
+                  @click="goToCharge"
                 />
               </v-col>
               <v-col cols="6">
@@ -134,7 +134,7 @@
   import PillManager from '../common/PillManager.vue';
   import { useUserStore } from '@/store/userStore'; // Importa el store de usuario
   import ReusableInput from '../common/ReusableInput.vue';
-import { errorMessages } from 'vue/compiler-sfc';
+  import { errorMessages } from 'vue/compiler-sfc';
   
   const balanceStore = useBalanceStore();
   const { balance, sections } = storeToRefs(balanceStore);
@@ -153,8 +153,8 @@ import { errorMessages } from 'vue/compiler-sfc';
     router.push('/transfer');
   };
 
-  const goToInvest = () => {
-    router.push('/invest');  
+  const goToCharge = () => {
+    router.push('/charge');  
   };
   
   const goToAddCard = () => {
