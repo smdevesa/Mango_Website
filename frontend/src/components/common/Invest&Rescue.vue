@@ -2,7 +2,7 @@
   <div class="invest-rescue-container">
     <!-- Píldoras existentes -->
     <PillButton
-      name="Dinero Disponible"
+      name="Dinero disponible"
       :value="availableBalance"
       icon="mdi-cash"
       icon-color="#4CAF50"
@@ -160,6 +160,11 @@ const investedBalance = computed(() => {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  text-transform: none;
+}
+
+.action-buttons .v-btn {
+  text-transform: none; /* Quita las mayúsculas de Vuetify */
 }
 
 .error-message {

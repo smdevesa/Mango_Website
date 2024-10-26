@@ -225,6 +225,10 @@ const confirmRemove = () => {
   right: 10px;
 }
 
+.button-container .v-btn {
+  text-transform: none; /* Quita las mayúsculas de Vuetify */
+}
+
 .remove-button:hover {
   background: rgba(255, 0, 0, 0.1); /* Fondo rojo suave al pasar el mouse */
 }

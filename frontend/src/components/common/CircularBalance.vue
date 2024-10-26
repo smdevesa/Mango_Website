@@ -2,7 +2,7 @@
   <div class="chart-container">
     <canvas ref="myChart" width="300" height="300" />
     <div class="balance-text">
-      {{ balanceStore.formattedBalance(userStore.currentUser.username) }}
+      ${{ balanceStore.formattedBalance(userStore.currentUser.username) }}
     </div>
   </div>
 </template>
@@ -89,7 +89,7 @@ watch(
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 18pt;
+  font-size: 22pt;
   text-align: center;
   font-weight: bold;
 }
