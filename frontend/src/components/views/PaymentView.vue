@@ -2,34 +2,47 @@
   <v-container class="payment-container" fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <v-card class="payment-card">
-          <v-card-title class="headline">Selecciona un método de pago</v-card-title>
-          <v-card-text v-if="selectedLink" class="payment-content">
+        <ReusableCard title="Selecciona un método de pago">
+          <div class="close-button-container">
+            <v-btn
+              icon="mdi-close"
+              color="red"
+              size="small"
+              @click="goHome"
+            ></v-btn>
+          </div>
+          <div v-if="selectedLink" class="payment-content">
             <p class="payment-info"><strong>Monto:</strong> ${{ selectedLink.amount }}</p>
-            <p class="payment-info"><strong>Descripción:</strong> {{ selectedLink.description }}</p>
-            <v-btn @click="payWithAvailableBalance" class="payment-btn mb-4" block>
-              Balance Disponible: ${{ availableBalance }}
-            </v-btn>
+            <div>
+              <p class="payment-info"><strong>Descripción:</strong> {{ selectedLink.description }}</p>
+            </div>
+            
+            <v-divider class="mb-7"></v-divider>
             
             <v-select
-              v-model="selectedCard"
-              :items="cardNumbers" 
-              item-text="number" 
-              item-value="id" 
-              label="Selecciona una tarjeta"
-              return-object
+              v-model="selectedPaymentMethod"
+              :items="paymentMethods"
+              item-title="text"
+              item-value="value"
+              label="Selecciona un método de pago"
               outlined
               class="mb-4"
             ></v-select>
             
-            <v-btn @click="payWithCard" :disabled="!selectedCard" class="payment-btn" block>
-              Pagar con Tarjeta
+            <v-btn 
+              @click="processPayment" 
+              :disabled="!selectedPaymentMethod" 
+              class="payment-btn" 
+              block 
+              color="#F19743"
+            >
+              Pagar
             </v-btn>
-          </v-card-text>
-          <v-card-text v-else class="payment-error">
+          </div>
+          <div v-else class="payment-error">
             <p>ID de pago no válido o no encontrado.</p>
-          </v-card-text>
-        </v-card>
+          </div>
+        </ReusableCard>
       </v-col>
     </v-row>
   </v-container>
@@ -42,33 +55,47 @@ import { usePayStore } from '@/store/payStore';
 import { useBalanceStore } from '@/store/balanceStore';
 import { useUserStore } from '@/store/userStore';
 import { useCardStore } from '@/store/cardStore';
-import { useHistoryStore } from '@/store/historyStore'; // Importa el store de historial
+import { useHistoryStore } from '@/store/historyStore';
 import router from '@/router';
+import ReusableCard from '@/components/common/ReusableCard.vue';
 
 const route = useRoute();
 const payStore = usePayStore();
 const balanceStore = useBalanceStore();
 const userStore = useUserStore();
 const cardStore = useCardStore();
-const historyStore = useHistoryStore(); // Instancia el store de historial
+const historyStore = useHistoryStore();
 
-const showPaymentOptions = ref(false);
 const selectedLink = ref(null);
-const selectedCard = ref(null);
+const selectedPaymentMethod = ref(null);
 
-const availableBalance = balanceStore.availableBalance(userStore.currentUser.username);
+const availableBalance = computed(() => {
+  return balanceStore.availableBalance(userStore.currentUser.username);
+});
+
+const paymentMethods = computed(() => {
+  const methods = [
+    { text: `Dinero en cuenta (Disponible: $${availableBalance.value})`, value: 'balance' }
+  ];
+  return methods.concat(cardStore.getCards.map(card => ({ text: `Tarjeta ${card.number}`, value: card.id })));
+});
 
 onMounted(() => {
   const linkId = route.params.id;
   if (linkId) {
     selectedLink.value = payStore.getLink(linkId);
-    showPaymentOptions.value = !!selectedLink.value;
   }
 });
 
-const cardNumbers = computed(() => {
-  return cardStore.getCards.map(card => card.number);
-});
+const processPayment = () => {
+  if (!selectedPaymentMethod.value) return;
+
+  if (selectedPaymentMethod.value === 'balance') {
+    payWithAvailableBalance();
+  } else {
+    payWithCard(selectedPaymentMethod.value);
+  }
+};
 
 const payWithAvailableBalance = () => {
   if (!selectedLink.value) return;
@@ -82,7 +109,6 @@ const payWithAvailableBalance = () => {
       date: new Date().toISOString(),
     });
     payStore.removeLink(selectedLink.value.id);
-    showPaymentOptions.value = false;
     alert('Pago realizado con balance disponible.');
     router.push('/home');
   } else {
@@ -90,8 +116,9 @@ const payWithAvailableBalance = () => {
   }
 };
 
-const payWithCard = () => {
-  if (!selectedCard.value) return;
+const payWithCard = (cardId) => {
+  const card = cardStore.getCards.find(c => c.id === cardId);
+  if (!card) return;
 
   historyStore.addTransaction({
     fromUser: userStore.currentUser.username,
@@ -99,20 +126,21 @@ const payWithCard = () => {
     amount: selectedLink.value.amount,
     description: selectedLink.value.description,
     date: new Date().toISOString(),
-    method: `Tarjeta ${selectedCard.number}`
+    method: `Tarjeta ${card.number}`
   });
   
   balanceStore.addMoney(selectedLink.value.owner, selectedLink.value.amount);
   payStore.removeLink(selectedLink.value.id);
-  showPaymentOptions.value = false;
-  alert(`Pago realizado con tarjeta: ${selectedCard.number}`);
+  alert(`Pago realizado con tarjeta: ${card.number}`);
   router.push('/home');
 };
 
+const goHome = () => {
+  router.push('/home');
+};
 </script>
 
 <style scoped>
-
 .payment-container {
   background-color: #FFFBE6;
   min-height: 100vh;
@@ -121,41 +149,69 @@ const payWithCard = () => {
   justify-content: center;
 }
 
-.payment-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-}
-
-.headline {
-  background-color: #D5ED9F;
-  color: #333;
-  font-weight: bold;
-  padding: 16px;
-  text-align: center;
-}
-
 .payment-content {
   padding: 20px;
 }
 
 .payment-info {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 16px;
 }
 
 .payment-btn {
-  background-color: #FFFBE6 !important;
-  color: #333 !important;
   font-weight: bold;
-  text-transform: none;
+  text-transform: none !important;
   height: 48px;
+  width: 100%;
+}
+
+.button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-main-text {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.button-sub-text {
+  font-size: 14px;
+  opacity: 0.8;
 }
 
 .payment-error {
   text-align: center;
   color: #ff5252;
   font-weight: bold;
+}
+
+.payment-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.balance-text {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.close-button-container {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+
 }
 </style>
