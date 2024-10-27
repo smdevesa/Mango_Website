@@ -84,9 +84,9 @@
         <v-card-title class="headline">Confirmar eliminación</v-card-title>
         <v-card-text>¿Estás seguro de que quieres eliminar esta tarjeta?</v-card-text>
         <v-card-actions>
+          <v-btn class="cancel-button" text @click="closeConfirmDialog">Cancelar</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="closeConfirmDialog">Cancelar</v-btn>
-          <v-btn color="red darken-1" text @click="confirmRemove">Eliminar</v-btn>
+          <v-btn class="confirm-button" text @click="confirmRemove">Eliminar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -97,12 +97,10 @@
 import { ref, computed } from 'vue';
 import ReusableCard from '../common/ReusableCard.vue';
 import CardDisplay from '../common/CardDisplay.vue';
-import ReusableInput from '../common/ReusableInput.vue'; // Importa el componente ReusableInput
+import ReusableInput from '../common/ReusableInput.vue';
 import { useCardStore } from '../../store/cardStore';
 
-// Variables reactivas
-
-const cardStore = useCardStore(); // Importa el store de tarjetas
+const cardStore = useCardStore();
 const cardName = ref('');
 const cardNumber = ref('');
 const expirationDate = ref('');
@@ -112,7 +110,6 @@ const showConfirmDialog = ref(false);
 const cardToRemove = ref(null);
 const cards = computed(() => cardStore.getCards);
 
-// Reglas de validación
 const rules = {
   required: (v) => !!v || 'Este campo es requerido',
   cardNumber: (v) => (v && v.replace(/\s/g, '').length === 16) || 'Número de tarjeta inválido',
@@ -146,7 +143,6 @@ const addCard = () => {
   }
 };
 
-
 const openConfirmDialog = (id) => {
   cardToRemove.value = id;
   showConfirmDialog.value = true;
@@ -163,7 +159,6 @@ const confirmRemove = () => {
     closeConfirmDialog();
   }
 };
-
 </script>
 
 <style scoped>
@@ -172,6 +167,7 @@ const confirmRemove = () => {
   height: 150px;
   margin-right: 10px;
 }
+
 .custom-button {
   border-radius: 55px;
   background-color: #3D3C37;
@@ -182,6 +178,7 @@ const confirmRemove = () => {
   text-transform: none; 
   font-size: 20px;
 }
+
 .card-image {
   display: block;
   margin: 0 auto 20px;
@@ -192,7 +189,8 @@ const confirmRemove = () => {
   margin: 20px auto;
   color: #FFFBE6;
   background: #F19743;
-  font-size: 17px;
+  font-size: 20px;
+  text-transform: none; /* Solo primera letra en mayúscula */
 }
 
 .scrollable {
@@ -208,9 +206,10 @@ const confirmRemove = () => {
   position: relative; 
 }
 
-.remove-button{
+.remove-button {
   position: absolute;
   top: 10px;
+  right: 10px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -221,16 +220,21 @@ const confirmRemove = () => {
   cursor: pointer;
 }
 
-.remove-button {
-  right: 10px;
-}
-
-.button-container .v-btn {
-  text-transform: none; /* Quita las mayúsculas de Vuetify */
-}
-
 .remove-button:hover {
-  background: rgba(255, 0, 0, 0.1); /* Fondo rojo suave al pasar el mouse */
+  background: rgba(255, 0, 0, 0.1);
 }
 
+.cancel-button {
+  color: green; /* Ajusta el color si lo deseas */
+  justify-content: flex-start; /* Alinea a la izquierda */
+  font-size: 16px;
+  text-transform: none;
+}
+
+.confirm-button {
+  color: red; /* Ajusta el color si lo deseas */
+  justify-content: flex-end; /* Alinea a la derecha */
+  font-size: 16px;
+  text-transform: none;
+}
 </style>

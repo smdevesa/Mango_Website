@@ -1,37 +1,40 @@
 <template>
   <v-container>
     <ReusableCard title="Cobrar">
-    <v-form @submit.prevent="generarEnlace">
-      <ReusableInput
-        v-model="monto"
-        label="Monto a cobrar"
-        type="number"
-        required
-      ></ReusableInput>
-      <v-textarea
-        v-model="descripcion"
-        label="Descripción del cobro"
-        required
-      ></v-textarea>
-      <v-btn class="button-container" @click="generarEnlace">
-        Generar enlace de pago
-      </v-btn>
-    </v-form>
-    <v-alert
-      v-if="enlaceGenerado"
-      type="success"
-      class="mt-4"
-    >
-      Enlace de pago generado: <a :href="enlaceGenerado" target="_blank">{{ enlaceGenerado }}</a>
-    </v-alert>
-    <v-alert
-      v-if="mostrarAlertaMonto"
-      type="error"
-      class="mt-4"
-    >
-      Debe ingresar un monto para generar un enlace
-    </v-alert>
-  </ReusableCard>
+      <v-form @submit.prevent="generarEnlace">
+        <ReusableInput
+          v-model="monto"
+          label="Monto a cobrar"
+          type="number"
+          required
+        ></ReusableInput>
+        <ReusableInput
+          v-model="descripcion"
+          label="Descripción del cobro"
+          required
+          style="height: 250px;"
+        ></ReusableInput>
+        <div class="button-container">
+          <v-btn @click="generarEnlace">
+            Generar enlace de pago
+          </v-btn>
+        </div>
+      </v-form>
+      <v-alert
+        v-if="enlaceGenerado"
+        type="success"
+        class="mt-4"
+      >
+        Enlace de pago generado: <a :href="enlaceGenerado" target="_blank">{{ enlaceGenerado }}</a>
+      </v-alert>
+      <v-alert
+        v-if="mostrarAlertaMonto"
+        type="error"
+        class="mt-4"
+      >
+        Debe ingresar un monto para generar un enlace
+      </v-alert>
+    </ReusableCard>
   </v-container>
 </template>
 
@@ -71,9 +74,15 @@ const generarEnlace = () => {
 
 <style scoped>
 .button-container {
-  display: block;
+  display: flex; /* Cambiado a flexbox para centrar el botón */
+  justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+.button-container .v-btn {
   color: #FFFBE6;
   background: #F19743;
-  font-size: 17px;
+  font-size: 19px;
+  text-transform: none;
+  margin-top: -4%;
 }
 </style>

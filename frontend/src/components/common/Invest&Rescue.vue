@@ -18,12 +18,12 @@
 
     <!-- Botones de acción -->
     <div class="action-buttons">
-      <v-btn color="secondary" @click="openRedeemDialog">Rescatar</v-btn>
+      <v-btn class="action-button" color="secondary" @click="openRedeemDialog">Rescatar</v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="openSubscribeDialog">Invertir</v-btn>
+      <v-btn class="action-button" color="primary" @click="openSubscribeDialog">Invertir</v-btn>
     </div>
 
-    <!-- Diálogo de SUSCRIPCION -->
+    <!-- Diálogo de SUSCRIPCIÓN -->
     <v-dialog v-model="subscribeDialog" max-width="400px">
       <v-card>
         <v-card-title>Suscribir Inversión</v-card-title>
@@ -156,15 +156,15 @@ const investedBalance = computed(() => {
 }
 
 .action-buttons {
-  margin-top: 1rem;
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   width: 100%;
-  text-transform: none;
 }
 
-.action-buttons .v-btn {
-  text-transform: none; /* Quita las mayúsculas de Vuetify */
+.action-button {
+  font-size: 18px; /* Tamaño de texto aumentado */
+  text-transform: none; /* Quita las mayúsculas */
 }
 
 .error-message {
