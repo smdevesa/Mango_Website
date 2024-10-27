@@ -49,9 +49,7 @@ const searchQuery = ref('');
 const sortCriteria = ref('date');
 const sortOptions = [
   { text: 'Más reciente', value: 'date' },
-  { text: 'Alfabéticamente', value: 'name' },
-  { text: 'Ingresos', value: 'income' },
-  { text: 'Egresos', value: 'expense' },
+  { text: 'Alfabéticamente', value: 'name' }
 ];
 
 const transactions = ref([
@@ -109,11 +107,6 @@ const sortTransactions = () => {
       return new Date(b.date) - new Date(a.date);
     } else if (sortCriteria.value === 'name') {
       return a.name.localeCompare(b.name);
-    }
-    else if (sortCriteria.value === 'income') {
-      return b.amount - a.amount; // Ordena de mayor a menor
-    } else if (sortCriteria.value === 'expense') {
-      return a.amount - b.amount; // Ordena de menor a mayor
     }
   });
 };

@@ -4,14 +4,12 @@
     <PillButton
       name="Dinero disponible"
       :value="availableBalance"
-      icon="mdi-cash"
       icon-color="#4CAF50"
       prefix="$"
     />
     <PillButton
-      name="Invertido"
+      name="Dinero invertido"
       :value="investedBalance"
-      icon="mdi-chart-line"
       icon-color="#2196F3"
       prefix="$"
     />
@@ -95,7 +93,7 @@ const openRedeemDialog = () => {
 };
 
 const submitSubscription = () => {
-  const amount = parseFloat(subscribeAmount.value);
+  let amount = parseFloat(subscribeAmount.value);
   if (isNaN(amount) || amount <= 0) {
     subscribeError.value = 'Por favor, ingrese un monto válido.';
     return;
@@ -104,7 +102,11 @@ const submitSubscription = () => {
     subscribeError.value = 'Saldo insuficiente.';
     return;
   }
-  
+  const investedSection = balanceStore.users[userStore.currentUser.username].sections.find(s => s.label === 'Invertido');
+  if(investedSection !== undefined) {
+    amount += investedSection.value;
+    balanceStore.removeSection(userStore.currentUser.username, balanceStore.users[userStore.currentUser.username].sections.findIndex(s => s.label === 'Invertido'));
+  }
   balanceStore.addSection(userStore.currentUser.username, {
     label: 'Invertido',
     value: amount,

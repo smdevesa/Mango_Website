@@ -55,6 +55,29 @@ export const useBalanceStore = defineStore('balance', {
     // Guarda los balances de usuarios en localStorage
     saveToLocalStorage() {
       localStorage.setItem('userBalances', JSON.stringify(this.users));
+    },
+    addMoney(username, amount) {
+      if (this.users[username]) {
+        this.users[username].totalBalance += amount;
+        this.users[username].sections[0].value += amount;
+        this.recalculatePercentages(username);
+        this.saveToLocalStorage();
+      }
+    },
+    transferMoney(fromUser, toUser, amount) {
+      if (this.users[fromUser] && this.users[toUser]) {
+        if (amount <= this.availableBalance(fromUser)) {
+          this.users[fromUser].totalBalance -= amount;
+          this.users[fromUser].sections[0].value -= amount;
+          this.users[toUser].totalBalance += amount;
+          this.users[toUser].sections[0].value += amount;
+          this.recalculatePercentages(fromUser);
+          this.recalculatePercentages(toUser);
+          this.saveToLocalStorage();
+          return true;
+        }
+      }
+      return false;
     }
   },
   getters: {

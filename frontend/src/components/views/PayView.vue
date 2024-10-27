@@ -49,19 +49,18 @@
   const paymentLink = ref('');
   const invalidLink = ref(false);
   const showPaymentOptions = ref(false);
-  const selectedLink = ref({ amount: 0, description: '' });
+  let selectedLink = null;
   const payStore = usePayStore();
-  const availableBalance = balanceStore.totalBalance(userStore.currentUser.username);
   
   const proceedToPayment = () => {
     showPaymentOptions.value = false;
     const linkId = extractLinkId(paymentLink.value);
-    const link = payStore.getLink(linkId);
-    if (link !== undefined) {
-      selectedLink.value = link;
+    selectedLink = payStore.getLink(linkId);
+    if (selectedLink !== undefined) {
       showPaymentOptions.value = true;
       invalidLink.value = false;
     } else {
+      selectedLink = null;
       invalidLink.value = true;
     }
   };
@@ -73,8 +72,8 @@
   };
   
   const payWithAvailableBalance = () => {
-    if (availableBalance.value >= selectedLink.value.amount) {
-      availableBalance.value -= selectedLink.value.amount;
+    if(!selectedLink) return;
+    if (balanceStore.transferMoney(userStore.currentUser.username, selectedLink.owner, selectedLink.amount)) {
       payStore.removeLink(selectedLink.value.id);
       showPaymentOptions.value = false;
       alert('Payment made with available balance.');

@@ -68,7 +68,7 @@ const generarEnlace = () => {
   enlaceGenerado.value = `${baseUrl}?${params.toString()}`;
 
   // Guarda el enlace en el store
-  payStore.addLink(userStore.currentUser.username, linkId, monto.value, descripcion.value);
+  payStore.addLink(userStore.currentUser.username, linkId, parseFloat(monto.value), descripcion.value);
 };
 </script>
 
