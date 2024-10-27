@@ -56,12 +56,6 @@ const router = createRouter({
           meta: { requiresAuth: true } // Ruta protegida
         },
         {
-          path: '/invest',
-          name: 'invest',
-          component: () => import('../components/views/InvestView.vue'),
-          meta: { requiresAuth: true } // Ruta protegida
-        },
-        {
           path: '/cards',
           name: 'cards',
           component: () => import('../components/views/AddCardView.vue'),
@@ -80,6 +74,13 @@ const router = createRouter({
           meta: { requiresAuth: true } // Ruta protegida
         },
       ]
+    },
+    {
+      path: '/payment/:id',
+      props: true,
+      name: 'payment',
+      component: () => import('../components/views/PaymentView.vue'),
+      meta: { requiresAuth: true } // Ruta protegida
     },
     {
       path: '/:pathMatch(.*)*',

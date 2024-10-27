@@ -56,7 +56,7 @@ const menuItems = [
   { title: 'Transferencias', route: '/transfer', icon: 'mdi-bank-transfer' },
   { title: 'Historial', route: '/history', icon: 'mdi-history' },
   { title: 'Cobrar', route: '/charge', icon: 'mdi-cash-register' },
-  { title: 'Inversiones', route: '/invest', icon: 'mdi-chart-line' },
+  { title: 'Pagar', route: '/pay', icon: 'mdi-cash-fast' },
   { title: 'Mis tarjetas', route: '/cards', icon: 'mdi-credit-card' }
 ];
 
@@ -119,6 +119,6 @@ const confirmLogoutAction = () => {
 .logo {
   width: 80%; /* Ajusta el tamaño del logo */
   max-width: 100px; /* Tamaño máximo */
-  margin-top: 200px; /* TRANSITORIO */
+  margin-top: 70px; /* TRANSITORIO */
 }
 </style>

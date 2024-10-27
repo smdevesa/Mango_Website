@@ -61,11 +61,8 @@ const generarEnlace = () => {
 
   // Genera un ID único para el enlace (esto es solo un ejemplo; reemplázalo con tu lógica)
   const linkId = `${Date.now()}`;
-  const baseUrl = domain + '/pay';
-  const params = new URLSearchParams({
-    id: linkId
-  });
-  enlaceGenerado.value = `${baseUrl}?${params.toString()}`;
+  const baseUrl = `http://` + domain.replace(/^https?:\/\//, '') + '/payment/';
+  enlaceGenerado.value = `${baseUrl}${linkId}`;
 
   // Guarda el enlace en el store
   payStore.addLink(userStore.currentUser.username, linkId, parseFloat(monto.value), descripcion.value);

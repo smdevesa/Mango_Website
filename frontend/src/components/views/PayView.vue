@@ -24,41 +24,25 @@
         The payment link is not valid.
       </v-alert>
   
-      <v-dialog v-model="showPaymentOptions" max-width="400px">
-        <v-card>
-          <v-card-title class="headline">Select a payment method</v-card-title>
-          <v-card-text>
-            <p><strong>Amount:</strong> ${{ selectedLink.amount }}</p>
-            <p><strong>Description:</strong> {{ selectedLink.description }}</p>
-            <v-btn @click="payWithAvailableBalance">Available Balance: ${{ availableBalance }}</v-btn>
-            <v-btn @click="payWithCard">Card</v-btn>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
     </v-container>
   </template>
   
   <script setup>
   import { ref } from 'vue';
   import { usePayStore } from '@/store/payStore'; // Import the pay link store
-  import { useBalanceStore } from '@/store/balanceStore';
-  import { useUserStore } from '@/store/userStore';
+  import router from '@/router';
   
-  const balanceStore = useBalanceStore();
-  const userStore = useUserStore();
   const paymentLink = ref('');
   const invalidLink = ref(false);
-  const showPaymentOptions = ref(false);
   let selectedLink = null;
   const payStore = usePayStore();
-  
+
   const proceedToPayment = () => {
-    showPaymentOptions.value = false;
     const linkId = extractLinkId(paymentLink.value);
     selectedLink = payStore.getLink(linkId);
     if (selectedLink !== undefined) {
-      showPaymentOptions.value = true;
       invalidLink.value = false;
+      router.push(`/payment/${linkId}`);
     } else {
       selectedLink = null;
       invalidLink.value = true;
@@ -67,26 +51,11 @@
   
   // Function to extract the `id` from the payment link
   const extractLinkId = (link) => {
-    const urlParams = new URLSearchParams(new URL(link).search);
-    return urlParams.get('id');
+    const segments = new URL(link).pathname.split('/');
+    return segments[segments.length - 1]; // Devuelve el último segmento después de "payment/"
   };
+
   
-  const payWithAvailableBalance = () => {
-    if(!selectedLink) return;
-    if (balanceStore.transferMoney(userStore.currentUser.username, selectedLink.owner, selectedLink.amount)) {
-      payStore.removeLink(selectedLink.value.id);
-      showPaymentOptions.value = false;
-      alert('Payment made with available balance.');
-    } else {
-      alert('Insufficient funds.');
-    }
-  };
-  
-  const payWithCard = () => {
-    payStore.removeLink(selectedLink.value.id);
-    showPaymentOptions.value = false;
-    alert('Payment made with card.');
-  };
   </script>
   
   <style scoped>
