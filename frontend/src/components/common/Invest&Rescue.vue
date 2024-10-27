@@ -26,6 +26,7 @@
       <v-card>
         <v-card-title>Suscribir Inversión</v-card-title>
         <v-card-text>
+          <p class="mb-4">El rendimiento diario actual es del {{ dailyReturn }}% </p>
           <ReusableInput
             v-model="subscribeAmount"
             label="Monto a invertir"
@@ -33,11 +34,14 @@
             type="number"
           ></ReusableInput>
           <p v-if="subscribeError" class="error-message">{{ subscribeError }}</p>
+          <p v-if="subscribeAmount > 0" class="mt-4">
+          Retorno diario estimado: ${{ calculateDailyReturn(subscribeAmount).toFixed(2) }}
+        </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="subscribeDialog = false">Cancelar</v-btn>
-          <v-btn color="blue darken-1" text @click="submitSubscription">Confirmar</v-btn>
+          <v-btn color="blue darken-1" text @click="subscribeDialog = false"> Cancelar</v-btn>
+          <v-btn color="blue darken-1" text @click="submitSubscription"> Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -81,6 +85,11 @@ const subscribeAmount = ref(0);
 const redeemAmount = ref(0);
 const subscribeError = ref('');
 const redeemError = ref('');
+const dailyReturn = 0.05; //Tasa de retorno diaria
+
+const calculateDailyReturn = (amount) => {
+  return (amount * dailyReturn) / 100 ;
+};
 
 const openSubscribeDialog = () => {
   subscribeDialog.value = true;

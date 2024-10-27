@@ -6,6 +6,7 @@
           v-model="monto"
           label="Monto a cobrar"
           type="number"
+          prefix="$"
           required
         ></ReusableInput>
         <ReusableInput

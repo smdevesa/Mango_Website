@@ -1,18 +1,18 @@
 <template>
     <v-container>
-      <h1>PAGINA DE PAGO</h1>
+      <ReusableCard title="Pagar">
       <v-form @submit.prevent="proceedToPayment">
-        <v-text-field
+        <ReusableInput
           v-model="paymentLink"
-          label="Enter the payment link"
+          label="Ingrese el link de pago"
           required
-        ></v-text-field>
+        ></ReusableInput>
   
         <v-btn
           class="button-container"
           @click="proceedToPayment"
         >
-          Continue
+          Continuar
         </v-btn>
       </v-form>
   
@@ -21,9 +21,9 @@
         type="error"
         class="mt-4"
       >
-        The payment link is not valid.
+        El link de pago no es válido 
       </v-alert>
-  
+    </ReusableCard>
     </v-container>
   </template>
   
@@ -64,6 +64,7 @@
     color: #FFFBE6;
     background: #F19743;
     font-size: 17px;
+    text-transform: none;
   }
   </style>
   
