@@ -1,8 +1,8 @@
 <!-- TransferNewAccountView.vue -->
 <template>
       <TransferForm
-        title="Transferir por CVU o Alias"
-        inputLabel="Ingrese CVU, CBU o Alias"
+        title="Transferir por CBU, CVU o Alias"
+        inputLabel="Ingrese CBU, CVU o Alias"
         @transfer="handleTransfer"
       />
   </template>

@@ -71,7 +71,9 @@
               >
                 <TransactionItem
                   logo-url="https://via.placeholder.com/50"
-                  :name="transaction.fromUser"
+                  :name="userStore.currentUser.username === transaction.toUser
+                          ? transaction.fromUser
+                          : transaction.toUser"
                   :date="formatDate(transaction.date)"
                   :amount="userStore.currentUser.username === transaction.toUser
                           ? transaction.amount 

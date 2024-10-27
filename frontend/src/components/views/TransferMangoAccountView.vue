@@ -12,10 +12,12 @@
 import TransferForm from '../common/TransferForm.vue';
 import { useUserStore } from '@/store/userStore';
 import { useBalanceStore } from '@/store/balanceStore';
+import { useHistoryStore } from '@/store/historyStore';
 import { ref } from 'vue';
 
 const userStore = useUserStore();
 const balanceStore = useBalanceStore();
+const historyStore = useHistoryStore();
 
 const error = ref('');
 
@@ -40,6 +42,7 @@ const handleTransfer = async ({ recipientUsername, amount }) => {
 
   if (success) {
     console.log(`Transferencia exitosa: ${amount} de ${senderUsername} a ${recipientUsername}`);
+    historyStore.addTransaction(senderUsername, recipientUsername, amount, 'Transferencia', new Date().toISOString());
     alert('Transferencia exitosa.');
     // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito
   } else {

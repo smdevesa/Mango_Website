@@ -24,6 +24,7 @@
             placeholder="Ingrese el monto"
             type="number"
           />
+          <p>Saldo disponible: ${{ balanceStore.formattedBalance(userStore.currentUser.username) }}</p>
           <v-btn class="continue-button" @click="handleContinue">Continuar</v-btn>
         </ReusableCard>
       </v-col>
@@ -36,9 +37,14 @@ import { ref, defineEmits, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 import ReusableCard from './ReusableCard.vue';
 import ReusableInput from './ReusableInput.vue';
+import { useUserStore } from '@/store/userStore';
+import { useBalanceStore } from '@/store/balanceStore';
 
 const router = useRouter();
 const emit = defineEmits(['transfer']);
+const userStore = useUserStore();
+const balanceStore = useBalanceStore();
+
 
 // Propiedades del componente
 const props = defineProps({
