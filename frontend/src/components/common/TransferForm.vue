@@ -14,11 +14,17 @@
       <v-col cols="7" class="text-center">
         <ReusableCard :title="title">
           <ReusableInput
-            v-model="inputValue"
+            v-model="recipientUsername"
             :label="inputLabel"
             placeholder="Ingrese el dato"
           />
-          <v-btn class="continue-button" @click="">Continuar</v-btn>
+          <ReusableInput
+            v-model="amount"
+            label="Monto a transferir"
+            placeholder="Ingrese el monto"
+            type="number"
+          />
+          <v-btn class="continue-button" @click="handleContinue">Continuar</v-btn>
         </ReusableCard>
       </v-col>
     </v-row>
@@ -41,11 +47,21 @@ const props = defineProps({
 });
 
 // Valor del input
-const inputValue = ref('');
+const recipientUsername = ref('');
+const amount = ref('');
 
 // Función para volver a la página anterior
 const goBack = () => {
   router.back();
+};
+
+const handleContinue = () => {
+  if (recipientUsername.value && amount.value) {
+    emit('transfer', {
+      recipientUsername: recipientUsername.value,
+      amount: Number(amount.value)
+    });
+  }
 };
 </script>
 

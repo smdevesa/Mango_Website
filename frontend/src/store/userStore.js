@@ -108,6 +108,9 @@ export const useUserStore = defineStore('user', () => {
 
   } 
 
+  const userExists = (username) => {
+    return users.value.some(user => user.username === username);
+  };
 
-  return { users, currentUser, error, loading, register, login, logout, isLoggedIn, aliasIsUsed};
+  return { users, currentUser, error, loading, register, login, logout, isLoggedIn, aliasIsUsed, userExists };
 });

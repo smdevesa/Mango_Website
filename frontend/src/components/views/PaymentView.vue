@@ -101,13 +101,13 @@ const payWithAvailableBalance = () => {
   if (!selectedLink.value) return;
 
   if (balanceStore.transferMoney(userStore.currentUser.username, selectedLink.value.owner, selectedLink.value.amount)) {
-    historyStore.addTransaction({
-      fromUser: userStore.currentUser.username,
-      toUser: selectedLink.value.owner,
-      amount: selectedLink.value.amount,
-      description: selectedLink.value.description,
-      date: new Date().toISOString(),
-    });
+    historyStore.addTransaction(
+      userStore.currentUser.username,
+      selectedLink.value.owner,
+      selectedLink.value.amount,
+      selectedLink.value.description,
+      new Date().toISOString()
+    );
     payStore.removeLink(selectedLink.value.id);
     alert('Pago realizado con balance disponible.');
     router.push('/home');
@@ -120,14 +120,13 @@ const payWithCard = (cardId) => {
   const card = cardStore.getCards.find(c => c.id === cardId);
   if (!card) return;
 
-  historyStore.addTransaction({
-    fromUser: userStore.currentUser.username,
-    toUser: selectedLink.value.owner,
-    amount: selectedLink.value.amount,
-    description: selectedLink.value.description,
-    date: new Date().toISOString(),
-    method: `Tarjeta ${card.number}`
-  });
+  historyStore.addTransaction(
+    userStore.currentUser.username,
+    selectedLink.value.owner,
+    selectedLink.value.amount,
+    selectedLink.value.description,
+    new Date().toISOString()
+  );
   
   balanceStore.addMoney(selectedLink.value.owner, selectedLink.value.amount);
   payStore.removeLink(selectedLink.value.id);

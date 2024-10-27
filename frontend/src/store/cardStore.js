@@ -1,43 +1,38 @@
 import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
+import { useUserStore } from './userStore';
 
-export const useCardStore = defineStore('card', {
-  state: () => ({
-    cards: JSON.parse(localStorage.getItem('cards')) || [],
-  }),
+export const useCardStore = defineStore('card', () => {
+  const userStore = useUserStore();
+  const cardsByUser = ref(JSON.parse(localStorage.getItem('cardsByUser')) || {});
 
-  actions: {
-    addCard(card) {
-      this.cards.push(card);
-      this.saveCards();
-    },
+  const saveToLocalStorage = () => {
+    localStorage.setItem('cardsByUser', JSON.stringify(cardsByUser.value));
+  };
 
-    removeCard(id) {
-      this.cards = this.cards.filter(card => card.id !== id);
-      this.saveCards();
-    },
+  const getCards = computed(() => {
+    const currentUsername = userStore.currentUser?.username;
+    return currentUsername ? (cardsByUser.value[currentUsername] || []) : [];
+  });
 
-    updateCard(updatedCard) {
-      const index = this.cards.findIndex(card => card.id === updatedCard.id);
-      if (index !== -1) {
-        this.cards[index] = updatedCard;
-        this.saveCards();
+  const addCard = (card) => {
+    const currentUsername = userStore.currentUser?.username;
+    if (currentUsername) {
+      if (!cardsByUser.value[currentUsername]) {
+        cardsByUser.value[currentUsername] = [];
       }
-    },
+      cardsByUser.value[currentUsername].push(card);
+      saveToLocalStorage();
+    }
+  };
 
-    saveCards() {
-      localStorage.setItem('cards', JSON.stringify(this.cards));
-    },
+  const removeCard = (cardId) => {
+    const currentUsername = userStore.currentUser?.username;
+    if (currentUsername && cardsByUser.value[currentUsername]) {
+      cardsByUser.value[currentUsername] = cardsByUser.value[currentUsername].filter(card => card.id !== cardId);
+      saveToLocalStorage();
+    }
+  };
 
-    loadCards() {
-      const storedCards = localStorage.getItem('cards');
-      if (storedCards) {
-        this.cards = JSON.parse(storedCards);
-      }
-    },
-  },
-
-  getters: {
-    getCards: (state) => state.cards,
-    getCardById: (state) => (id) => state.cards.find(card => card.id === id),
-  },
+  return { getCards, addCard, removeCard };
 });
