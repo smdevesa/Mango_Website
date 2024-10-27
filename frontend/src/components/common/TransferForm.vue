@@ -45,11 +45,14 @@ const emit = defineEmits(['transfer']);
 const userStore = useUserStore();
 const balanceStore = useBalanceStore();
 
-
 // Propiedades del componente
 const props = defineProps({
   title: String,
   inputLabel: String,
+  transferType: {
+    type: String,
+    default: 'internal'
+  }
 });
 
 // Valor del input
@@ -63,10 +66,19 @@ const goBack = () => {
 
 const handleContinue = () => {
   if (recipientUsername.value && amount.value) {
-    emit('transfer', {
-      recipientUsername: recipientUsername.value,
-      amount: Number(amount.value)
-    });
+    if (props.transferType === 'internal') {
+      // Para transferencias entre usuarios Mango
+      emit('transfer', {
+        recipientUsername: recipientUsername.value,
+        amount: Number(amount.value)
+      });
+    } else {
+      // Para transferencias por CVU o alias
+      emit('transfer', {
+        recipientId: recipientUsername.value,
+        amount: Number(amount.value)
+      });
+    }
   }
 };
 </script>

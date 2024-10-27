@@ -57,41 +57,55 @@
         />
       </v-form>
       <!-- Lista de contactos frecuentes -->
-      <v-list class="transparent-background">
-        <UserItem
-          v-for="(contact, index) in filteredContacts"
-          :key="index"
-          :first-name="contact.firstName"
-          :last-name="contact.lastName"
+      <div class="scrollable">
+        <div v-if="filteredContacts.length === 0">
+          No hay contactos frecuentes.
+        </div>
+      <div v-else>
+        <v-list class="transparent-background">
+          <UserItem
+            v-for= "contact in filteredContacts"
+          :key="contact.username"
+          :username="contact.username"
         />
-      </v-list>
+        </v-list>
+      </div>
+      </div>
     </ReusableCard>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore';
+import { useFrequentContactsStore } from '@/store/frequentContactsStore';
 import ReusableCard from '../common/ReusableCard.vue';
 import UserItem from '../common/UserItem.vue';
 import mangoLogo from '@/assets/mangoLogo.png';
 import ReusableInput from '../common/ReusableInput.vue';
 
 const router = useRouter();
+const userStore = useUserStore();
+const frequentContactsStore = useFrequentContactsStore();
 
 const searchQuery = ref('');
-const contacts = ref([
-  { firstName: 'Juan', lastName: 'Pérez' },
-  { firstName: 'María', lastName: 'García' },
-  { firstName: 'Carlos', lastName: 'Fernández' },
-  { firstName: 'Laura', lastName: 'Martínez' },
-  { firstName: 'Ana', lastName: 'López' },
-]);
-const filteredContacts = ref([...contacts.value]); // Almacena los contactos filtrados
 
-const goHome = () => {
-  router.push('/home'); // Cambia esta ruta según sea necesario
-};
+// Obtener contactos frecuentes del usuario actual
+const frequentContacts = computed(() => {
+  if (!userStore.currentUser) return [];
+  return frequentContactsStore.getContacts(userStore.currentUser.username);
+});
+
+// Filtrar contactos según la búsqueda
+const filteredContacts = computed(() => {
+  if (!searchQuery.value) return frequentContacts.value;
+  
+  const query = searchQuery.value.toLowerCase();
+  return frequentContacts.value.filter(contact => 
+    contact.username.toLowerCase().includes(query)
+  );
+});
 
 const goToContacts = () => {
   // Navegar a la vista de contactos Mango
@@ -106,18 +120,17 @@ const goToBankDetails = () => {
 const filterContacts = () => {
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase(); // warning?
-    filteredContacts.value = contacts.value.filter(contact =>
-      contact.firstName.toLowerCase().includes(query) ||
-      contact.lastName.toLowerCase().includes(query)
+    filteredContacts.value = frequentContacts.value.filter(contact =>
+      contact.username.toLowerCase().includes(query)
     );
   } else {
-    filteredContacts.value = [...contacts.value]; // Si no hay búsqueda, muestra todos los contactos
+    filteredContacts.value = [...frequentContacts.value]; // Si no hay búsqueda, muestra todos los contactos
   }
 };
 
 // Inicializa los contactos filtrados al cargar el componente
 onMounted(() => {
-  filteredContacts.value = [...contacts.value];
+  filteredContacts.value = [...frequentContacts.value];
 });
 </script>
 
@@ -175,5 +188,10 @@ onMounted(() => {
 
 .top-row {
   margin-bottom: 20px;
+}
+
+.scrollable {
+  max-height: 500px;
+  overflow-y: auto;  
 }
 </style>

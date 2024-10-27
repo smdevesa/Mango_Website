@@ -112,5 +112,24 @@ export const useUserStore = defineStore('user', () => {
     return users.value.some(user => user.username === username);
   };
 
-  return { users, currentUser, error, loading, register, login, logout, isLoggedIn, aliasIsUsed, userExists };
+  const findUserByCBUCVUOrAlias = (identifier) => {
+    return users.value.find(user => 
+      user.cvu === identifier || 
+      user.alias === identifier
+    );
+  };
+
+  return { 
+    users, 
+    currentUser, 
+    error, 
+    loading, 
+    register, 
+    login, 
+    logout, 
+    isLoggedIn, 
+    aliasIsUsed, 
+    userExists,
+    findUserByCBUCVUOrAlias
+  };
 });

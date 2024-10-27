@@ -49,6 +49,12 @@ const drawChart = () => {
         },
         tooltip: {
           enabled: true,
+          callbacks: {
+            label: function(context) {
+              
+              return `${context.label}: ${Math.round(context.raw)}%`;
+            }
+          }
         },
       },
       maintainAspectRatio: false,

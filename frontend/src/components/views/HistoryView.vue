@@ -33,6 +33,11 @@
         </v-col>
       </v-row>
 
+      <div class="scrollable">
+        <div v-if="sortedTransactions.length === 0"> 
+          No hay transacciones recientes. 
+        </div>
+      <div v-else >  
       <div
         v-for="(transaction, index) in sortedTransactions"
         :key="index"
@@ -44,6 +49,8 @@
           :amount="transaction.displayAmount"
         />
       </div>
+    </div> 
+    </div>
     </ReusableCard>
   </v-container>
 </template>
@@ -149,5 +156,10 @@ onMounted(() => {
 <style scoped>
 .search-row {
   margin-bottom: 15px;
+}
+
+.scrollable {
+  max-height: 500px;
+  overflow-y: auto;  
 }
 </style>

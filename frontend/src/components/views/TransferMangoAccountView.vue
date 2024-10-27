@@ -3,6 +3,7 @@
   <TransferForm
     title="Transferir a contacto Mango"
     inputLabel="Ingrese el nombre de usuario del contacto Mango"
+    :transferType="'internal'"  
     @transfer="handleTransfer"
   />
   <p v-if="error" class="error-message">{{ error }}</p>
@@ -13,23 +14,27 @@ import TransferForm from '../common/TransferForm.vue';
 import { useUserStore } from '@/store/userStore';
 import { useBalanceStore } from '@/store/balanceStore';
 import { useHistoryStore } from '@/store/historyStore';
+import { useFrequentContactsStore } from '@/store/frequentContactsStore';
 import { ref } from 'vue';
 
 const userStore = useUserStore();
 const balanceStore = useBalanceStore();
 const historyStore = useHistoryStore();
+const frequentContactsStore = useFrequentContactsStore();
 
 const error = ref('');
 
 const handleTransfer = async ({ recipientUsername, amount }) => {
   error.value = '';
   
-  if (!userStore.currentUser) {
-    error.value = 'Debes iniciar sesión para realizar una transferencia.';
-    return;
-  }
 
   const senderUsername = userStore.currentUser.username;
+
+   // Verificar que no esté transfiriendo a sí mismo
+   if (recipientUsername === senderUsername) {
+    error.value = 'No puedes transferir dinero a tu propia cuenta';
+    return;
+  }
   
   // Verificar si el usuario destinatario existe
   if (!userStore.userExists(recipientUsername)) {
@@ -41,8 +46,9 @@ const handleTransfer = async ({ recipientUsername, amount }) => {
   const success = balanceStore.transferMoney(senderUsername, recipientUsername, amount);
 
   if (success) {
-    console.log(`Transferencia exitosa: ${amount} de ${senderUsername} a ${recipientUsername}`);
     historyStore.addTransaction(senderUsername, recipientUsername, amount, 'Transferencia', new Date().toISOString());
+    // Agregar a contactos frecuentes
+    frequentContactsStore.addContact(senderUsername, recipientUsername);
     alert('Transferencia exitosa.');
     // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito
   } else {
