@@ -2,7 +2,7 @@
   <v-container>
 
     <!-- ReusableCard para transferir -->
-    <ReusableCard title="Transferir Fondos">
+    <ReusableCard title="Transferir fondos">
       <v-row>
         <v-col cols="6">
           <!-- Botón para contactos Mango -->
@@ -37,7 +37,7 @@
                 mdi-bank
               </v-icon>
               <div class="transfer-text">
-                CBU, CVU o Alias
+                CBU, CVU o alias
               </div>
             </div>
           </v-btn>
@@ -46,7 +46,7 @@
     </ReusableCard>
 
     <!-- ReusableCard para buscar contactos frecuentes -->
-    <ReusableCard title="Buscar Contactos Frecuentes">
+    <ReusableCard title="Buscar contactos frecuentes">
       <v-form>
         <ReusableInput 
           v-model="searchQuery"

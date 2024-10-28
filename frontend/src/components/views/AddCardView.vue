@@ -90,6 +90,20 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Agregar snackbar para mensajes -->
+    <v-snackbar
+      v-model="snackbar"
+      :color="snackbarColor"
+      location="top"
+    >
+      {{ snackbarMessage }}
+      <template v-slot:actions>
+        <v-btn color="white" variant="text" @click="snackbar = false">
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -127,8 +141,16 @@ const formattedCardNumber = computed({
   },
 });
 
-const addCard = () => {
-  if (valid.value) {
+const form = ref(null); // Referencia al formulario
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('');
+
+const addCard = async () => {
+  // Validar el formulario antes de continuar
+  const { valid } = await form.value.validate();
+  
+  if (valid) {
     cardStore.addCard({
       id: Date.now(),
       name: cardName.value,
@@ -136,10 +158,23 @@ const addCard = () => {
       expiration: expirationDate.value,
       cvv: cvv.value,
     });
+    
+    // Mostrar mensaje de éxito
+    snackbarMessage.value = 'Tarjeta agregada exitosamente';
+    snackbarColor.value = 'success';
+    snackbar.value = true;
+    
+    // Resetear el formulario
+    form.value.reset();
     cardName.value = '';
     cardNumber.value = '';
     expirationDate.value = '';
     cvv.value = '';
+  } else {
+    // Mostrar mensaje de error
+    snackbarMessage.value = 'Por favor, complete todos los campos correctamente';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
   }
 };
 

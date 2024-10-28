@@ -6,7 +6,19 @@
     :transferType="'external'" 
     @transfer="handleTransfer"
   />
-  <p v-if="error" class="error-message">{{ error }}</p>
+
+  <v-snackbar
+    v-model="snackbar"
+    :color="snackbarColor"
+    location="top"
+  >
+    {{ snackbarMessage }}
+    <template v-slot:actions>
+      <v-btn color="white" variant="text" @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script setup>
@@ -21,39 +33,53 @@ const userStore = useUserStore();
 const balanceStore = useBalanceStore();
 const historyStore = useHistoryStore();
 const frequentContactsStore = useFrequentContactsStore();
-const error = ref('');
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('');
 
 const handleTransfer = async ({ recipientId, amount }) => {
-  error.value = '';
-  
-
-  const senderUsername = userStore.currentUser.username;
+  // Validar que el monto no sea negativo
+  if (amount <= 0) {
+    snackbarMessage.value = 'El monto debe ser mayor a 0';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
+    return;
+  }
 
   // Validar el formato de CVU (18 dígitos) o un alias (formato: palabra.palabra.mango)
   const isCVU = /^\d{18}$/.test(recipientId);
   const isAlias = /^[a-zA-Z0-9]+\.[a-zA-Z0-9]+\.mango$/.test(recipientId);
 
   if (!isCVU && !isAlias) {
-    error.value = 'El formato del CVU o alias no es válido';
+    snackbarMessage.value = 'El formato del CVU o alias no es válido';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
     return;
   }
 
   // Verificar si existe un usuario con ese CVU o alias
   const recipientUser = userStore.findUserByCBUCVUOrAlias(recipientId);
   if (!recipientUser) {
-    error.value = 'No se encontró ninguna cuenta asociada a este CVU o alias';
+    snackbarMessage.value = 'No se encontró ninguna cuenta asociada a este CVU o alias';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
     return;
   }
 
   // Verificar que no esté transfiriendo a sí mismo
+  const senderUsername = userStore.currentUser.username;
   if (recipientUser.username === senderUsername) {
-    error.value = 'No puedes transferir dinero a tu propia cuenta';
+    snackbarMessage.value = 'No puedes transferir dinero a tu propia cuenta';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
     return;
   }
 
   // Verificar que el usuario tiene saldo suficiente
   if (amount > balanceStore.availableBalance(senderUsername)) {
-    error.value = 'No tienes saldo suficiente para realizar esta transferencia';
+    snackbarMessage.value = 'No tienes saldo suficiente para realizar esta transferencia';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
     return;
   }
 
@@ -62,11 +88,14 @@ const handleTransfer = async ({ recipientId, amount }) => {
 
   if (success) {
     historyStore.addTransaction(senderUsername, recipientUser.username, amount, 'Transferencia', new Date().toISOString());
-    // Agregar a contactos frecuentes
     frequentContactsStore.addContact(senderUsername, recipientUser.username);
-    alert('Transferencia exitosa');
+    snackbarMessage.value = 'Transferencia exitosa';
+    snackbarColor.value = 'success';
+    snackbar.value = true;
   } else {
-    error.value = 'No se pudo realizar la transferencia. Por favor, intente nuevamente.';
+    snackbarMessage.value = 'No se pudo realizar la transferencia. Por favor, intente nuevamente.';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
   }
 };
 </script>

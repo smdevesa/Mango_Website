@@ -70,6 +70,20 @@
       </v-col>
     </v-row>
   </v-container>
+
+  <!-- Agregar el snackbar -->
+  <v-snackbar
+    v-model="snackbar"
+    :color="snackbarColor"
+    location="top"
+  >
+    {{ snackbarMessage }}
+    <template v-slot:actions>
+      <v-btn color="white" variant="text" @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script setup>
@@ -116,10 +130,13 @@ const submitForm = () => {
 
     if (!store.error) {
       balanceStore.initUserBalance(username.value); // Crea un balance para el nuevo usuario
-      router.push('/home'); // Redirige al usuario a la página de inicio
+      snackbarMessage.value = 'Registrado con éxito';
+      snackbarColor.value = 'success';
+      snackbar.value = true;
+      setTimeout(() => {
+        router.push('/login'); // Redirige al usuario a la página de inicio después de mostrar el mensaje
+      }, 1500);
     }
-  } else {
-    alert('Por favor, llene todos los campos');
   }
 };
 
@@ -130,6 +147,10 @@ const togglePassword = () => {
 const toggleConfirmPassword = () => {
   showConfirmPassword.value = !showConfirmPassword.value;
 };
+
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('');
 </script>
 
 <style scoped>
@@ -174,6 +195,7 @@ const toggleConfirmPassword = () => {
   border-radius: 20px;
   margin-bottom: 5px;
   font-size: 18px;
+  text-transform: none;
 }
 
 .login a {

@@ -37,8 +37,8 @@
         <v-card-text>¿Estás seguro de que quieres cerrar sesión?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="logoutDialog = false">Cancelar</v-btn>
-          <v-btn color="blue darken-1" text @click="confirmLogoutAction">Confirmar</v-btn>
+          <v-btn color="red" text @click="logoutDialog = false" class="btn-class">Cancelar</v-btn>
+          <v-btn color="blue darken-1" text @click="confirmLogoutAction" class="btn-class">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -120,5 +120,10 @@ const confirmLogoutAction = () => {
   width: 80%; /* Ajusta el tamaño del logo */
   max-width: 100px; /* Tamaño máximo */
   margin-top: 70px; /* TRANSITORIO */
+}
+
+.btn-class {
+  text-transform: none;
+  font-size: 18px;
 }
 </style>

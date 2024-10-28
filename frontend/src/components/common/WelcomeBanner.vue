@@ -8,19 +8,39 @@
     />
     <label class="username">{{ userStore.currentUser.username }}</label>
     <span class="notification-icon" @click="handleNotificationClick">
-      <i class="mdi mdi-bell"></i> <!-- Ícono de notificaciones -->
+      <i class="mdi mdi-bell"></i>
     </span>
   </div>
+
+  <!-- Agregar el snackbar -->
+  <v-snackbar
+    v-model="snackbar"
+    :color="snackbarColor"
+    location="top"
+  >
+    {{ snackbarMessage }}
+    <template v-slot:actions>
+      <v-btn color="white" variant="text" @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script setup>
 import { useUserStore } from '@/store/userStore';
+import { ref } from 'vue';
 
 const userStore = useUserStore();
 
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('');
+
 const handleNotificationClick = () => {
-  // Maneja el evento de clic en el ícono de notificaciones
-  alert("¡Notificaciones clickeadas!");
+  snackbarMessage.value = 'No hay notificaciones pendientes';
+  snackbarColor.value = 'info';
+  snackbar.value = true;
 };
 </script>
 

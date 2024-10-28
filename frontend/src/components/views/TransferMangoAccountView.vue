@@ -6,7 +6,24 @@
     :transferType="'internal'"  
     @transfer="handleTransfer"
   />
-  <p v-if="error" class="error-message">{{ error }}</p>
+  
+  <v-snackbar
+    v-model="snackbar.show"
+    :color="snackbar.color"
+    :timeout="3000"
+    location="top"
+  >
+    {{ snackbar.message }}
+    <template v-slot:actions>
+      <v-btn
+        color="white"
+        variant="text"
+        @click="snackbar.show = false"
+      >
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script setup>
@@ -23,10 +40,22 @@ const historyStore = useHistoryStore();
 const frequentContactsStore = useFrequentContactsStore();
 
 const error = ref('');
+const snackbar = ref({
+  show: false,
+  message: '',
+  color: 'success'
+});
 
 const handleTransfer = async ({ recipientUsername, amount }) => {
-  error.value = '';
-  
+  // Validar que el monto no sea negativo
+  if (amount <= 0) {
+    snackbar.value = {
+      show: true,
+      message: 'El monto debe ser mayor a 0',
+      color: 'error'
+    };
+    return;
+  }
 
   const senderUsername = userStore.currentUser.username;
 
@@ -47,13 +76,27 @@ const handleTransfer = async ({ recipientUsername, amount }) => {
 
   if (success) {
     historyStore.addTransaction(senderUsername, recipientUsername, amount, 'Transferencia', new Date().toISOString());
-    // Agregar a contactos frecuentes
     frequentContactsStore.addContact(senderUsername, recipientUsername);
-    alert('Transferencia exitosa.');
-    // Aquí puedes agregar lógica adicional, como mostrar un mensaje de éxito
+    snackbar.value = {
+      show: true,
+      message: 'Transferencia exitosa',
+      color: 'success'
+    };
   } else {
-    error.value = 'No se pudo realizar la transferencia. Verifica el saldo disponible.';
+    snackbar.value = {
+      show: true,
+      message: 'No se pudo realizar la transferencia. Verifica el saldo disponible.',
+      color: 'error'
+    };
   }
+};
+
+const showSnackbar = (message, color = 'success') => {
+  snackbar.value = {
+    show: true,
+    message,
+    color
+  };
 };
 </script>
 

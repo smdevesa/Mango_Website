@@ -2,7 +2,7 @@
   <v-container class="payment-container" fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <ReusableCard title="Selecciona un método de pago">
+        <ReusableCard title="Pagar">
           <div class="close-button-container">
             <v-btn
               icon="mdi-close"
@@ -29,15 +29,15 @@
               class="mb-4"
             ></v-select>
             
-            <v-btn 
-              @click="processPayment" 
-              :disabled="!selectedPaymentMethod" 
-              class="payment-btn" 
-              block 
-              color="#F19743"
-            >
-              Pagar
-            </v-btn>
+            <div class="text-center">
+              <v-btn 
+                @click="processPayment" 
+                :disabled="!selectedPaymentMethod" 
+                class="payment-btn"
+              >
+                Pagar
+              </v-btn>
+            </div>
           </div>
           <div v-else class="payment-error">
             <p>ID de pago no válido o no encontrado.</p>
@@ -45,6 +45,25 @@
         </ReusableCard>
       </v-col>
     </v-row>
+
+    <!-- Snackbar para mensajes de éxito -->
+    <v-snackbar
+      v-model="snackbar.show"
+      :color="snackbar.color"
+      :timeout="1000"
+      location="top"
+    >
+      {{ snackbar.message }}
+      <template v-slot:actions>
+        <v-btn
+          color="white"
+          variant="text"
+          @click="snackbar.show = false"
+        >
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -87,8 +106,25 @@ onMounted(() => {
   }
 });
 
+const snackbar = ref({
+  show: false,
+  message: '',
+  color: 'success'
+});
+
+const showSnackbar = (message, color = 'success') => {
+  snackbar.value = {
+    show: true,
+    message,
+    color
+  };
+};
+
 const processPayment = () => {
-  if (!selectedPaymentMethod.value) return;
+  if (!selectedPaymentMethod.value) {
+    showSnackbar('Por favor seleccione un método de pago', 'warning');
+    return;
+  }
 
   if (selectedPaymentMethod.value === 'balance') {
     payWithAvailableBalance();
@@ -109,10 +145,13 @@ const payWithAvailableBalance = () => {
       new Date().toISOString()
     );
     payStore.removeLink(selectedLink.value.id);
-    alert('Pago realizado con balance disponible.');
-    router.push('/home');
+    showSnackbar('Pago realizado con éxito');
+    selectedPaymentMethod.value = null;
+    setTimeout(() => {
+      router.push('/home');
+    }, 2000);
   } else {
-    alert('Fondos insuficientes.');
+    showSnackbar('Fondos insuficientes', 'error');
   }
 };
 
@@ -130,8 +169,11 @@ const payWithCard = (cardId) => {
   
   balanceStore.addMoney(selectedLink.value.owner, selectedLink.value.amount);
   payStore.removeLink(selectedLink.value.id);
-  alert(`Pago realizado con tarjeta: ${card.number}`);
-  router.push('/home');
+  showSnackbar(`Pago realizado con éxito usando la tarjeta ${card.number}`);
+  selectedPaymentMethod.value = null;
+  setTimeout(() => {
+    router.push('/home');
+  }, 2000);
 };
 
 const goHome = () => {
@@ -158,39 +200,24 @@ const goHome = () => {
 }
 
 .payment-btn {
-  font-weight: bold;
-  text-transform: none !important;
-  height: 48px;
-  width: 100%;
+  color: #FFFBE6;
+  background: #F19743;
+  font-size: 19px;
+  text-transform: none;
+  margin-top: -4%;
+  width: 80%;
 }
 
-.button-content {
+.text-center {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.button-main-text {
-  font-size: 16px;
-  margin-bottom: 4px;
-}
-
-.button-sub-text {
-  font-size: 14px;
-  opacity: 0.8;
+  justify-content: center;
+  width: 100%;
 }
 
 .payment-error {
   text-align: center;
   color: #ff5252;
   font-weight: bold;
-}
-
-.payment-button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
 }
 
 .balance-text {

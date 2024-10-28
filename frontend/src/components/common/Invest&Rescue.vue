@@ -40,8 +40,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="subscribeDialog = false"> Cancelar</v-btn>
-          <v-btn color="blue darken-1" text @click="submitSubscription"> Confirmar</v-btn>
+          <v-btn color="red" text @click="subscribeDialog = false" class="btn-class"> Cancelar</v-btn>
+          <v-btn color="blue darken-1" text @click="submitSubscription" class="btn-class"> Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -61,8 +61,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="redeemDialog = false">Cancelar</v-btn>
-          <v-btn color="blue darken-1" text @click="submitRedemption">Confirmar</v-btn>
+          <v-btn color="red" text @click="redeemDialog = false" class = "btn-class">Cancelar</v-btn>
+          <v-btn color="blue darken-1" text @click="submitRedemption" class = "btn-class">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -81,8 +81,8 @@ const userStore = useUserStore();
 
 const subscribeDialog = ref(false);
 const redeemDialog = ref(false);
-const subscribeAmount = ref(0);
-const redeemAmount = ref(0);
+const subscribeAmount = ref('');
+const redeemAmount = ref('');
 const subscribeError = ref('');
 const redeemError = ref('');
 const dailyReturn = 0.05; //Tasa de retorno diaria
@@ -123,7 +123,7 @@ const submitSubscription = () => {
   });
   
   subscribeDialog.value = false;
-  subscribeAmount.value = 0;
+  subscribeAmount.value = '';
 };
 
 const submitRedemption = () => {
@@ -148,7 +148,7 @@ const submitRedemption = () => {
   }
   
   redeemDialog.value = false;
-  redeemAmount.value = 0;
+  redeemAmount.value = '';
 };
 
 const availableBalance = computed(() => {
@@ -162,6 +162,12 @@ const investedBalance = computed(() => {
 </script>
 
 <style scoped>
+
+.btn-class {
+  font-size: 18px;
+  text-transform: none;
+}
+
 .invest-rescue-container {
   padding: 1rem;
 }

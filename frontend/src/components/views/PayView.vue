@@ -1,13 +1,13 @@
 <template>
-    <v-container>
-      <ReusableCard title="Pagar">
+  <v-container>
+    <ReusableCard title="Pagar">
       <v-form @submit.prevent="proceedToPayment">
         <ReusableInput
           v-model="paymentLink"
           label="Ingrese el link de pago"
           required
         ></ReusableInput>
-  
+
         <v-btn
           class="button-container"
           @click="proceedToPayment"
@@ -15,56 +15,85 @@
           Continuar
         </v-btn>
       </v-form>
-  
+
       <v-alert
-        v-if="invalidLink"
+        v-if="error"
         type="error"
         class="mt-4"
       >
-        El link de pago no es válido 
+        {{ error }}
       </v-alert>
     </ReusableCard>
-    </v-container>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import { usePayStore } from '@/store/payStore'; // Import the pay link store
-  import router from '@/router';
-  
-  const paymentLink = ref('');
-  const invalidLink = ref(false);
-  let selectedLink = null;
-  const payStore = usePayStore();
+  </v-container>
+  <v-snackbar 
+  v-model="snackbar" 
+  :color="snackbarColor" 
+  location="top">
+    {{ snackbarMessage }}
+    <template #action="{ attrs }">
+      <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 
-  const proceedToPayment = () => {
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { usePayStore } from '@/store/payStore';
+import router from '@/router';
+
+const paymentLink = ref('');
+const error = ref('');
+const payStore = usePayStore();
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('');
+
+const proceedToPayment = () => {
+  try {
     const linkId = extractLinkId(paymentLink.value);
-    selectedLink = payStore.getLink(linkId);
+    const selectedLink = payStore.getLink(linkId);
+    
     if (selectedLink !== undefined) {
-      invalidLink.value = false;
+      error.value = '';
       router.push(`/payment/${linkId}`);
     } else {
-      selectedLink = null;
-      invalidLink.value = true;
+      error.value = 'El link de pago no es válido';
     }
-  };
-  
-  // Function to extract the `id` from the payment link
-  const extractLinkId = (link) => {
-    const segments = new URL(link).pathname.split('/');
-    return segments[segments.length - 1]; // Devuelve el último segmento después de "payment/"
-  };
-
-  
-  </script>
-  
-  <style scoped>
-  .button-container {
-    display: block;
-    color: #FFFBE6;
-    background: #F19743;
-    font-size: 17px;
-    text-transform: none;
+  } catch (e) {
+    snackbarMessage.value = 'El link ingresado no es correcto'; // Mensaje de snackbar
+    snackbarColor.value = 'error';
+    snackbar.value = true; // Mostrar snackbar
   }
-  </style>
-  
+};
+
+// Function to extract the `id` from the payment link
+const extractLinkId = (link) => {
+  try {
+    // Verificar si el string es una URL válida
+    const url = new URL(link);
+    
+    // Verificar si la URL tiene el formato esperado
+    if (!url.pathname.includes('/payment/')) {
+      throw new Error('URL inválida');
+    }
+
+    const segments = url.pathname.split('/');
+    return segments[segments.length - 1];
+  } catch (e) {
+    throw new Error('URL inválida');
+  }
+};
+</script>
+
+<style scoped>
+.button-container {
+  display: block;
+  color: #FFFBE6;
+  background: #F19743;
+  font-size: 17px;
+  text-transform: none;
+}
+</style>

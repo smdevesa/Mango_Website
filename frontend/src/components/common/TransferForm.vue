@@ -24,7 +24,7 @@
             placeholder="Ingrese el monto"
             type="number"
           />
-          <p>Saldo disponible: ${{ balanceStore.formattedBalance(userStore.currentUser.username) }}</p>
+          <p>Saldo disponible: ${{ balanceStore.availableBalance(userStore.currentUser.username) }}</p>
           <v-btn class="continue-button" @click="handleContinue">Continuar</v-btn>
         </ReusableCard>
       </v-col>

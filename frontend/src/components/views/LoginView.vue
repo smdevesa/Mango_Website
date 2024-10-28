@@ -65,6 +65,20 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <!-- Modificar el snackbar -->
+        <v-snackbar 
+          v-model="snackbar" 
+          :color="snackbarColor"
+          location="top"
+        >
+          {{ snackbarMessage }}
+          <template v-slot:actions>
+            <v-btn color="white" variant="text" @click="snackbar = false">
+              Cerrar
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-col>
     </v-row>
   </v-container>
@@ -83,6 +97,9 @@ const showPassword = ref(false);
 const dialog = ref(false);
 const errorMessage = ref('');
 const userStore = useUserStore();
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('');
 
 // Validaciones
 const rules = {
@@ -96,12 +113,13 @@ const submitLoginForm = () => {
   if (username.value && password.value) {
     userStore.login(username.value, password.value);
 
-    // Esperar a que la acción de login termine
     if (userStore.isLoggedIn()) {
       router.push('/home');
     }
   } else {
-    alert('Por favor, complete todos los campos');
+    snackbarMessage.value = 'Por favor, complete todos los campos';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
   }
 };
 
@@ -112,8 +130,10 @@ const togglePassword = () => {
 
 // Función para manejar el envío de restablecimiento de contraseña
 const handleResetPassword = () => {
-  if (email.value) {
-    alert(`Correo enviado a ${email.value} para reestablecer la contraseña.`);
+  if (rules.required(email.value) === true && rules.email(email.value) === true) {
+    snackbarMessage.value = `Correo enviado a ${email.value} para reestablecer la contraseña.`;
+    snackbarColor.value = 'success';
+    snackbar.value = true;
     dialog.value = false;
     errorMessage.value = '';
   } else {
@@ -190,6 +210,7 @@ const handleResetPassword = () => {
   margin-bottom: 5px;
   font-size: 18px;
   margin-top: 10px;
+  text-transform: none;
 }
 
 .register a {
