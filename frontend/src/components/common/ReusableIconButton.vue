@@ -46,10 +46,10 @@
   .custom-icon {
     color: #F19743; /* Cambia el color del icono */
     font-size: 30px;
-    margin-right: 20px;
+    margin-right: 25px;
   
     position: absolute;
-    left: 25px;
+    left: 20px;
   }
   
   .custom-button {

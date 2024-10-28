@@ -36,8 +36,8 @@
             </v-col>
             <v-col cols="6">
               <ReusableIconButton
-                  icon="mdi-credit-card-plus"
-                  text="Añadir tarjeta"
+                  icon="mdi-credit-card"
+                  text="Mis tarjetas"
                   @click="goToAddCard"
               />
             </v-col>
