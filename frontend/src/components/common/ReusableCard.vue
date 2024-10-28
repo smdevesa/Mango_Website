@@ -5,12 +5,12 @@
         class="card-title"
       >
         {{ title }}
-      </h3> <!-- Muestra el título solo si existe -->
+      </h3> 
       <v-card
         class="card-content"
         outlined
       >
-        <slot /> <!-- Permite insertar contenido dinámico -->
+        <slot /> 
       </v-card>
     </div>
   </template>
@@ -20,7 +20,7 @@
   defineProps({
     title: {
       type: String,
-      default: null, // Establece un valor por defecto a null
+      default: null, 
     },
   });
   </script>
@@ -28,21 +28,21 @@
   <style scoped>
   .card-container {
     position: relative;
-    margin-bottom: 20px; /* Espaciado entre tarjetas */
+    margin-bottom: 20px; 
   }
   
   .card-title {
-    background: transparent; /* Fondo transparente para el título */
-    border-radius: 5px; /* Esquinas redondeadas */
-    font-weight: normal; /* Para quitar el bold */
-    font-size: 20pt; /* Tamaño de fuente de 20 puntos */
+    background: transparent; 
+    border-radius: 5px; 
+    font-weight: normal; 
+    font-size: 20pt; 
     text-align: left;
   }
   
   .card-content {
-    background-color: #D5ED9F; /* Color de fondo de la tarjeta */
-    color: black; /* Color del texto dentro de la tarjeta */
-    padding: 20px; /* Espaciado interno de la tarjeta */
+    background-color: #D5ED9F; 
+    color: black; 
+    padding: 20px; 
   }
   </style>
   

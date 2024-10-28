@@ -1,11 +1,10 @@
 <template>
   <v-container>
 
-    <!-- ReusableCard para transferir -->
     <ReusableCard title="Transferir fondos">
       <v-row>
         <v-col cols="6">
-          <!-- Botón para contactos Mango -->
+          
           <v-btn 
             class="transfer-button" 
             @click="goToContacts"
@@ -24,7 +23,7 @@
           </v-btn>
         </v-col>
         <v-col cols="6">
-          <!-- Botón para CBU, CVU o Alias -->
+         
           <v-btn 
             class="transfer-button" 
             @click="goToBankDetails"
@@ -45,7 +44,7 @@
       </v-row>
     </ReusableCard>
 
-    <!-- ReusableCard para buscar contactos frecuentes -->
+  
     <ReusableCard title="Buscar contactos frecuentes">
       <v-form>
         <ReusableInput 
@@ -56,7 +55,7 @@
           @input="filterContacts"
         />
       </v-form>
-      <!-- Lista de contactos frecuentes -->
+    
       <div class="scrollable">
         <div v-if="filteredContacts.length === 0">
           No hay contactos frecuentes.
@@ -82,7 +81,6 @@ import { useUserStore } from '@/store/userStore';
 import { useFrequentContactsStore } from '@/store/frequentContactsStore';
 import ReusableCard from '../common/ReusableCard.vue';
 import UserItem from '../common/UserItem.vue';
-import mangoLogo from '@/assets/mangoLogo.png';
 import ReusableInput from '../common/ReusableInput.vue';
 
 const router = useRouter();
@@ -91,13 +89,13 @@ const frequentContactsStore = useFrequentContactsStore();
 
 const searchQuery = ref('');
 
-// Obtener contactos frecuentes del usuario actual
+
 const frequentContacts = computed(() => {
   if (!userStore.currentUser) return [];
   return frequentContactsStore.getContacts(userStore.currentUser.username);
 });
 
-// Filtrar contactos según la búsqueda
+
 const filteredContacts = computed(() => {
   if (!searchQuery.value) return frequentContacts.value;
   
@@ -108,27 +106,27 @@ const filteredContacts = computed(() => {
 });
 
 const goToContacts = () => {
-  // Navegar a la vista de contactos Mango
+  
   router.push('/transfer/mango-contact');
 };
 
 const goToBankDetails = () => {
-  // Navegar a la vista de ingresar CBU, CVU o Alias
+  
   router.push('/transfer/new-account')
 };
 
 const filterContacts = () => {
   if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase(); // warning?
+    const query = searchQuery.value.toLowerCase(); 
     filteredContacts.value = frequentContacts.value.filter(contact =>
       contact.username.toLowerCase().includes(query)
     );
   } else {
-    filteredContacts.value = [...frequentContacts.value]; // Si no hay búsqueda, muestra todos los contactos
+    filteredContacts.value = [...frequentContacts.value]; 
   }
 };
 
-// Inicializa los contactos filtrados al cargar el componente
+
 onMounted(() => {
   filteredContacts.value = [...frequentContacts.value];
 });
@@ -136,7 +134,7 @@ onMounted(() => {
 
 <style scoped>
 .transparent-background {
-  background-color: #D5ED9F; /* Asegúrate de que el fondo sea transparente */
+  background-color: #D5ED9F; 
 }
 
 .transfer-button {
@@ -156,13 +154,13 @@ onMounted(() => {
 
 .transfer-content {
   display: flex;
-  flex-direction: column; /* Asegura que el icono esté arriba del texto */
+  flex-direction: column; 
   align-items: center;
 }
 
 .transfer-icon {
-  font-size: 56px; /* Tamaño más grande para el icono */
-  margin-bottom: 10px; /* Espacio entre el icono y el texto */
+  font-size: 56px; 
+  margin-bottom: 10px; 
 }
 
 .transfer-text {
@@ -174,9 +172,9 @@ onMounted(() => {
   background-color: #3D3C37;
   color: #333;
   text-align: left;
-  width: 300px; /* Ajusta el tamaño según sea necesario */
+  width: 300px; 
   height: 50px;
-  text-transform: none; /* Asegúrate de que no haya transformación de texto */
+  text-transform: none; 
   font-size: 20px;
 }
 

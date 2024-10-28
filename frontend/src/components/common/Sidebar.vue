@@ -5,7 +5,7 @@
         <WelcomeBanner />
       </v-list-item>
 
-      <!-- Enlaces a las secciones generados dinámicamente con v-for -->
+
       <v-list-item-group v-model="activeItem">
         <v-list-item 
           v-for="(item, index) in menuItems" 
@@ -18,14 +18,14 @@
         </v-list-item>
       </v-list-item-group>
 
-      <!-- Botón de cerrar sesión -->
+ 
       <v-list-item @click="confirmLogout" class="custom-list-item">
         <v-icon class="menu-icon">mdi-logout</v-icon>
         <span class="menu-text">Cerrar sesión</span>
       </v-list-item>
     </v-list>
 
-    <!-- Diálogo de confirmación de cierre de sesión -->
+    
     <v-dialog v-model="logoutDialog" max-width="400px">
       <v-card>
         <v-card-title class="headline">Confirmar Cierre de Sesión</v-card-title>
@@ -43,9 +43,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore'; // Asegúrate de importar tu store
+import { useUserStore } from '@/store/userStore';
 
-// Menú con items dinámicos
+
 const menuItems = [
   { title: 'Inicio', route: '/home', icon: 'mdi-home' },
   { title: 'Transferencias', route: '/transfer', icon: 'mdi-bank-transfer' },
@@ -55,26 +55,24 @@ const menuItems = [
   { title: 'Mis tarjetas', route: '/cards', icon: 'mdi-credit-card' }
 ];
 
-const activeItem = ref(0); // Controla el ítem activo
+const activeItem = ref(0); 
 const router = useRouter();
-const userStore = useUserStore(); // Inicializa el store
-const logoutDialog = ref(false); // Controla el estado del diálogo
+const userStore = useUserStore(); 
+const logoutDialog = ref(false); 
 
 const goToRoute = (route) => {
   router.push(route);
   activeItem.value = menuItems.findIndex(item => item.route === route);
 };
 
-// Muestra el diálogo de confirmación de cierre de sesión
 const confirmLogout = () => {
   logoutDialog.value = true;
 };
 
-// Función para confirmar el cierre de sesión
 const confirmLogoutAction = () => {
-  userStore.logout(); // Llama a la función de logout del store
-  router.push('/login'); // Redirige a la página de login después de cerrar sesión
-  logoutDialog.value = false; // Cierra el diálogo
+  userStore.logout(); 
+  router.push('/login'); 
+  logoutDialog.value = false; 
 };
 </script>
 
@@ -87,12 +85,11 @@ const confirmLogoutAction = () => {
   border-right: 1px solid #FFFBE6;
 }
 
-/* Clase personalizada para asegurar el estilo horizontal */
 .custom-list-item {
   display: flex;
   align-items: center;
   justify-content: start;
-  padding-left: 10px; /* Añade algo de espacio al comienzo */
+  padding-left: 10px;
 }
 
 .menu-icon {
@@ -100,21 +97,8 @@ const confirmLogoutAction = () => {
 }
 
 .active-item {
-  background-color: rgba(255, 255, 255, 0.2); /* Color de fondo para el ítem activo */
-  color: #FFF; /* Cambia el color del texto si es necesario */
-}
-
-/* Estilos para la imagen del logo */
-.logo-container {
-  display: flex;
-  justify-content: center; /* Centrar el logo */
-  padding: 20px 0; /* Espaciado alrededor del logo */
-}
-
-.logo {
-  width: 80%; /* Ajusta el tamaño del logo */
-  max-width: 100px; /* Tamaño máximo */
-  margin-top: 70px; /* TRANSITORIO */
+  background-color: rgba(255, 255, 255, 0.2); 
+  color: #FFF; 
 }
 
 .btn-class {

@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'; // Importa 'computed'
+import { computed } from 'vue'; 
 
 const props = defineProps({
   logoUrl: {

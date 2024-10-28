@@ -1,6 +1,6 @@
 <template>
   <div class="invest-rescue-container">
-    <!-- Píldoras existentes -->
+ 
     <PillButton
       name="Dinero disponible"
       :value="availableBalance"
@@ -14,14 +14,14 @@
       prefix="$"
     />
 
-    <!-- Botones de acción -->
+
     <div class="action-buttons">
       <v-btn class="action-button" color="secondary" @click="openRedeemDialog">Rescatar</v-btn>
       <v-spacer></v-spacer>
       <v-btn class="action-button" color="primary" @click="openSubscribeDialog">Invertir</v-btn>
     </div>
 
-    <!-- Diálogo de SUSCRIPCIÓN -->
+
     <v-dialog v-model="subscribeDialog" max-width="400px">
       <v-card>
         <v-card-title>Suscribir Inversión</v-card-title>
@@ -46,7 +46,7 @@
       </v-card>
     </v-dialog>
 
-    <!-- Diálogo de RESCATE -->
+
     <v-dialog v-model="redeemDialog" max-width="400px">
       <v-card>
         <v-card-title>Rescatar Inversión</v-card-title>
@@ -85,7 +85,7 @@ const subscribeAmount = ref('');
 const redeemAmount = ref('');
 const subscribeError = ref('');
 const redeemError = ref('');
-const dailyReturn = 0.05; //Tasa de retorno diaria
+const dailyReturn = 0.05; 
 
 const calculateDailyReturn = (amount) => {
   return (amount * dailyReturn) / 100 ;
@@ -119,7 +119,7 @@ const submitSubscription = () => {
   balanceStore.addSection(userStore.currentUser.username, {
     label: 'Invertido',
     value: amount,
-    color: '#2196F3'
+    color: '#2196F3' 
   });
   
   subscribeDialog.value = false;
@@ -180,8 +180,8 @@ const investedBalance = computed(() => {
 }
 
 .action-button {
-  font-size: 18px; /* Tamaño de texto aumentado */
-  text-transform: none; /* Quita las mayúsculas */
+  font-size: 18px;
+  text-transform: none; 
 }
 
 .error-message {

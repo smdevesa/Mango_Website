@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <!-- Botón para eliminar la píldora -->
+
     <v-icon
       class="delete-icon"
       @click.stop="emitRemove"  
@@ -37,16 +37,15 @@
 const props = defineProps({
   name: { type: String, required: true },
   value: { type: Number, required: true },
-  icon: { type: String, required: true },  // Agregar prop para el icono
+  icon: { type: String, required: true },  
   iconColor: { type: String, default: '#000' },
   bgColor: { type: String, default: '#FFFBE6' },
 });
 
-const emit = defineEmits(['remove']); // Definir el evento de eliminación
+const emit = defineEmits(['remove']); 
 
-// Emitir evento 'remove' cuando se hace clic en el icono de eliminar
 const emitRemove = () => {
-  emit('remove'); // Emitir el evento
+  emit('remove'); 
 };
 </script>
 

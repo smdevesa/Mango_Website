@@ -19,7 +19,7 @@ const userStore = useUserStore();
 const myChart = ref(null);
 let chartInstance = null;
 
-// Asegúrate de inicializar el balance del usuario al montar el componente
+
 balanceStore.initUserBalance(userStore.currentUser.username);
 
 const drawChart = () => {

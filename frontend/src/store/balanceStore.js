@@ -2,48 +2,48 @@ import { defineStore } from 'pinia'
 
 export const useBalanceStore = defineStore('balance', {
   state: () => ({
-    users: JSON.parse(localStorage.getItem('userBalances')) || {} // Carga los balances del localStorage
+    users: JSON.parse(localStorage.getItem('userBalances')) || {} 
   }),
   actions: {
-    // Inicializa el balance para un nuevo usuario
+   
     initUserBalance(username) {
       if (!this.users[username]) {
         this.users[username] = {
-          totalBalance: 1000, // Balance inicial
+          totalBalance: 1000, 
           sections: [{ label: 'Disponible', value: 1000, percentage: 100, color: 'green' }]
 
         };
-        this.saveToLocalStorage(); // Guarda en localStorage
+        this.saveToLocalStorage();
       }
     },
-    // Cambia el balance de un usuario
+    
     updateBalance(username, newBalance) {
       if (this.users[username]) {
         this.users[username].totalBalance = newBalance;
         this.recalculatePercentages(username);
-        this.saveToLocalStorage(); // Guarda en localStorage
+        this.saveToLocalStorage(); 
       }
     },
-    // Agrega una nueva sección para un usuario
+
     addSection(username, newSection) {
       if (this.users[username] && newSection.value <= this.availableBalance(username)) {
         this.users[username].sections.push(newSection);
-        this.users[username].sections[0].value -= newSection.value; // Reducir el disponible
+        this.users[username].sections[0].value -= newSection.value;
         this.recalculatePercentages(username);
-        this.saveToLocalStorage(); // Guarda en localStorage
+        this.saveToLocalStorage(); 
       }
     },
-    // Elimina una sección para un usuario
+
     removeSection(username, index) {
       if (this.users[username]) {
         const removedValue = this.users[username].sections[index].value;
         this.users[username].sections.splice(index, 1);
-        this.users[username].sections[0].value += removedValue; // Aumentar el disponible
+        this.users[username].sections[0].value += removedValue; 
         this.recalculatePercentages(username);
-        this.saveToLocalStorage(); // Guarda en localStorage
+        this.saveToLocalStorage(); 
       }
     },
-    // Recalcula los porcentajes de las secciones de un usuario
+
     recalculatePercentages(username) {
       if (this.users[username]) {
         const totalBalance = this.users[username].totalBalance;
@@ -52,7 +52,7 @@ export const useBalanceStore = defineStore('balance', {
         });
       }
     },
-    // Guarda los balances de usuarios en localStorage
+
     saveToLocalStorage() {
       localStorage.setItem('userBalances', JSON.stringify(this.users));
     },
@@ -81,13 +81,13 @@ export const useBalanceStore = defineStore('balance', {
     }
   },
   getters: {
-    // Obtiene el balance formateado de un usuario
+
     formattedBalance: (state) => (username) => {
       return username in state.users 
         ? `${state.users[username].totalBalance.toFixed(2)}` 
         : '$0.00';
     },
-    // Obtiene el balance disponible de un usuario
+    
     availableBalance: (state) => (username) => {
       return username in state.users 
         ? state.users[username].sections[0].value 

@@ -1,4 +1,3 @@
-<!-- TransferMangoAccountView.vue -->
 <template>
   <TransferForm
     title="Transferir a contacto Mango"
@@ -47,7 +46,7 @@ const snackbar = ref({
 });
 
 const handleTransfer = async ({ recipientUsername, amount }) => {
-  // Validar que el monto no sea negativo
+
   if (amount <= 0) {
     snackbar.value = {
       show: true,
@@ -59,19 +58,19 @@ const handleTransfer = async ({ recipientUsername, amount }) => {
 
   const senderUsername = userStore.currentUser.username;
 
-   // Verificar que no esté transfiriendo a sí mismo
+   
    if (recipientUsername === senderUsername) {
     error.value = 'No puedes transferir dinero a tu propia cuenta';
     return;
   }
   
-  // Verificar si el usuario destinatario existe
+
   if (!userStore.userExists(recipientUsername)) {
     error.value = 'El usuario destinatario no existe.';
     return;
   }
 
-  // Intentar realizar la transferencia
+  
   const success = balanceStore.transferMoney(senderUsername, recipientUsername, amount);
 
   if (success) {

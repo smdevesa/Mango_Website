@@ -63,19 +63,19 @@ const proceedToPayment = () => {
       error.value = 'El link de pago no es válido';
     }
   } catch (e) {
-    snackbarMessage.value = 'El link ingresado no es correcto'; // Mensaje de snackbar
+    snackbarMessage.value = 'El link ingresado no es correcto'; 
     snackbarColor.value = 'error';
-    snackbar.value = true; // Mostrar snackbar
+    snackbar.value = true; 
   }
 };
 
-// Function to extract the `id` from the payment link
+
 const extractLinkId = (link) => {
   try {
-    // Verificar si el string es una URL válida
+    
     const url = new URL(link);
     
-    // Verificar si la URL tiene el formato esperado
+    
     if (!url.pathname.includes('/payment/')) {
       throw new Error('URL inválida');
     }

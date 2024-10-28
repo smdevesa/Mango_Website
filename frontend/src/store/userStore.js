@@ -1,9 +1,8 @@
-// userStore.js
 import { defineStore } from 'pinia';
 import { ref, onMounted } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
-  const users = ref(JSON.parse(localStorage.getItem('users')) || []); // Cargar usuarios desde localStorage
+  const users = ref(JSON.parse(localStorage.getItem('users')) || []); 
   const currentUser = ref(JSON.parse(localStorage.getItem('currentUser')) || null);
   const error = ref('');
   const loading = ref(false);
@@ -19,54 +18,53 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const register = (username, password, email) => {
-    loading.value = true; // Indica que se está procesando la solicitud
-    error.value = ''; // Limpia errores anteriores
+    loading.value = true; 
+    error.value = ''; 
 
-    // Validar si el usuario ya existe
     const userExists = users.value.some(user => user.username === username || user.email === email);
     if (userExists) {
       error.value = 'El nombre de usuario o el correo ya están en uso.';
-      loading.value = false; // Finaliza la carga
+      loading.value = false; 
       return;
     }
 
     const alias = generateRandomAlias();
     const cvu = generateRandomCvu();
 
-    // Simulación de registro
-    users.value.push({ username, password, email, alias, cvu }); // Agregar nuevo usuario
-    saveUsersToLocalStorage(); // Guardar usuarios en localStorage
-    loading.value = false; // Finaliza la carga
+    
+    users.value.push({ username, password, email, alias, cvu });
+    saveUsersToLocalStorage(); 
+    loading.value = false; 
   };
 
-  // Función para iniciar sesión
-  const login = (username, password) => {
-    loading.value = true; // Indica que se está procesando la solicitud
-    error.value = ''; // Limpia errores anteriores
 
-    // Buscar el usuario por nombre de usuario
+  const login = (username, password) => {
+    loading.value = true; 
+    error.value = ''; 
+
+
     const user = users.value.find(user => user.username === username && user.password === password);
     if (!user) {
       error.value = 'Nombre de usuario o contraseña incorrectos.';
-      loading.value = false; // Finaliza la carga
+      loading.value = false; 
       return;
     }
 
-    // Si el usuario es encontrado, lo establece como usuario actual
+   
     currentUser.value = user;
-    saveCurrentUserToLocalStorage(); // Guardar usuario actual en localStorage
-    loading.value = false; // Finaliza la carga
+    saveCurrentUserToLocalStorage(); 
+    loading.value = false; 
   };
 
-  // Función para cerrar sesión
+  
   const logout = () => {
-    currentUser.value = null; // Limpiar el usuario actual
-    localStorage.removeItem('currentUser'); // Eliminar el usuario actual del localStorage
+    currentUser.value = null; 
+    localStorage.removeItem('currentUser'); 
   };
 
   const isLoggedIn = () => currentUser.value !== null;
 
-  // Cargar datos al montar el store
+  
   onMounted(() => {
     const storedUsers = JSON.parse(localStorage.getItem('users'));
     if (storedUsers) {

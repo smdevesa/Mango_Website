@@ -32,11 +32,11 @@
     },
     borderColor: {
       type: String,
-      default: '#000', // Default black border
+      default: '#000', 
     },
     outlined: {
       type: Boolean,
-      default: true, // Default to having a border
+      default: true, 
     },
   });
   
@@ -44,7 +44,7 @@
   
   <style scoped>
   .custom-icon {
-    color: #F19743; /* Cambia el color del icono */
+    color: #F19743; 
     font-size: 30px;
     margin-right: 25px;
   

@@ -12,7 +12,6 @@
     </span>
   </div>
 
-  <!-- Agregar el snackbar -->
   <v-snackbar
     v-model="snackbar"
     :color="snackbarColor"
@@ -51,7 +50,7 @@ const handleNotificationClick = () => {
   justify-content: space-between;
   padding: 10px;
   width: 100%;
-  max-width: 250px; /* Mantiene el ancho máximo en 250px */
+  max-width: 250px; 
   box-sizing: border-box;
   background-color: #444;
   border-radius: 8px;
@@ -61,28 +60,28 @@ const handleNotificationClick = () => {
 
 .profile-picture {
   margin-right: 10px;
-  border: solid 2px #fff; /* Especifica el color del borde aquí */
-  border-radius: 50%; /* Esto hará que la imagen sea redonda */
-  max-width: 50px; /* Tamaño fijo de la imagen */
-  max-height: 50px; /* Tamaño fijo de la imagen */
-  object-fit: cover; /* Asegura que la imagen se recorte adecuadamente en el contenedor */
+  border: solid 2px #fff; 
+  border-radius: 50%; 
+  max-width: 50px; 
+  max-height: 50px; 
+  object-fit: cover; 
 }
 
 .username {
-  margin: 0; /* Elimina márgenes */
-  font-size: 16px; /* Tamaño del texto */
-  font-weight: bold; /* Estilo del texto */
-  flex-grow: 1; /* Permite que el nombre ocupe el espacio disponible */
-  min-width: 0; /* Previene que el texto se desborde el contenedor */
-  white-space: nowrap; /* Evita que el texto se envuelva en múltiples líneas */
-  overflow: hidden; /* Oculta cualquier desbordamiento de texto */
-  text-overflow: ellipsis; /* Agrega "..." al final si el texto es demasiado largo */
+  margin: 0; 
+  font-size: 16px; 
+  font-weight: bold; 
+  flex-grow: 1; 
+  min-width: 0; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 .notification-icon {
-  cursor: pointer; /* Cambia el cursor a pointer para indicar que es clickeable */
-  color: #fff; /* Color del ícono */
-  font-size: 24px; /* Tamaño del ícono */
+  cursor: pointer; 
+  color: #fff;
+  font-size: 24px; 
 }
 
 .notification-icon:hover {

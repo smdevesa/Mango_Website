@@ -13,21 +13,21 @@ import Sidebar from "../common/Sidebar.vue";
 
 <style scoped>
 .layout {
-  display: flex; /* Usar Flexbox para organizar los elementos */
-  min-height: 100vh; /* Altura completa de la pantalla */
-  width: 100vw; /* Ancho completo de la pantalla */
-  overflow: hidden; /* Evita desbordamiento horizontal */
+  display: flex; 
+  min-height: 100vh; 
+  width: 100vw; 
+  overflow: hidden; 
 }
 
 .sidebar {
-  width: 250px; /* Ancho fijo para la Sidebar */
-  flex-shrink: 0; /* Impide que se encoja si falta espacio */
+  width: 250px; 
+  flex-shrink: 0; 
 }
 
 .main-content {
-  flex-grow: 1; /* Ocupa el espacio restante */
-  margin-left: 250px; /* Desplaza el contenido para que comience donde termina el Sidebar */
-  padding: 20px; /* Espaciado interno */
-  overflow: auto; /* Manejo de contenido que exceda el tamaño */
+  flex-grow: 1; 
+  margin-left: 250px; 
+  padding: 20px;
+  overflow: auto; 
 }
 </style>

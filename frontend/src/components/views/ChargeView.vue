@@ -22,7 +22,7 @@
         </div>
       </v-form>
       
-      <!-- Alerta modificada con botón de copiar -->
+     
       <v-alert
         v-if="enlaceGenerado"
         type="success"
@@ -58,7 +58,7 @@
         Debe ingresar un monto para generar un enlace
       </v-alert>
 
-      <!-- Agregar el snackbar -->
+     
       <v-snackbar
         v-model="snackbar"
         :color="snackbarColor"
@@ -77,7 +77,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { usePayStore } from '@/store/payStore'; // Importa el store de pagos
+import { usePayStore } from '@/store/payStore'; 
 import { useUserStore } from '@/store/userStore';
 
 const domain = 'https://localhost:3000';
@@ -86,7 +86,7 @@ const descripcion = ref('');
 const enlaceGenerado = ref('');
 const mostrarAlertaMonto = ref(false);
 const mostrarSnackbar = ref(false);
-const payStore = usePayStore(); // Inicializa el store de pagos
+const payStore = usePayStore(); 
 const userStore = useUserStore();
 const snackbar = ref(false);
 const snackbarMessage = ref('');
@@ -102,12 +102,11 @@ const generarEnlace = () => {
 
   mostrarAlertaMonto.value = false;
 
-  // Genera un ID único para el enlace (esto es solo un ejemplo; reemplázalo con tu lógica)
+  
   const linkId = `${Date.now()}`;
   const baseUrl = `http://` + domain.replace(/^https?:\/\//, '') + '/payment/';
   enlaceGenerado.value = `${baseUrl}${linkId}`;
 
-  // Guarda el enlace en el store
   payStore.addLink(userStore.currentUser.username, linkId, parseFloat(monto.value), descripcion.value);
 };
 
@@ -123,8 +122,8 @@ const copiarEnlace = async () => {
 
 <style scoped>
 .button-container {
-  display: flex; /* Cambiado a flexbox para centrar el botón */
-  justify-content: center; /* Centrar el contenido horizontalmente */
+  display: flex; 
+  justify-content: center; 
 }
 
 .button-container .v-btn {
@@ -135,7 +134,7 @@ const copiarEnlace = async () => {
   margin-top: -4%;
 }
 
-/* Estilos para el enlace y el botón de copiar */
+
 .d-flex {
   display: flex;
   align-items: center;

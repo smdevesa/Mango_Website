@@ -55,7 +55,7 @@
             @click:append-inner="toggleConfirmPassword"
           />
           
-          <!-- Mostrar errores si existen -->
+        
           <div v-if="store.error" class="error-message">{{ store.error }}</div>
 
           <div class="actions">
@@ -71,7 +71,7 @@
     </v-row>
   </v-container>
 
-  <!-- Agregar el snackbar -->
+
   <v-snackbar
     v-model="snackbar"
     :color="snackbarColor"
@@ -88,7 +88,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useUserStore } from '@/store/userStore'; // Importa tu store de Pinia
+import { useUserStore } from '@/store/userStore'; 
 import { useBalanceStore } from '@/store/balanceStore';
 import mangoLogo from '@/assets/mangoLogo.png';
 import { useRouter } from 'vue-router';
@@ -106,7 +106,7 @@ const confirmPassword = ref('');
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 
-// Regla de validación de campos
+
 const rules = {
   required: (value) => !!value || 'Campo requerido',
   email: (value) => {
@@ -122,25 +122,25 @@ const rules = {
   }
 };
 
-// Función de envío de registro
+
 const submitForm = () => {
-  store.logout(); // Cerrar sesión antes de registrar un nuevo usuario
+  store.logout(); 
   if (username.value && email.value && telephone.value && password.value && confirmPassword.value) {
     store.register(username.value, password.value, email.value);
 
     if (!store.error) {
-      balanceStore.initUserBalance(username.value); // Crea un balance para el nuevo usuario
+      balanceStore.initUserBalance(username.value); 
       snackbarMessage.value = 'Registrado con éxito';
       snackbarColor.value = 'success';
       snackbar.value = true;
       setTimeout(() => {
-        router.push('/login'); // Redirige al usuario a la página de inicio después de mostrar el mensaje
+        router.push('/login'); 
       }, 1500);
     }
   }
 };
 
-// Funciones de visibilidad de contraseña
+
 const togglePassword = () => {
   showPassword.value = !showPassword.value;
 };
@@ -179,8 +179,8 @@ const snackbarColor = ref('');
 
 .actions {
   display: flex;
-  flex-direction: column; /* Colocar los elementos en columnas */
-  align-items: flex-end; /* Alinear el enlace a la derecha */
+  flex-direction: column; 
+  align-items: flex-end; 
   width: 100%;
   margin-top: 9px;
   position: relative;
@@ -189,7 +189,7 @@ const snackbarColor = ref('');
 .buttonRegister {
   background-color: #FF9500;
   color: #333;
-  width: 100%; /* El botón ocupa todo el ancho */
+  width: 100%; 
   max-width: 700px;
   height: 50px;
   border-radius: 20px;
@@ -205,8 +205,8 @@ const snackbarColor = ref('');
 }
 
 .error-message {
-  color: red; /* Texto en rojo para el mensaje de error */
-  margin-bottom: 10px; /* Espacio entre el mensaje de error y el botón */
-  font-size: 14px; /* Tamaño de fuente del mensaje de error */
+  color: red; 
+  margin-bottom: 10px; 
+  font-size: 14px; 
 }
 </style>

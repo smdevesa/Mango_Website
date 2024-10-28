@@ -78,7 +78,7 @@
       </v-col>
     </v-row>
 
-    <!-- Diálogo de confirmación -->
+  
     <v-dialog v-model="showConfirmDialog" max-width="300">
       <v-card>
         <v-card-title class="headline">Confirmar eliminación</v-card-title>
@@ -91,7 +91,6 @@
       </v-card>
     </v-dialog>
 
-    <!-- Agregar snackbar para mensajes -->
     <v-snackbar
       v-model="snackbar"
       :color="snackbarColor"
@@ -141,13 +140,13 @@ const formattedCardNumber = computed({
   },
 });
 
-const form = ref(null); // Referencia al formulario
+const form = ref(null); 
 const snackbar = ref(false);
 const snackbarMessage = ref('');
 const snackbarColor = ref('');
 
 const addCard = async () => {
-  // Validar el formulario antes de continuar
+ 
   const { valid } = await form.value.validate();
   
   if (valid) {
@@ -159,19 +158,19 @@ const addCard = async () => {
       cvv: cvv.value,
     });
     
-    // Mostrar mensaje de éxito
+    
     snackbarMessage.value = 'Tarjeta agregada exitosamente';
     snackbarColor.value = 'success';
     snackbar.value = true;
     
-    // Resetear el formulario
+
     form.value.reset();
     cardName.value = '';
     cardNumber.value = '';
     expirationDate.value = '';
     cvv.value = '';
   } else {
-    // Mostrar mensaje de error
+ 
     snackbarMessage.value = 'Por favor, complete todos los campos correctamente';
     snackbarColor.value = 'error';
     snackbar.value = true;
@@ -225,7 +224,7 @@ const confirmRemove = () => {
   color: #333;
   background: #F19743;
   font-size: 20px;
-  text-transform: none; /* Solo primera letra en mayúscula */
+  text-transform: none; 
 }
 
 .scrollable {
@@ -260,15 +259,15 @@ const confirmRemove = () => {
 }
 
 .cancel-button {
-  color: green; /* Ajusta el color si lo deseas */
-  justify-content: flex-start; /* Alinea a la izquierda */
+  color: green; 
+  justify-content: flex-start; 
   font-size: 16px;
   text-transform: none;
 }
 
 .confirm-button {
-  color: red; /* Ajusta el color si lo deseas */
-  justify-content: flex-end; /* Alinea a la derecha */
+  color: red; 
+  justify-content: flex-end; 
   font-size: 16px;
   text-transform: none;
 }

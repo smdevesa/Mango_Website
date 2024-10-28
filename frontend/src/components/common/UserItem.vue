@@ -39,8 +39,8 @@ const defaultPhoto = computed(() => {
   display: flex;
   align-items: center;
   padding: 10px 0;
-  background-color: #d5ed9f; /* Cambiado a verde */
-  border-bottom: 1px solid #ccc; /* Si deseas un separador */
+  background-color: #d5ed9f; 
+  border-bottom: 1px solid #ccc; 
 }
 
 .user-info {

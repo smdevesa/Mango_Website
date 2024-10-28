@@ -63,11 +63,11 @@ import ReusableInput from '../common/ReusableInput.vue';
 import { useUserStore } from '@/store/userStore';
 import { useHistoryStore } from '@/store/historyStore';
 
-// Instancia de los stores
+
 const userStore = useUserStore();
 const historyStore = useHistoryStore();
 
-// Datos reactivos
+
 const searchQuery = ref('');
 const sortCriteria = ref('date');
 const filterCriteria = ref('all');
@@ -81,16 +81,14 @@ const filterOptions = [
   { text: 'Egresos', value: 'expense' }
 ];
 
-// Obtener las transacciones del usuario actual
+
 const transactions = computed(() => 
   historyStore.getTransactionsByUser(userStore.currentUser.username)
 );
 
-// Método para filtrar transacciones
 const filteredTransactions = computed(() => {
   let filtered = transactions.value;
 
-  // Filtrar por búsqueda
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase();
     filtered = filtered.filter(transaction =>
@@ -100,26 +98,24 @@ const filteredTransactions = computed(() => {
     );
   }
 
-  // Filtrar por ingresos o egresos
   if (filterCriteria.value === 'income') {
     filtered = filtered.filter(transaction => {
       const isReceiver = transaction.toUser === userStore.currentUser.username;
-      return isReceiver; // Ingreso
+      return isReceiver;
     });
   } else if (filterCriteria.value === 'expense') {
     filtered = filtered.filter(transaction => {
       const isSender = transaction.fromUser === userStore.currentUser.username;
-      return isSender; // Egreso
+      return isSender; 
     });
   }
 
   return filtered;
 });
 
-// Computed para obtener las transacciones ordenadas y mostrar el nombre y monto correctos
 const sortedTransactions = computed(() => {
   return [...filteredTransactions.value].map(transaction => {
-    // Verificar si el usuario actual es el receptor o el remitente
+
     const isReceiver = transaction.toUser === userStore.currentUser.username;
     return {
       ...transaction,
@@ -144,10 +140,10 @@ function formatDate(dateString) {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false
-  }).replace(',', ''); // Eliminar la coma
+  }).replace(',', ''); 
 }
 
-// Montar el componente y realizar la carga de transacciones
+
 onMounted(() => {
   historyStore.loadTransactions();
 });

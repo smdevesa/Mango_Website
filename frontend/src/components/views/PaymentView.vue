@@ -46,7 +46,6 @@
       </v-col>
     </v-row>
 
-    <!-- Snackbar para mensajes de éxito -->
     <v-snackbar
       v-model="snackbar.show"
       :color="snackbar.color"
@@ -183,7 +182,6 @@ const goHome = () => {
 
 <style scoped>
 .payment-container {
-  background-color: #333;
   min-height: 100vh;
   display: flex;
   align-items: center;

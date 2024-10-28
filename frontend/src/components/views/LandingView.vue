@@ -1,8 +1,7 @@
-<!-- LandingPage.vue -->
 <template>
     <v-app>
       <div class="landing-container">
-        <!-- Hero Section -->
+       
         <section class="hero-section">
           <v-img
             src="@/assets/mangoLogo3.png"
@@ -19,7 +18,7 @@
           </div>
         </section>
   
-        <!-- Sección de Características -->
+       
         <section class="features-section">
           <h2 class="section-title">Por qué elegir Mango$</h2>
           <v-row class="features-row" justify="center">
@@ -73,14 +72,14 @@
   </script>
   
   <style scoped>
-  /* Estilos del Contenedor */
+  
   .landing-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
   }
   
-  /* Estilos del Hero Section */
+  
   .hero-section {
     display: flex;
     flex-direction: column;
@@ -122,7 +121,6 @@
     text-transform: none; 
   }
   
-  /* Estilos de la Sección de Características */
   .features-section {
     padding: 60px 20px;
   }

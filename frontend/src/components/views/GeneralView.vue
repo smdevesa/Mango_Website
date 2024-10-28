@@ -94,7 +94,7 @@
       </v-col>
     </v-row>
 
-    <!-- Diálogo para mostrar CVU y Alias -->
+ 
     <v-dialog v-model="showCvuDialog" max-width="500px">
       <v-card class="v-card-class">
         <v-card-title class="headline">Recibir Dinero</v-card-title>
@@ -135,15 +135,15 @@ import ReusableCard from '../common/ReusableCard.vue';
 import CircularBalance from '../common/CircularBalance.vue';
 import ReusableIconButton from '../common/ReusableIconButton.vue';
 import TransactionItem from '../common/TransactionItem.vue';
-import { useUserStore } from '@/store/userStore'; // Importa el store de usuario
+import { useUserStore } from '@/store/userStore'; 
 import ReusableInput from '../common/ReusableInput.vue';
 import { errorMessages } from 'vue/compiler-sfc';
-import { useHistoryStore } from '@/store/historyStore'; // Importa el store de historial
+import { useHistoryStore } from '@/store/historyStore'; 
 
 const balanceStore = useBalanceStore();
 const { balance, sections } = storeToRefs(balanceStore);
 const router = useRouter();
-const userStore = useUserStore(); // Obtén el store de usuario
+const userStore = useUserStore(); 
 const newAlias = ref('');
 const showAliasInput = ref(false);
 const showCvuDialog = ref(false);
@@ -173,7 +173,7 @@ historyStore.loadTransactions();
 const displayedTransactions = computed(() => {
 return transactions.value.slice(-3).reverse();
 });
-// Funciones de navegación
+
 const goToTransfer = () => {
   router.push('/transfer');
 };
@@ -190,22 +190,21 @@ const goToHistory = () => {
   router.push('/history');
 };
 
-// Función para manejar el click en "Ingresar"
 const handleShowCvu = () => {
   fetchCvuAndAlias().then(data => {
     cvu.value = data.cvu;
     alias.value = data.alias;
-    showCvuDialog.value = true; // Mostrar el modal
+    showCvuDialog.value = true; 
   });
 };
 
-// Llamada simulada a la API (esta sería tu lógica real)
+
 const fetchCvuAndAlias = () => {
   return new Promise(resolve => {
   const currentUser = userStore.currentUser;
 
   if (currentUser) {
-    // Obtener el CVU y alias del usuario actual desde el store
+   
     const cvu = userStore.currentUser.cvu;
     const alias = userStore.currentUser.alias;
 
@@ -214,7 +213,7 @@ const fetchCvuAndAlias = () => {
       alias: alias
     });
   } else {
-    // Manejar el caso en que no haya un usuario actual
+
     resolve({
       cvu: 'N/A',
       alias: 'N/A'
@@ -289,13 +288,13 @@ showCvuDialog.value = false;
   align-items: center;
 }
 
-/* Estilo para el scroll de las pills */
+
 .scrollable-pills {
   max-height: 287px;
   overflow-y: auto;
 }
 
-/* Estilo del CVU */
+
 .cvu-info {
   text-align: center;
   font-size: 19px;

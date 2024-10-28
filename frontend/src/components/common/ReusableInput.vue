@@ -11,20 +11,20 @@
   </template>
   
   <script setup>
-  import { defineProps, ref, watch } from 'vue';
+  import { ref, watch } from 'vue';
   
-  // Definimos las propiedades del componente
+
   const props = defineProps({
     modelValue: String,
     rules: Array,
     label: String,
-    appendIcon: String, // Agregamos la propiedad para el icono
+    appendIcon: String, 
   });
   
-  // Usamos ref para manejar el valor del input
+  
   const modelValue = ref(props.modelValue);
   
-  // Observamos cambios en modelValue para emitir el nuevo valor
+ 
   watch(() => props.modelValue, (newValue) => {
     modelValue.value = newValue;
   });
@@ -38,17 +38,17 @@
     overflow: hidden;
   }
   
-  /* Eliminar el subrayado */
+
   .custom-input :deep(.v-input__control::after) {
     content: none;
   }
   
-  /* Eliminar borde inferior interno */
+  
   .custom-input :deep(.v-input__control .v-input__outline) {
     border-bottom: none;
   }
   
-  /* Eliminar sombra interna que sobresale */
+
   .custom-input :deep(.v-input__control .v-input__outline) {
     box-shadow: none;
   }

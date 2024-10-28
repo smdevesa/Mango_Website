@@ -9,7 +9,7 @@ export const useFrequentContactsStore = defineStore('frequentContacts', () => {
   };
 
   const addContact = (ownerUsername, contactUsername) => {
-    // Si el usuario no tiene lista de contactos, crear una
+
     if (!contacts.value[ownerUsername]) {
       contacts.value[ownerUsername] = [];
     }

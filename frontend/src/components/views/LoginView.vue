@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <!-- Mostrar mensaje de error si hay uno -->
+      
           <p v-if="userStore.error" class="error-message">{{ userStore.error }}</p>
 
           <div class="clase-boton">
@@ -66,7 +66,7 @@
           </v-card>
         </v-dialog>
 
-        <!-- Modificar el snackbar -->
+       
         <v-snackbar 
           v-model="snackbar" 
           :color="snackbarColor"
@@ -101,13 +101,13 @@ const snackbar = ref(false);
 const snackbarMessage = ref('');
 const snackbarColor = ref('');
 
-// Validaciones
+
 const rules = {
   required: (value) => !!value || 'Campo requerido',
   email: (value) => /.+@.+\..+/.test(value) || 'Correo inválido',
 };
 
-// Envío del formulario de login
+
 const submitLoginForm = () => {
   userStore.logout();
   if (username.value && password.value) {
@@ -123,12 +123,11 @@ const submitLoginForm = () => {
   }
 };
 
-// Función para alternar la visibilidad de la contraseña
 const togglePassword = () => {
   showPassword.value = !showPassword.value;
 };
 
-// Función para manejar el envío de restablecimiento de contraseña
+
 const handleResetPassword = () => {
   if (rules.required(email.value) === true && rules.email(email.value) === true) {
     snackbarMessage.value = `Correo enviado a ${email.value} para reestablecer la contraseña.`;

@@ -1,4 +1,3 @@
-<!-- TransferNewAccountView.vue -->
 <template>
   <TransferForm
     title="Transferir por CVU o Alias"
@@ -38,7 +37,7 @@ const snackbarMessage = ref('');
 const snackbarColor = ref('');
 
 const handleTransfer = async ({ recipientId, amount }) => {
-  // Validar que el monto no sea negativo
+  
   if (amount <= 0) {
     snackbarMessage.value = 'El monto debe ser mayor a 0';
     snackbarColor.value = 'error';
@@ -46,7 +45,6 @@ const handleTransfer = async ({ recipientId, amount }) => {
     return;
   }
 
-  // Validar el formato de CVU (18 dígitos) o un alias (formato: palabra.palabra.mango)
   const isCVU = /^\d{18}$/.test(recipientId);
   const isAlias = /^[a-zA-Z0-9]+\.[a-zA-Z0-9]+\.mango$/.test(recipientId);
 
@@ -57,7 +55,6 @@ const handleTransfer = async ({ recipientId, amount }) => {
     return;
   }
 
-  // Verificar si existe un usuario con ese CVU o alias
   const recipientUser = userStore.findUserByCBUCVUOrAlias(recipientId);
   if (!recipientUser) {
     snackbarMessage.value = 'No se encontró ninguna cuenta asociada a este CVU o alias';
@@ -66,7 +63,7 @@ const handleTransfer = async ({ recipientId, amount }) => {
     return;
   }
 
-  // Verificar que no esté transfiriendo a sí mismo
+ 
   const senderUsername = userStore.currentUser.username;
   if (recipientUser.username === senderUsername) {
     snackbarMessage.value = 'No puedes transferir dinero a tu propia cuenta';
@@ -75,7 +72,7 @@ const handleTransfer = async ({ recipientId, amount }) => {
     return;
   }
 
-  // Verificar que el usuario tiene saldo suficiente
+
   if (amount > balanceStore.availableBalance(senderUsername)) {
     snackbarMessage.value = 'No tienes saldo suficiente para realizar esta transferencia';
     snackbarColor.value = 'error';
@@ -83,7 +80,6 @@ const handleTransfer = async ({ recipientId, amount }) => {
     return;
   }
 
-  // Realizar la transferencia
   const success = balanceStore.transferMoney(senderUsername, recipientUser.username, amount);
 
   if (success) {
