@@ -91,7 +91,7 @@ const extractLinkId = (link) => {
 <style scoped>
 .button-container {
   display: block;
-  color: #FFFBE6;
+  color: #333;
   background: #F19743;
   font-size: 17px;
   text-transform: none;

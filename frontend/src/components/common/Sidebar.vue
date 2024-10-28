@@ -25,11 +25,6 @@
       </v-list-item>
     </v-list>
 
-    <!-- Logo en la parte inferior -->
-    <div class="logo-container">
-      <img src="@/assets/mangoLogo3.png" alt="Logo" class="logo" />
-    </div>
-
     <!-- Diálogo de confirmación de cierre de sesión -->
     <v-dialog v-model="logoutDialog" max-width="400px">
       <v-card>

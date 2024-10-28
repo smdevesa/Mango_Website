@@ -9,7 +9,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/register'
+      redirect: '/landing'
+    },
+    {
+      path: '/landing',
+      name: 'landing',
+      component: () => import('../components/views/LandingView.vue')
     },
     {
       path: '/register',

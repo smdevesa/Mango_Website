@@ -188,7 +188,7 @@ const snackbarColor = ref('');
 
 .buttonRegister {
   background-color: #FF9500;
-  color: white;
+  color: #333;
   width: 100%; /* El botón ocupa todo el ancho */
   max-width: 700px;
   height: 50px;

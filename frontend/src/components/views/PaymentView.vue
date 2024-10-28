@@ -183,7 +183,7 @@ const goHome = () => {
 
 <style scoped>
 .payment-container {
-  background-color: #FFFBE6;
+  background-color: #333;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -200,7 +200,7 @@ const goHome = () => {
 }
 
 .payment-btn {
-  color: #FFFBE6;
+  color: #333;
   background: #F19743;
   font-size: 19px;
   text-transform: none;

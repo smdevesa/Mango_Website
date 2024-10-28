@@ -222,7 +222,7 @@ const confirmRemove = () => {
 .button-container {
   display: block;
   margin: 20px auto;
-  color: #FFFBE6;
+  color: #333;
   background: #F19743;
   font-size: 20px;
   text-transform: none; /* Solo primera letra en mayúscula */

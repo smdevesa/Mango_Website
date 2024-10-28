@@ -202,7 +202,7 @@ const handleResetPassword = () => {
 
 .buttonLogin {
   background-color: #FF9500;
-  color: white;
+  color: #333;
   width: 100%;
   max-width: 700px;
   height: 50px;

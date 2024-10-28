@@ -143,7 +143,7 @@ onMounted(() => {
   width: 100%;
   height: 150px;
   background-color: #F19743;
-  color: #FFFBE6;
+  color: #333;
   text-transform: none;
   font-size: 16px;
   padding: 15px;
@@ -172,7 +172,7 @@ onMounted(() => {
 .custom-button {
   border-radius: 55px;
   background-color: #3D3C37;
-  color: white;
+  color: #333;
   text-align: left;
   width: 300px; /* Ajusta el tamaño según sea necesario */
   height: 50px;

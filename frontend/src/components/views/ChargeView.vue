@@ -128,7 +128,7 @@ const copiarEnlace = async () => {
 }
 
 .button-container .v-btn {
-  color: #FFFBE6;
+  color: #333;
   background: #F19743;
   font-size: 19px;
   text-transform: none;

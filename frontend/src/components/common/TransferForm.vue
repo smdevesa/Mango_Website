@@ -97,7 +97,7 @@ const handleContinue = () => {
 
 .continue-button {
   background-color: #F19743; /* Color de fondo del botón */
-  color: white; /* Color del texto */
+  color: #333; /* Color del texto */
   text-transform: none; /* Para que el texto no esté en mayúsculas */
   font-size: 19px; /* Ajusta el tamaño de fuente si es necesario */
   margin-top: 10px; /* Espacio superior para separar del input */
